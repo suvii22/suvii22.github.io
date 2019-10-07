@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="snprintf误用，它返回的是格式化解析后形成的字符串的长度（及期望写入目标缓冲区的长度），而不是实际写入目标缓冲区的内存长度。 123456int off = snprintf(buf, 0x100, &amp;quot;name:%s&amp;amp;&amp;quot;, input);    ...........................    ...........................">
+<meta name="description" content="snprintf误用，它返回的是格式化解析后形成的字符串的长度（及期望写入目标缓冲区的长度），而不是实际写入目标缓冲区的内存长度。">
 <meta name="keywords" content="pwn,栈溢出,snprintf">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SUS YoRHa-pwn2">
 <meta property="og:url" content="http://suvii22.github.io/2019/10/07/SUS-YoRHa-pwn2/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
-<meta property="og:description" content="snprintf误用，它返回的是格式化解析后形成的字符串的长度（及期望写入目标缓冲区的长度），而不是实际写入目标缓冲区的内存长度。 123456int off = snprintf(buf, 0x100, &amp;quot;name:%s&amp;amp;&amp;quot;, input);    ...........................    ...........................">
+<meta property="og:description" content="snprintf误用，它返回的是格式化解析后形成的字符串的长度（及期望写入目标缓冲区的长度），而不是实际写入目标缓冲区的内存长度。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-07T07:48:57.165Z">
+<meta property="og:updated_time" content="2019-10-07T07:51:14.557Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SUS YoRHa-pwn2">
-<meta name="twitter:description" content="snprintf误用，它返回的是格式化解析后形成的字符串的长度（及期望写入目标缓冲区的长度），而不是实际写入目标缓冲区的内存长度。 123456int off = snprintf(buf, 0x100, &amp;quot;name:%s&amp;amp;&amp;quot;, input);    ...........................    ...........................">
+<meta name="twitter:description" content="snprintf误用，它返回的是格式化解析后形成的字符串的长度（及期望写入目标缓冲区的长度），而不是实际写入目标缓冲区的内存长度。">
 
 
 
@@ -373,10 +373,10 @@
 
       
         <p><code>snprintf</code>误用，它返回的是格式化解析后形成的字符串的长度（及期望写入目标缓冲区的长度），而不是实际写入目标缓冲区的内存长度。</p>
+<a id="more"></a>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int off = snprintf(buf, 0x100, &quot;name:%s&amp;&quot;, input);</span><br><span class="line">    ...........................</span><br><span class="line">    ...........................    </span><br><span class="line">    ...........................</span><br><span class="line">    // off 可能会比较大，出现越界写</span><br><span class="line">    off = snprintf(buf + off, 0x100 - off, &quot;pwd:%s&quot;, input);</span><br></pre></td></tr></table></figure>
 
 <p>所以利用<code>snprintf</code>让<code>off</code>移动到返回地址的位置， 然后写返回地址为<code>getshell</code>函数的地址。</p>
-<a id="more"></a>
 <h2 id="查看保护"><a href="#查看保护" class="headerlink" title="查看保护"></a>查看保护</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CANARY    : ENABLED</span><br><span class="line">FORTIFY   : disabled</span><br><span class="line">NX        : ENABLED</span><br><span class="line">PIE       : disabled</span><br><span class="line">RELRO     : Partial</span><br></pre></td></tr></table></figure>
 
 <h2 id="确认偏移"><a href="#确认偏移" class="headerlink" title="确认偏移"></a>确认偏移</h2><p>计算偏移时要除去<code>name:%s&amp;</code>中的<code>name:</code>和<code>&amp;</code>，还有<code>pwd:%s</code>中的<code>pwd:</code>共10个字节</p>

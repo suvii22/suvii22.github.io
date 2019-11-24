@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Apr1L&#39;s blog">
 <meta property="og:description" content="在没有目标系统libc文件下，如何泄露地址信息——pwntools的DynELF模块。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-24T02:41:04.657Z">
+<meta property="og:updated_time" content="2019-11-24T12:40:06.057Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="攻防世界 pwn-100">
 <meta name="twitter:description" content="在没有目标系统libc文件下，如何泄露地址信息——pwntools的DynELF模块。">
@@ -384,7 +384,8 @@
       
 
       
-        <p>在没有目标系统libc文件下，如何泄露地址信息——pwntools的DynELF模块。</p>
+        <blockquote class="blockquote-center"><p>在没有目标系统libc文件下，如何泄露地址信息——pwntools的DynELF模块。 </p>
+</blockquote>
 <a id="more"></a>
 <h2 id="DynELF"><a href="#DynELF" class="headerlink" title="DynELF"></a>DynELF</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">p = process(&apos;./xxx&apos;)</span><br><span class="line">def leak(address):</span><br><span class="line">  #各种预处理</span><br><span class="line">  payload = &quot;xxxxxxxx&quot; + address + &quot;xxxxxxxx&quot;</span><br><span class="line">  p.send(payload)</span><br><span class="line">  #各种处理</span><br><span class="line">  data = p.recv(4)</span><br><span class="line">  log.debug(&quot;%#x =&gt; %s&quot; % (address, (data or &apos;&apos;).encode(&apos;hex&apos;)))</span><br><span class="line">  return data</span><br><span class="line">d = DynELF(leak, elf=ELF(&quot;./xxx&quot;))      #初始化DynELF模块 </span><br><span class="line">systemAddress = d.lookup(&apos;system&apos;, &apos;libc&apos;)  #在libc文件中搜索system函数的地址</span><br></pre></td></tr></table></figure>
 

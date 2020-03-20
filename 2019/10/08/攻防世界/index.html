@@ -10,7 +10,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate">
     <meta name="keywords" content="Fechin,"> 
-    <meta name="description" content="二进制萌新QAQ,pwn1分析程序123456gdb-peda$ checksec babystackCANARY    : ENABLEDFORTIFY   : disabledNX        : ENABLE,"> 
+    <meta name="description" content="二进制萌新QAQ, 
+
+pwn1分析程序123456gdb-peda$ checksec babystackCANARY    : ENABLEDFORTIFY   : disabledNX        : ENA,"> 
     <meta name="author" content="Apr1L"> 
     <link rel="alternative" href="atom.xml" title="Apr1L&#39;s blog" type="application/atom+xml"> 
     <link rel="icon" href="/img/1.ico"> 
@@ -59,7 +61,9 @@
 
         </div>
         <div class="content markdown">
-            <h1 id="pwn1"><a href="#pwn1" class="headerlink" title="pwn1"></a>pwn1</h1><h2 id="分析程序"><a href="#分析程序" class="headerlink" title="分析程序"></a>分析程序</h2><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gdb-peda$ checksec babystack</span><br><span class="line">CANARY    : <span class="type">ENABLED</span></span><br><span class="line">FORTIFY   : <span class="type">disabled</span></span><br><span class="line">NX        : <span class="type">ENABLED</span></span><br><span class="line">PIE       : <span class="type">disabled</span></span><br><span class="line">RELRO     : <span class="type">FULL</span></span><br></pre></td></tr></table></figure>
+             <a id="more"></a>
+
+<h1 id="pwn1"><a href="#pwn1" class="headerlink" title="pwn1"></a>pwn1</h1><h2 id="分析程序"><a href="#分析程序" class="headerlink" title="分析程序"></a>分析程序</h2><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gdb-peda$ checksec babystack</span><br><span class="line">CANARY    : <span class="type">ENABLED</span></span><br><span class="line">FORTIFY   : <span class="type">disabled</span></span><br><span class="line">NX        : <span class="type">ENABLED</span></span><br><span class="line">PIE       : <span class="type">disabled</span></span><br><span class="line">RELRO     : <span class="type">FULL</span></span><br></pre></td></tr></table></figure>
 
 <p>我们发现程序存在<code>canary</code>，并且没有<code>system</code>和<code>/bin/sh</code>，于是我们的思路就有了：</p>
 <ul>

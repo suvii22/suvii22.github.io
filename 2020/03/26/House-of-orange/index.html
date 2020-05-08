@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -245,7 +245,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('http://www.005.tv/uploads/allimg/190404/63-1Z404152A2512.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -425,8 +425,14 @@
 <h2 id="unsorted-bin-attack"><a href="#unsorted-bin-attack" class="headerlink" title="unsorted bin attack"></a>unsorted bin attack</h2><p>我们可以通过 <code>unsorted bin attack</code> 来覆盖 IO_list_all 指针；覆盖完 IO_list_all 为 main_arena+88，由于我们无法完全控制 main_arena 的内容，所以需要 <code>chain</code> 来转移到下一个 IO_FILE。</p>
 <p><code>chain</code> 位于_IO_FILE_plus 偏移为 0x68 的位置，所以我们要把 <code>main_arena+88+0x68</code> 的地方覆盖为我们可控制的区域（top_chunk）。我们可以把 old_top 置为0x61，这样触发一个不合适的 small chunk 分配，old_top 就会被放到 smallbins[5] 中，smallbins[5] 刚好在 <code>main_arena+88+0x68</code> 的位置，这样 fp 指向了old_top 。</p>
 <h2 id="申请内存，触发-glibc-异常处理"><a href="#申请内存，触发-glibc-异常处理" class="headerlink" title="申请内存，触发 glibc 异常处理"></a>申请内存，触发 glibc 异常处理</h2><p>我们要伪造内存，将 _IO_OVERFLOW 修改为 system，fp 开头8字节赋值成 “/bin/sh\x00”来 get shell 。为了触发 _IO_OVERFLOW ，我们需要满足一些条件：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">      <span class="keyword">if</span> (((fp-&gt;_mode &lt;= <span class="number">0</span> &amp;&amp; fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_write_base)</span><br><span class="line">#<span class="keyword">if</span> defined _LIBC || defined _GLIBCPP_USE_WCHAR_T</span><br><span class="line">	   || (_IO_vtable_offset (fp) == <span class="number">0</span></span><br><span class="line">	       &amp;&amp; fp-&gt;_mode &gt; <span class="number">0</span> &amp;&amp; (fp-&gt;_wide_data-&gt;_IO_write_ptr</span><br><span class="line">				    &gt; fp-&gt;_wide_data-&gt;_IO_write_base))</span><br><span class="line">#endif</span><br><span class="line">	   )</span><br><span class="line">	  &amp;&amp; _IO_OVERFLOW (fp, EOF) == EOF)   &lt;--- system('/bin/sh')</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-C"><code class="language-C">      if (((fp->_mode <= 0 && fp->_IO_write_ptr > fp->_IO_write_base)
+#if defined _LIBC || defined _GLIBCPP_USE_WCHAR_T
+       || (_IO_vtable_offset (fp) == 0
+           && fp->_mode > 0 && (fp->_wide_data->_IO_write_ptr
+                    > fp->_wide_data->_IO_write_base))
+#endif
+       )
+      && _IO_OVERFLOW (fp, EOF) == EOF)   <--- system('/bin/sh')</code></pre>
 <ul>
 <li><p>fp-&gt;_mode &lt;= 0</p>
 </li>
@@ -434,9 +440,22 @@
 </li>
 </ul>
 <p>这是我伪造的布局：</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0x5555557584f0</span>:	<span class="number">0x0068732f6e69622f</span>	<span class="number">0x0000000000000061</span></span><br><span class="line"><span class="number">0x555555758500</span>:	<span class="number">0x000000000000aabb</span>	<span class="number">0x00007ffff7dd2510</span></span><br><span class="line"><span class="number">0x555555758510</span>:	<span class="number">0x0000000000000002</span>	<span class="number">0x0000000000000003</span></span><br><span class="line"><span class="number">0x555555758520</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x555555758530</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x555555758540</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x555555758550</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x555555758560</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x555555758570</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x555555758580</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x555555758590</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x5555557585a0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x5555557585b0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x5555557585c0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x00005555557585d0</span> &lt;vtable_addr&gt;</span><br><span class="line"><span class="number">0x5555557585d0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x5555557585e0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x00007ffff7a52390</span> &lt;system&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://blog.angelboy.tw/" target="_blank" rel="noopener">angelboy的blog</a></p>
+<pre><code>0x5555557584f0:    0x0068732f6e69622f    0x0000000000000061
+0x555555758500:    0x000000000000aabb    0x00007ffff7dd2510
+0x555555758510:    0x0000000000000002    0x0000000000000003
+0x555555758520:    0x0000000000000000    0x0000000000000000
+0x555555758530:    0x0000000000000000    0x0000000000000000
+0x555555758540:    0x0000000000000000    0x0000000000000000
+0x555555758550:    0x0000000000000000    0x0000000000000000
+0x555555758560:    0x0000000000000000    0x0000000000000000
+0x555555758570:    0x0000000000000000    0x0000000000000000
+0x555555758580:    0x0000000000000000    0x0000000000000000
+0x555555758590:    0x0000000000000000    0x0000000000000000
+0x5555557585a0:    0x0000000000000000    0x0000000000000000
+0x5555557585b0:    0x0000000000000000    0x0000000000000000
+0x5555557585c0:    0x0000000000000000    0x00005555557585d0 &lt;vtable_addr&gt;
+0x5555557585d0:    0x0000000000000000    0x0000000000000000
+0x5555557585e0:    0x0000000000000000    0x00007ffff7a52390 &lt;system&gt;</code></pre><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://blog.angelboy.tw/" target="_blank" rel="noopener">angelboy的blog</a></p>
 <p><a href="https://de4dcr0w.github.io/%E5%A0%86%E5%88%A9%E7%94%A8/houseoforange%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93.html#0x03-%E7%94%B3%E8%AF%B7%E5%86%85%E5%AD%98%E8%A7%A6%E5%8F%91%E5%BC%82%E5%B8%B8" target="_blank" rel="noopener">houseoforange学习总结</a></p>
 
             </div>
@@ -544,29 +563,34 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/03/27/no-show-to-leak/">
+                <a href="/2020/03/26/House-of-orange/">
                     <div class="card-image">
                         
+                        <img src="http://www.005.tv/uploads/allimg/190404/63-1Z404152A2512.png" class="responsive-img" alt="House of orange">
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="no show to leak">
-                        
-                        <span class="card-title">no show to leak</span>
+                        <span class="card-title">House of orange</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            这个 leak 方法是从高校战“疫”网络安全分享赛 woodenbox 这道题中学会的，这道题我是用 House of roman 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 Overwri
+                            简单记录一下 House of orange 的利用过程：
+house of orange
+修改 top chunk 的sizesize 需满足以下条件：
+
+top chunk 大于 MINSIZE，即 0x10
+old_size  &lt
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-27
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-26
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -583,6 +607,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -604,8 +629,7 @@
                 <a href="/2020/03/13/IO-FILE/">
                     <div class="card-image">
                         
-                        
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="IO_FILE">
+                        <img src="http://www.005.tv/uploads/allimg/200313/66-200313140151126.jpg" class="responsive-img" alt="IO_FILE">
                         
                         <span class="card-title">IO_FILE</span>
                     </div>
@@ -615,7 +639,11 @@
                         
                              
 
-_IO_FILE_plus12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565
+_IO_FILE_plus'i386':{
+        0x0:'_flags',
+        0x4:'_IO_read_ptr',
+        0x8:'_IO_read_end',
+        0xc:'_IO_
                         
                     </div>
                     <div class="publish-info">

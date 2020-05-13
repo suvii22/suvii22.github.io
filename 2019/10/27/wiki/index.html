@@ -1463,7 +1463,14 @@ p <span class="token operator">=</span> process<span class="token punctuation">(
       ++v3;
     }
     a1[v3] = 0;
-    a1[a2] = 0;      <---- off by null } else { *a1="0;" return __readfsqword(0x28u) ^ v4; }< code></----></code></pre>
+    a1[a2] = 0;      <---- off by null
+  }
+  else
+  {
+    *a1 = 0;
+  }
+  return __readfsqword(0x28u) ^ v4;
+}</code></pre>
 <p>思路大体上是这样的：</p>
 <blockquote>
 <p>申请三个堆快 A，B，C 再依次释放，它们会合并进入 unsorted bin，其中 B，C 的 prev_size 会变成 0x100 和 0x200 。再把 A，B，C 申请出来，先把 tcahce 填6个，再 free B，这时 B 处于 tcache 的第一个，再 free A ，让 A 进 unsorted bin ，再把 B malloc 出来，这时候要用 off  by null，把 C 的 prev_inuse 位置为 0，再  free C 的时候就实现了堆块重叠，可以 leak libc。最后通过double free 覆盖 free_hook 为 one_gadget 来 get shell。 (申请和释放的时候注意 tcache 的变化)</p>

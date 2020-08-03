@@ -359,6 +359,43 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/03/babystack/" >
+            
+                <span>babystack</span>
+        </a>
+        <div class="abstract-content">
+            babystack除了ASLR之外保护全开，存在明显栈溢出漏洞，不知道如何绕过canary
+调试过程断点下到触发 __stack_chk_fail 的地方，输入 ‘a’*0x1200，观察 rcx 的值（里面存放着原 canary 与 ‘aaaaaaaa’ xor 的结果）。
+
+把 rcx 异或回去得到原 canary 的值 
+
+可以得到 stack_guard 存放在 $rbp+2008 的位置，0x1010+2008 = 0x1f70，也就是说我们可以覆盖 stack_guard 来绕过canary。看来在使用pthread时，TLS会被定位到与线程的栈空间相接近的位置。
+参考链接G...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/03</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "canary">canary</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2019/11/04/Syc-Geek-10th/" >
             
                 <span>Syc Geek 10th</span>
@@ -627,9 +664,34 @@ fro...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 10
+        Total : 11
         </div>
         <!-- search  -->
         
@@ -642,6 +704,11 @@ fro...
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/03</span><a class="archive-post-title" href= "/2020/08/03/babystack/" >babystack</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -765,6 +832,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="pwn/wp"><span class="iconfont-archer">&#xe60a;</span>pwn/wp</span>
     
         <span class="sidebar-category-name" data-categories="pwn/笔记"><span class="iconfont-archer">&#xe60a;</span>pwn/笔记</span>
+    
+        <span class="sidebar-category-name" data-categories="日记"><span class="iconfont-archer">&#xe60a;</span>日记</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

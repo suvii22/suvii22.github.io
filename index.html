@@ -372,6 +372,43 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/03/babystack/" >
+            
+                <span>babystack</span>
+        </a>
+        <div class="abstract-content">
+            babystack除了ASLR之外保护全开，存在明显栈溢出漏洞，不知道如何绕过canary
+调试过程断点下到触发 __stack_chk_fail 的地方，输入 ‘a’*0x1200，观察 rcx 的值（里面存放着原 canary 与 ‘aaaaaaaa’ xor 的结果）。
+
+把 rcx 异或回去得到原 canary 的值 
+
+可以得到 stack_guard 存放在 $rbp+2008 的位置，0x1010+2008 = 0x1f70，也就是说我们可以覆盖 stack_guard 来绕过canary。看来在使用pthread时，TLS会被定位到与线程的栈空间相接近的位置。
+参考链接G...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/03</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "canary">canary</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/05/13/csaw2016-hungman/" >
             
                 <span>csaw2016_hungman</span>
@@ -714,55 +751,11 @@ if ( count &lt;= 5 )
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/10/08/攻防世界/" >
-            
-                <span>攻防世界</span>
-        </a>
-        <div class="abstract-content">
-            pwn1分析程序gdb-peda$ checksec babystack
-CANARY    : ENABLED
-FORTIFY   : disabled
-NX        : ENABLED
-PIE       : disabled
-RELRO     : FULL我们发现程序存在canary，并且没有system和/bin/sh，于是我们的思路就有了：
-
-通过程序的print函数leakcanary的值
-泄露puts真正地址，计算出libcbase
-构造ROP chain来get shell
-
-EXP#!usr/bin/python
-#-- coding: utf:8 --
-fro...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "canary">canary</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "栈溢出">栈溢出</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ROP">ROP</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
+    
+    <nav class="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">NEXT ></a>
+    </nav>
     
 </main>
             <!-- profile -->
@@ -1024,9 +1017,34 @@ fro...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 10
+        Total : 11
         </div>
         <!-- search  -->
         
@@ -1039,6 +1057,11 @@ fro...
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/03</span><a class="archive-post-title" href= "/2020/08/03/babystack/" >babystack</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1162,6 +1185,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="pwn/wp"><span class="iconfont-archer">&#xe60a;</span>pwn/wp</span>
     
         <span class="sidebar-category-name" data-categories="pwn/笔记"><span class="iconfont-archer">&#xe60a;</span>pwn/笔记</span>
+    
+        <span class="sidebar-category-name" data-categories="日记"><span class="iconfont-archer">&#xe60a;</span>日记</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

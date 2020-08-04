@@ -23,7 +23,7 @@
     <meta name="description" content="二进制萌新QAQ">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Apr1L&#39;s blog">
-<meta property="og:url" content="http://suvii22.github.io/index.html">
+<meta property="og:url" content="http://suvii22.github.io/tags/crack-me/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
 <meta property="og:description" content="二进制萌新QAQ">
 <meta property="og:locale" content="zh-CN">
@@ -90,6 +90,8 @@
 
     <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -214,10 +216,8 @@
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
     
-        <body class="home-body">
     
-    
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
@@ -233,34 +233,21 @@
 
 
 
-
-height:50vh;
 ">
     
     <!-- 主页  -->
-    
-    
-    <!-- 文章页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Apr1L's blog
-            <!-- 文章页  -->
-            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
-            
-            
-                Just want to try a little bit more.
-            
-            <!-- 文章页  -->
             
         </p>
         <!-- 文章页meta -->
@@ -400,434 +387,10 @@ height:50vh;
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/03/babystack/" >
-            
-                <span>babystack</span>
-        </a>
-        <div class="abstract-content">
-            babystack除了ASLR之外保护全开，存在明显栈溢出漏洞，不知道如何绕过canary
-调试过程断点下到触发 __stack_chk_fail 的地方，输入 ‘a’*0x1200，观察 rcx 的值（里面存放着原 canary 与 ‘aaaaaaaa’ xor 的结果）。
-
-把 rcx 异或回去得到原 canary 的值 
-
-可以得到 stack_guard 存放在 $rbp+2008 的位置，0x1010+2008 = 0x1f70，也就是说我们可以覆盖 stack_guard 来绕过canary。看来在使用pthread时，TLS会被定位到与线程的栈空间相接近的位置。
-参考链接G...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/03</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "canary">canary</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/13/csaw2016-hungman/" >
-            
-                <span>csaw2016_hungman</span>
-        </a>
-        <div class="abstract-content">
-            分析这个程序一开始要输入name，name存储在堆中：
-//相关数据体
-struct 
-{
-    int score;
-    int name_len;
-    char *name;
-}
-然后让你玩游戏，游戏是是让你猜随机生成和你name等长的随机字符串，有三次猜错机会，全部猜出来会获得一次change name的机会。
-if ( v3 == 'y' )
-      {
-        s = malloc(0xF8uLL);
-        memset(s, 0, 0xF8uLL);
-        v8 = read(0, s, 0xF8uLL);
-        *(_DW...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/27/no-show-to-leak/" >
-            
-                <span>no show to leak</span>
-        </a>
-        <div class="abstract-content">
-            这个 leak 方法是从高校战“疫”网络安全分享赛 woodenbox 这道题中学会的，这道题我是用 House of roman 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 Overwrite Stdout Leak Libc 。
-相关代码：
-int _IO_new_file_overflow (_IO_FILE *f, int ch)
-{
-  if (f->_flags & _IO_NO_WRITES) /* SET ERROR */
-    {
-      //...
-      return EOF;
-    }
-  if ((f...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/26/House-of-orange/" >
-            
-                <span>House of orange</span>
-        </a>
-        <div class="abstract-content">
-            简单记录一下 House of orange 的利用过程：
-house of orange
-修改 top chunk 的sizesize 需满足以下条件：
-
-top chunk 大于 MINSIZE，即 0x10
-old_size  &lt;  nb + MINSIZE
-PREV_INUSE = 1
-old_top + old_size 页对齐    
-
-申请一块大内存来触发 sysmalloc() 中的 _int_free()_int_free() 之后，top_chunk 会进入 unsorted bin 中，我们申请一个小于此大小的 chunk 后，因为 bk 指针会保留，所以可以...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/13/IO-FILE/" >
-            
-                <span>IO_FILE</span>
-        </a>
-        <div class="abstract-content">
-            _IO_FILE_plus'i386':{
-        0x0:'_flags',
-        0x4:'_IO_read_ptr',
-        0x8:'_IO_read_end',
-        0xc:'_IO_read_base',
-        0x10:'_IO_write_base',
-        0x14:'_IO_write_ptr',
-        0x18:'_IO_write_end',
-        0x1c:'_IO_buf_base',
-        0x20:'_IO_buf_end',
-        0x24:'_IO_sa...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/02/28/SUCTF2019-playfmt/" >
-            
-                <span>SUCTF2019 playfmt</span>
-        </a>
-        <div class="abstract-content">
-            通过这道题学习到了不少新姿势~
-分析首先看一下输入aaaaa之后栈中的情况：
-0c:0030│      0xffffd130 ◂— 0x0
-0d:0034│      0xffffd134 —▸ 0x804b040 (buf) ◂— &#39;aaaaa\n&#39;
-0e:0038│      0xffffd138 ◂— 0xc8
-0f:003c│      0xffffd13c —▸ 0x80488e8 (logo()+59) ◂— add    esp, 0x10
-10:0040│      0xffffd140 —▸ 0x8048cb1 ◂— cmp    eax, 0x3d3...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/11/24/BUUCTF/" >
-            
-                <span>BUUCTF</span>
-        </a>
-        <div class="abstract-content">
-            ciscn_2019_c_1&amp;ciscn_2019_en_2from pwn import *
-from LibcSearcher import *
-#p = remote('node3.buuoj.cn',26936)
-p = process('./ciscn_2019_c_1')
-elf = ELF('./ciscn_2019_c_1')
-
-def send(content):
-        p.recvuntil("Input your choice!")
-        p.sendline('1')
-        p.recvuntil("Input your Pl...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/24</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/11/04/Syc-Geek-10th/" >
-            
-                <span>Syc Geek 10th</span>
-        </a>
-        <div class="abstract-content">
-            Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。
-先来看一下函数___stack_chk_fail源码：
-void __attribute__ ((noreturn)) __stack_chk_fail (void)
-{
-  __fortify_fail (&quot;stack smashing detected&quot;);
-}...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/04</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "canary">canary</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "shellcode">shellcode</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/10/29/Ubuntu关闭ASLR/" >
-            
-                <span>Ubuntu关闭ASLR</span>
-        </a>
-        <div class="abstract-content">
-            确认ASLR是否已经被打开，“2”表示已经打开
-suv11@ubuntu:~$ cat /proc/sys/kernel/randomize_va_space 
-2直接使用sudo会出现下面结果：
-suv11@ubuntu:~$ sudo echo 0 &gt; /proc/sys/kernel/randomize_va_space
-bash: /proc/sys/kernel/randomize_va_space: 权限不够切换至root下关闭ASLR：
-suv11@ubuntu:~$ su
-密码： 
-root@ubuntu:/home/suv11# echo 0 &gt; /proc...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/29</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Ubuntu">Ubuntu</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ASLR">ASLR</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">NEXT ></a>
-    </nav>
     
 </main>
             <!-- profile -->
-            
-            <div class="profile">
-    <img class="profile-avatar" alt="avatar" src= /avatar/avatar.JPG >
-    <div class="profile-name">Apr1L</div>
-    
-    <div class="profile-signature">
-        bin~
-    </div>
-    
-    
-    <div class="profile-social">
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-            
-                
-            
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href = "/about" >ABOUT ME</a>
-        </div>
-    
-</div>
             
         </div>
         <footer class="footer footer-unloaded">

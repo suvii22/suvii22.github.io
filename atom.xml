@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://suvii22.github.io/"/>
-  <updated>2020-08-03T11:29:15.444Z</updated>
+  <updated>2020-08-04T14:33:12.891Z</updated>
   <id>http://suvii22.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Acid burn</title>
+    <link href="http://suvii22.github.io/2020/08/04/Acid-burn/"/>
+    <id>http://suvii22.github.io/2020/08/04/Acid-burn/</id>
+    <published>2020-08-04T14:27:46.000Z</published>
+    <updated>2020-08-04T14:33:12.891Z</updated>
+    
+    <content type="html"><![CDATA[<p>从0开始的re</p><p>暴力破解就不用多说了，nop就完事了</p><p>明天学习一下如何追码写注册机，贴个[链接]([<a href="https://kongdewei.cn/2017/07/07/%E3%80%90CrackMe%E3%80%91Acid%20burn%E8%BF%BD%E7%A0%81%E5%86%99%E6%B3%A8%E5%86%8C%E6%9C%BA/]" target="_blank" rel="noopener">https://kongdewei.cn/2017/07/07/%E3%80%90CrackMe%E3%80%91Acid%20burn%E8%BF%BD%E7%A0%81%E5%86%99%E6%B3%A8%E5%86%8C%E6%9C%BA/]</a>(<a href="https://kongdewei.cn/2017/07/07/[CrackMe]Acid" target="_blank" rel="noopener">https://kongdewei.cn/2017/07/07/[CrackMe]Acid</a> burn追码写注册机/))先。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;从0开始的re&lt;/p&gt;
+&lt;p&gt;暴力破解就不用多说了，nop就完事了&lt;/p&gt;
+&lt;p&gt;明天学习一下如何追码写注册机，贴个[链接]([&lt;a href=&quot;https://kongdewei.cn/2017/07/07/%E3%80%90CrackMe%E3%80%91Acid%20
+      
+    
+    </summary>
+    
+    
+      <category term="日记" scheme="http://suvii22.github.io/categories/%E6%97%A5%E8%AE%B0/"/>
+    
+    
+      <category term="re" scheme="http://suvii22.github.io/tags/re/"/>
+    
+      <category term="crack me" scheme="http://suvii22.github.io/tags/crack-me/"/>
+    
+  </entry>
   
   <entry>
     <title>babystack</title>

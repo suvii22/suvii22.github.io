@@ -23,7 +23,7 @@
     <meta name="description" content="二进制萌新QAQ">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Apr1L&#39;s blog">
-<meta property="og:url" content="http://suvii22.github.io/tags/canary/index.html">
+<meta property="og:url" content="http://suvii22.github.io/categories/pwn/page/2/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
 <meta property="og:description" content="二进制萌新QAQ">
 <meta property="og:locale" content="zh-CN">
@@ -359,81 +359,6 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/03/babystack/" >
-            
-                <span>babystack</span>
-        </a>
-        <div class="abstract-content">
-            babystack除了ASLR之外保护全开，存在明显栈溢出漏洞，不知道如何绕过canary
-调试过程断点下到触发 __stack_chk_fail 的地方，输入 ‘a’*0x1200，观察 rcx 的值（里面存放着原 canary 与 ‘aaaaaaaa’ xor 的结果）。
-
-把 rcx 异或回去得到原 canary 的值 
-
-可以得到 stack_guard 存放在 $rbp+2008 的位置，0x1010+2008 = 0x1f70，也就是说我们可以覆盖 stack_guard 来绕过canary。看来在使用pthread时，TLS会被定位到与线程的栈空间相接近的位置。
-参考链接G...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/03</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "canary">canary</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/11/04/Syc-Geek-10th/" >
-            
-                <span>Syc Geek 10th</span>
-        </a>
-        <div class="abstract-content">
-            Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。
-先来看一下函数___stack_chk_fail源码：
-void __attribute__ ((noreturn)) __stack_chk_fail (void)
-{
-  __fortify_fail (&quot;stack smashing detected&quot;);
-}...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/04</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "canary">canary</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "shellcode">shellcode</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
         <a class="abstract-title" href = "/2019/10/08/攻防世界/" >
             
                 <span>攻防世界</span>
@@ -477,6 +402,10 @@ fro...
     </article>
     
     <!-- paginator  -->
+    
+    <nav class="page-nav">
+        <a class="extend prev" rel="prev" href="/categories/pwn/">< PREV</a><a class="page-number" href="/categories/pwn/">1</a><span class="page-number current">2</span>
+    </nav>
     
 </main>
             <!-- profile -->

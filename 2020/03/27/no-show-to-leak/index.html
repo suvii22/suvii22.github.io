@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="这个 leak 方法是从高校战“疫”网络安全分享赛 woodenbox 这道题中学会的，这道题我是用 House of roman 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 Overwrite Stdout Leak Libc 。 相关代码： int _IO_new_file_overflow (_IO_FILE *f, int ch) {">
+    <meta name="description" content="这个 leak 方法是从高校战“疫”网络安全分享赛 woodenbox 这道题中学会的，这道题我是用 House of roman 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 Overwrite Stdout Leak Libc 。 相关代码： 1234567891011121314151617int _IO_new_file_overflow (">
 <meta name="keywords" content="pwn,stdout">
 <meta property="og:type" content="article">
 <meta property="og:title" content="no show to leak">
 <meta property="og:url" content="http://suvii22.github.io/2020/03/27/no-show-to-leak/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
-<meta property="og:description" content="这个 leak 方法是从高校战“疫”网络安全分享赛 woodenbox 这道题中学会的，这道题我是用 House of roman 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 Overwrite Stdout Leak Libc 。 相关代码： int _IO_new_file_overflow (_IO_FILE *f, int ch) {">
+<meta property="og:description" content="这个 leak 方法是从高校战“疫”网络安全分享赛 woodenbox 这道题中学会的，这道题我是用 House of roman 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 Overwrite Stdout Leak Libc 。 相关代码： 1234567891011121314151617int _IO_new_file_overflow (">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2020-09-01T12:47:21.855Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="no show to leak">
-<meta name="twitter:description" content="这个 leak 方法是从高校战“疫”网络安全分享赛 woodenbox 这道题中学会的，这道题我是用 House of roman 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 Overwrite Stdout Leak Libc 。 相关代码： int _IO_new_file_overflow (_IO_FILE *f, int ch) {">
+<meta name="twitter:description" content="这个 leak 方法是从高校战“疫”网络安全分享赛 woodenbox 这道题中学会的，这道题我是用 House of roman 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 Overwrite Stdout Leak Libc 。 相关代码： 1234567891011121314151617int _IO_new_file_overflow (">
     
     
         
@@ -47,7 +47,7 @@
     <!-- rss -->
     
     
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+</head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -157,23 +157,8 @@
   <div class="content" itemprop="articleBody">
     <p>这个 leak 方法是从高校战“疫”网络安全分享赛 <code>woodenbox</code> 这道题中学会的，这道题我是用 <code>House of roman</code> 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 <code>Overwrite Stdout Leak Libc</code> 。</p>
 <p>相关代码：</p>
-<pre class=" language-C"><code class="language-C">int _IO_new_file_overflow (_IO_FILE *f, int ch)
-{
-  if (f->_flags & _IO_NO_WRITES) /* SET ERROR */
-    {
-      //...
-      return EOF;
-    }
-  if ((f->_flags & _IO_CURRENTLY_PUTTING) == 0 || f->_IO_write_base == NULL)
-    {
-        //...
-    }
-  if (ch == EOF)
-    return _IO_do_write (f, f->_IO_write_base,
-             f->_IO_write_ptr - f->_IO_write_base);
-    //...
-}
-libc_hidden_ver (_IO_new_file_overflow, _IO_file_overflow)</code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> _IO_new_file_overflow (_IO_FILE *f, <span class="keyword">int</span> ch)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> (f-&gt;_flags &amp; _IO_NO_WRITES) <span class="comment">/* SET ERROR */</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">//...</span></span><br><span class="line">      <span class="keyword">return</span> EOF;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">if</span> ((f-&gt;_flags &amp; _IO_CURRENTLY_PUTTING) == <span class="number">0</span> || f-&gt;_IO_write_base == <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">		<span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">if</span> (ch == EOF)</span><br><span class="line">    <span class="keyword">return</span> _IO_do_write (f, f-&gt;_IO_write_base,</span><br><span class="line">			 f-&gt;_IO_write_ptr - f-&gt;_IO_write_base);</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line">libc_hidden_ver (_IO_new_file_overflow, _IO_file_overflow)</span><br></pre></td></tr></table></figure>
+
 <p>我们想要顺利执行<code>_IO_do_write (f, f-&gt;_IO_write_base, f-&gt;_IO_write_ptr - f-&gt;_IO_write_base)</code> ,要尽可能减少其他不必要代码的执行，需要满足以下条件：</p>
 <ul>
 <li><code>f-&gt;_flags &amp; _IO_NO_WRITES == 0</code></li>
@@ -186,10 +171,8 @@ libc_hidden_ver (_IO_new_file_overflow, _IO_file_overflow)</code></pre>
 <p>We overwrite <code>_flags</code> with the calculated value and <code>_IO_read_ptr</code>, <code>_IO_read_end</code>, <code>_IO_read_base</code> with NULL and the last byte of <code>_IO_write_base</code> with NULL as well.</p>
 </blockquote>
 <p>_flags = <code>0xfbad1800</code></p>
-<pre class=" language-C"><code class="language-C">_flags = 0xfbad0000  // Magic number
-_flags & = ~_IO_NO_WRITES // _flags = 0xfbad0000
-_flags | = _IO_CURRENTLY_PUTTING // _flags = 0xfbad0800
-_flags | = _IO_IS_APPENDING // _flags = 0xfbad1800</code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">_flags = <span class="number">0xfbad0000</span>  <span class="comment">// Magic number</span></span><br><span class="line">_flags &amp; = ~_IO_NO_WRITES <span class="comment">// _flags = 0xfbad0000</span></span><br><span class="line">_flags | = _IO_CURRENTLY_PUTTING <span class="comment">// _flags = 0xfbad0800</span></span><br><span class="line">_flags | = _IO_IS_APPENDING <span class="comment">// _flags = 0xfbad1800</span></span><br></pre></td></tr></table></figure>
+
 <p>参考链接：</p>
 <p><a href="https://sunichi.github.io/2018/11/29/leak-from-stdout/" target="_blank" rel="noopener">Leak From Stdout</a></p>
 <p><a href="https://vigneshsrao.github.io/babytcache/" target="_blank" rel="noopener">HITCON CTF: baby_tcache Writeup</a></p>

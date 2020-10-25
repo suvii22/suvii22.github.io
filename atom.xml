@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Apr1L&#39;s blog</title>
-  
-  
+  <icon>https://www.gravatar.com/avatar/a2819341e24d56b868117ac1d3361f64</icon>
+  <subtitle>Hello,bin</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://suvii22.github.io/"/>
@@ -11,7 +11,7 @@
   
   <author>
     <name>Apr1L</name>
-    
+    <email>bl4nc@qq.com</email>
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>

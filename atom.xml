@@ -154,13 +154,13 @@
     <link href="http://suvii22.github.io/2020/08/03/babystack/"/>
     <id>http://suvii22.github.io/2020/08/03/babystack/</id>
     <published>2020-08-03T08:56:37.000Z</published>
-    <updated>2020-10-25T15:36:38.651Z</updated>
+    <updated>2020-10-25T17:15:58.128Z</updated>
     
-    <content type="html"><![CDATA[<p>关于canary的一道题</p><a id="more"></a><h2 id="babystack"><a href="#babystack" class="headerlink" title="babystack"></a>babystack</h2><p>除了ASLR之外保护全开，存在明显栈溢出漏洞，不知道如何绕过canary</p><h3 id="调试过程"><a href="#调试过程" class="headerlink" title="调试过程"></a>调试过程</h3><p>断点下到触发 __stack_chk_fail 的地方，输入 ‘a’*0x1200，观察 rcx 的值（里面存放着原 canary 与 ‘aaaaaaaa’ xor 的结果）。</p><p><img src="https://i.loli.net/2020/08/03/eUbkLGR9ENStXra.png" alt></p><p>把 rcx 异或回去得到原 canary 的值 </p><p><img src="https://i.loli.net/2020/08/03/IgaX6AGVZ1n5sKh.png" alt></p><p>可以得到 stack_guard 存放在 $rbp+2008 的位置，0x1010+2008 = 0x1f70，也就是说我们可以覆盖 stack_guard 来绕过canary。看来在使用pthread时，TLS会被定位到与线程的栈空间相接近的位置。</p><h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://zhakul.top/archives/348" target="_blank" rel="noopener">Glibc中canary的实现</a></p><p><a href="https://ble55ing.github.io/2019/07/01/starctf2018-babystack/" target="_blank" rel="noopener">starctf2018 babystack</a></p>]]></content>
+    <content type="html"><![CDATA[<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">center</span>&gt;</span>关于canary的一道题<span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br></pre></td></tr></table></figure><a id="more"></a><h2 id="babystack"><a href="#babystack" class="headerlink" title="babystack"></a>babystack</h2><p>除了ASLR之外保护全开，存在明显栈溢出漏洞，不知道如何绕过canary</p><h3 id="调试过程"><a href="#调试过程" class="headerlink" title="调试过程"></a>调试过程</h3><p>断点下到触发 __stack_chk_fail 的地方，输入 ‘a’*0x1200，观察 rcx 的值（里面存放着原 canary 与 ‘aaaaaaaa’ xor 的结果）。</p><p><img src="https://i.loli.net/2020/08/03/eUbkLGR9ENStXra.png" alt></p><p>把 rcx 异或回去得到原 canary 的值 </p><p><img src="https://i.loli.net/2020/08/03/IgaX6AGVZ1n5sKh.png" alt></p><p>可以得到 stack_guard 存放在 $rbp+2008 的位置，0x1010+2008 = 0x1f70，也就是说我们可以覆盖 stack_guard 来绕过canary。看来在使用pthread时，TLS会被定位到与线程的栈空间相接近的位置。</p><h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://zhakul.top/archives/348" target="_blank" rel="noopener">Glibc中canary的实现</a></p><p><a href="https://ble55ing.github.io/2019/07/01/starctf2018-babystack/" target="_blank" rel="noopener">starctf2018 babystack</a></p>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;关于canary的一道题&lt;/p&gt;
+      &lt;figure class=&quot;highlight xml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;center&lt;/span&gt;&amp;gt;&lt;/span&gt;关于canary的一道题&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;center&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     

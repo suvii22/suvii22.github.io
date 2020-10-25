@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Linux,Ubuntu,ASLR,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="笔记">
-<meta name="keywords" content="Linux,Ubuntu,ASLR">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Ubuntu关闭ASLR">
-<meta property="og:url" content="http://suvii22.github.io/2019/10/29/Ubuntu关闭ASLR/index.html">
+<meta name="description" content="二进制萌新">
+<meta name="keywords" content="pwn">
+<meta property="og:type" content="website">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://suvii22.github.io/categories/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
-<meta property="og:description" content="笔记">
+<meta property="og:description" content="二进制萌新">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-10-25T15:39:21.461Z">
+<meta property="og:updated_time" content="2020-10-25T17:25:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ubuntu关闭ASLR">
-<meta name="twitter:description" content="笔记">
+<meta name="twitter:title" content="categories">
+<meta name="twitter:description" content="二进制萌新">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://suvii22.github.io/2019/10/29/Ubuntu关闭ASLR/">
+  <link rel="canonical" href="http://suvii22.github.io/categories/">
 
 
 
 
 
-  <title>Ubuntu关闭ASLR | Apr1L's blog</title>
+  <title>categories | Apr1L's blog</title>
   
 
 
@@ -263,183 +263,40 @@
 
   <div id="posts" class="posts-expand">
     
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://suvii22.github.io/2019/10/29/Ubuntu关闭ASLR/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Apr1L">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/logo.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Apr1L's blog">
-    </span>
-
     
+    
+    <div class="post-block page">
       <header class="post-header">
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">Ubuntu关闭ASLR</h1>
-        
+	<h1 class="post-title" itemprop="name headline">categories</h1>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-29T16:53:22+08:00">
-                2019-10-29
-              </time>
-            
 
-            
 
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+</header>
 
       
       
-
       
-        <p>笔记</p>
-<a id="more"></a>
-
-<p>确认ASLR是否已经被打开，“2”表示已经打开</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">suv11<span class="variable">@ubuntu</span><span class="symbol">:~</span><span class="variable">$ </span>cat /proc/sys/kernel/randomize_va_space </span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
-
-<p>直接使用sudo会出现下面结果：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">suv11<span class="meta">@ubuntu</span>:~$ sudo echo <span class="number">0</span> &gt; <span class="regexp">/proc/</span>sys<span class="regexp">/kernel/</span>randomize_va_space</span><br><span class="line"><span class="string">bash:</span> <span class="regexp">/proc/</span>sys<span class="regexp">/kernel/</span><span class="string">randomize_va_space:</span> 权限不够</span><br></pre></td></tr></table></figure>
-
-<p>切换至root下关闭ASLR：</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">suv11<span class="variable">@ubuntu</span><span class="symbol">:~</span><span class="variable">$ </span>su</span><br><span class="line">密码： </span><br><span class="line">root<span class="variable">@ubuntu</span><span class="symbol">:/home/suv11</span><span class="comment"># echo 0 &gt; /proc/sys/kernel/randomize_va_space</span></span><br><span class="line">root<span class="variable">@ubuntu</span><span class="symbol">:/home/suv11</span><span class="comment"># cat /proc/sys/kernel/randomize_va_space</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line">root<span class="variable">@ubuntu</span><span class="symbol">:/home/suv11</span><span class="comment"># su suv11</span></span><br><span class="line">suv11<span class="variable">@ubuntu</span><span class="symbol">:~</span>$</span><br></pre></td></tr></table></figure>
-
-
+      <div class="post-body">
+        
+        
+          <div class="category-all-page">
+            <div class="category-all-title">
+                4 categories in total
+            </div>
+            <div class="category-all">
+              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/pwn/">pwn</a><span class="category-list-count">15</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/pwn/wp/">wp</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/pwn/笔记/">笔记</a><span class="category-list-count">3</span></li></ul></li></ul>
+            </div>
+          </div>
+        
+      </div>
+      
+      
       
     </div>
     
     
     
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
-          
-            <a href="/tags/Ubuntu/" rel="tag"># Ubuntu</a>
-          
-            <a href="/tags/ASLR/" rel="tag"># ASLR</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/10/27/wiki/" rel="next" title="wiki">
-                <i class="fa fa-chevron-left"></i> wiki
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/11/04/Syc-Geek-10th/" rel="prev" title="Syc Geek 10th">
-                Syc Geek 10th <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
   </div>
 
 
@@ -448,6 +305,10 @@
 
 
           
+
+  
+
+
 
         </div>
         

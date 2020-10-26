@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="这个 leak 方法是从高校战“疫”网络安全分享赛 woodenbox 这道题中学会的，这道题我是用 House of roman 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 Overwrite Stdout Leak Libc 。 相关代码： 1234567891011121314151617int _IO_new_file_overflow">
+<meta name="description" content="这个 leak 方法是从高校战“疫”网络安全分享赛 woodenbox 这道题中学会的，这道题我是用 House of roman 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 Overwrite Stdout Leak Libc 。 相关代码： 1234567891011121314151617int _IO_new_file_overflow (">
 <meta name="keywords" content="pwn,stdout">
 <meta property="og:type" content="article">
 <meta property="og:title" content="no show to leak">
 <meta property="og:url" content="http://suvii22.github.io/2020/03/27/no-show-to-leak/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
-<meta property="og:description" content="这个 leak 方法是从高校战“疫”网络安全分享赛 woodenbox 这道题中学会的，这道题我是用 House of roman 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 Overwrite Stdout Leak Libc 。 相关代码： 1234567891011121314151617int _IO_new_file_overflow">
+<meta property="og:description" content="这个 leak 方法是从高校战“疫”网络安全分享赛 woodenbox 这道题中学会的，这道题我是用 House of roman 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 Overwrite Stdout Leak Libc 。 相关代码： 1234567891011121314151617int _IO_new_file_overflow (">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-10-26T04:15:16.530Z">
+<meta property="og:updated_time" content="2020-10-26T04:19:37.035Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="no show to leak">
-<meta name="twitter:description" content="这个 leak 方法是从高校战“疫”网络安全分享赛 woodenbox 这道题中学会的，这道题我是用 House of roman 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 Overwrite Stdout Leak Libc 。 相关代码： 1234567891011121314151617int _IO_new_file_overflow">
+<meta name="twitter:description" content="这个 leak 方法是从高校战“疫”网络安全分享赛 woodenbox 这道题中学会的，这道题我是用 House of roman 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 Overwrite Stdout Leak Libc 。 相关代码： 1234567891011121314151617int _IO_new_file_overflow (">
 
 
 
@@ -373,9 +373,7 @@
       
 
       
-        <a id="more"></a>
-
-<p>这个 leak 方法是从高校战“疫”网络安全分享赛 <code>woodenbox</code> 这道题中学会的，这道题我是用 <code>House of roman</code> 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 <code>Overwrite Stdout Leak Libc</code> 。</p>
+        <p>这个 leak 方法是从高校战“疫”网络安全分享赛 <code>woodenbox</code> 这道题中学会的，这道题我是用 <code>House of roman</code> 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 <code>Overwrite Stdout Leak Libc</code> 。</p>
 <p>相关代码：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> _IO_new_file_overflow (_IO_FILE *f, <span class="keyword">int</span> ch)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> (f-&gt;_flags &amp; _IO_NO_WRITES) <span class="comment">/* SET ERROR */</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">//...</span></span><br><span class="line">      <span class="keyword">return</span> EOF;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">if</span> ((f-&gt;_flags &amp; _IO_CURRENTLY_PUTTING) == <span class="number">0</span> || f-&gt;_IO_write_base == <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">		<span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">if</span> (ch == EOF)</span><br><span class="line">    <span class="keyword">return</span> _IO_do_write (f, f-&gt;_IO_write_base,</span><br><span class="line">			 f-&gt;_IO_write_ptr - f-&gt;_IO_write_base);</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line">libc_hidden_ver (_IO_new_file_overflow, _IO_file_overflow)</span><br></pre></td></tr></table></figure>
 

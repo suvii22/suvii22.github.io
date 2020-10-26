@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。 先来看一下函数___stack_chk_fail源码： 1234567891011voi">
+<meta name="description" content="Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。 先来看一下函数___stack_chk_fail源码： 1234567891011void">
 <meta name="keywords" content="pwn,canary,shellcode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Syc Geek 10th">
 <meta property="og:url" content="http://suvii22.github.io/2019/11/04/Syc-Geek-10th/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
-<meta property="og:description" content="Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。 先来看一下函数___stack_chk_fail源码： 1234567891011voi">
+<meta property="og:description" content="Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。 先来看一下函数___stack_chk_fail源码： 1234567891011void">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-10-26T04:15:27.048Z">
+<meta property="og:updated_time" content="2020-10-26T04:20:19.298Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Syc Geek 10th">
-<meta name="twitter:description" content="Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。 先来看一下函数___stack_chk_fail源码： 1234567891011voi">
+<meta name="twitter:description" content="Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fail产生的。 先来看一下函数___stack_chk_fail源码： 1234567891011void">
 
 
 
@@ -373,9 +373,7 @@
       
 
       
-        <a id="more"></a>
-
-<h2 id="Baby-canary"><a href="#Baby-canary" class="headerlink" title="Baby canary"></a>Baby canary</h2><h3 id="ssp"><a href="#ssp" class="headerlink" title="ssp"></a>ssp</h3><p>如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 <code>___stack_chk_fail</code> 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数<code>___stack_chk_fail</code>产生的。</p>
+        <h2 id="Baby-canary"><a href="#Baby-canary" class="headerlink" title="Baby canary"></a>Baby canary</h2><h3 id="ssp"><a href="#ssp" class="headerlink" title="ssp"></a>ssp</h3><p>如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 <code>___stack_chk_fail</code> 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数<code>___stack_chk_fail</code>产生的。</p>
 <p>先来看一下函数___stack_chk_fail源码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">__attribute__</span> <span class="params">((noreturn)</span>) <span class="title">__stack_chk_fail</span> <span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __fortify_fail (<span class="string">"stack smashing detected"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">__attribute__</span> <span class="params">((noreturn)</span>) internal_function <span class="title">__fortify_fail</span> <span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *msg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">/* The loop is added only to keep gcc happy.  */</span></span><br><span class="line">  <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">    __libc_message (<span class="number">2</span>, <span class="string">"*** %s ***: %s terminatedn"</span>,</span><br><span class="line">                    msg, __libc_argv[<span class="number">0</span>] ?: <span class="string">"&lt;unknown&gt;"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 

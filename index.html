@@ -376,7 +376,13 @@
 
       
         
-          <p>又是被打的一天</p>
+          
+          
+
+SignIn周末抽空做了N1CTF的签到，洞很简单，delete完start指针直接减8，也就是说我们可以直接读写之前堆块的内容，所以leak libc后改tcache中堆块fd为free_hook，改free_hook为system来get shell
+exp：
+123456789101112
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2020/10/23/N1CTF2020-SignIn/#more" rel="contents">
@@ -531,7 +537,12 @@
 
       
         
-          <p>复现一道当时没有做出来的题</p>
+          
+          
+
+这个程序的洞在 show 的时候会 push 一个 0xaabbccdd，当申请新的 chunk 时并没有更新 start 指针，这样就有可能造成 edit 向下溢出。
+利用方法全程参考这篇writeup。将一个0x90的chunk通过show释放进入unsortedbin，因为未更新start
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2020/09/21/DDCTF2020-pwn/#more" rel="contents">
@@ -688,7 +699,12 @@
 
       
         
-          <p>钓鱼城杯，咕咕咕</p>
+          
+          
+
+通过溢出可以拥有足够的 free 次数；然后通过 stdout 来leak libc，覆写 malloc_hook 为 one_gadget。
+1234567891011121314151617181920212223242526272829303132333435363738394041424
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2020/09/01/dycb-veryeasy/#more" rel="contents">
@@ -843,7 +859,13 @@
 
       
         
-          <p>国赛2020</p>
+          
+          
+
+存在 uaf，通过改 stdout 来 leak libc，最后改 malloc_hook 为 one_gadget 来get shell。
+(顺便吐槽一下不给 libc 的zz操作
+12345678910111213141516171819202122232425262728293031323
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2020/09/01/CISCN2020-maj/#more" rel="contents">
@@ -998,7 +1020,14 @@
 
       
         
-          <p>当没有合适 gadgets 可用的时候，可以找一找 __libc_csu_init 中的gadgets</p>
+          
+          
+
+
+具体分析过程见ctf wiki
+exp
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556from pwn import *from Li
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2020/08/08/ret2csu/#more" rel="contents">
@@ -1153,7 +1182,14 @@
 
       
         
-          <p>关于canary的一道题</p>
+          
+          
+
+babystack除了ASLR之外保护全开，存在明显栈溢出漏洞，不知道如何绕过canary
+调试过程断点下到触发 __stack_chk_fail 的地方，输入 ‘a’*0x1200，观察 rcx 的值（里面存放着原 canary 与 ‘aaaaaaaa’ xor 的结果）。
+
+把 rcx 异或
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2020/08/03/babystack/#more" rel="contents">
@@ -1308,7 +1344,14 @@
 
       
         
-          <p>刷题</p>
+          
+          
+
+分析这个程序一开始要输入name，name存储在堆中：
+1234567//相关数据体struct &#123;    int score;    int name_len;    char *name;&#125;
+
+然后让你玩游戏，游戏是是让你猜随机生成和你name等长的随机字符串，有三次猜错
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2020/05/13/csaw2016-hungman/#more" rel="contents">
@@ -1463,7 +1506,13 @@
 
       
         
-          <p>学习新的leak方法</p>
+          
+          
+
+这个 leak 方法是从高校战“疫”网络安全分享赛 woodenbox 这道题中学会的，这道题我是用 House of roman 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 Overwrite Stdout Leak Libc 。
+相关代码：
+
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2020/03/27/no-show-to-leak/#more" rel="contents">
@@ -1618,7 +1667,18 @@
 
       
         
-          <p>简单记录一下 House of orange 的利用过程：</p>
+          
+          
+
+house of orange
+修改 top chunk 的sizesize 需满足以下条件：
+
+top chunk 大于 MINSIZE，即 0x10
+old_size  &lt;  nb + MINSIZE
+PREV_INUSE = 1
+old_top + old_size 页对齐    
+
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2020/03/26/House-of-orange/#more" rel="contents">
@@ -1773,7 +1833,7 @@
 
       
         
-          <p>IO笔记</p>
+          <p>I</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2020/03/13/IO-FILE/#more" rel="contents">

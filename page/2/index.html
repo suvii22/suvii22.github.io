@@ -376,7 +376,12 @@
 
       
         
-          <p>通过这道题学习到了新姿势~</p>
+          
+          
+
+分析首先看一下输入aaaaa之后栈中的情况：
+12345678910111213141516171819200c:0030│      0xffffd130 ◂— 0x00d:0034│      0xffffd134 —▸ 0x804b040 (buf) ◂— 'aaaaa\n'0e:0038
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2020/02/28/SUCTF2019-playfmt/#more" rel="contents">
@@ -531,7 +536,11 @@
 
       
         
-          <p>BUU刷题</p>
+          
+          
+
+ciscn_2019_c_1&amp;ciscn_2019_en_2123456789101112131415161718192021222324252627282930313233343536373839404142from pwn import *from LibcSearcher impo
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/11/24/BUUCTF/#more" rel="contents">
@@ -686,7 +695,11 @@
 
       
         
-          <p>Syc招新赛</p>
+          
+          
+
+Baby canaryssp如果发生栈溢出覆盖到了canary而导致canary发生了改变则跳到函数 ___stack_chk_fail 直接终止程序。而ssp（Stack Smashing Protector ） leak正是通过故意触发canary保护执行函数___stack_chk_fai
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/11/04/Syc-Geek-10th/#more" rel="contents">
@@ -830,7 +843,15 @@
 
       
         
-          <p>笔记</p>
+          
+          
+
+确认ASLR是否已经被打开，“2”表示已经打开
+12suv11@ubuntu:~$ cat /proc/sys/kernel/randomize_va_space 2
+
+直接使用sudo会出现下面结果：
+12suv11@ubuntu:~$ sudo echo 0 &gt; /proc/sys/k
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/10/29/Ubuntu关闭ASLR/#more" rel="contents">
@@ -985,7 +1006,11 @@
 
       
         
-          <p>wiki刷题</p>
+          
+          
+
+HITCON-training lab 10 hacknote功能分析1234puts(" 1. Add note          ");puts(" 2. Delete note       ");puts(" 3. Print note        ");puts(" 4. Exit  
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/10/27/wiki/#more" rel="contents">
@@ -1140,7 +1165,13 @@
 
       
         
-          <p>攻防世界的几道题</p>
+          
+          
+
+pwn1分析程序123456gdb-peda$ checksec babystackCANARY    : ENABLEDFORTIFY   : disabledNX        : ENABLEDPIE       : disabledRELRO     : FULL
+
+我们发现程序存在ca
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/10/08/攻防世界/#more" rel="contents">

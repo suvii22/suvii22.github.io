@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="复现一道当时没有做出来的题">
+<meta name="description" content="这个程序的洞在 show 的时候会 push 一个 0xaabbccdd，当申请新的 chunk 时并没有更新 start 指针，这样就有可能造成 edit 向下溢出。 利用方法全程参考这篇writeup。将一个0x90的chunk通过show释放进入unsortedbin，因为未更新start指针，可以leak出libc；因为程序没开pie，可以通过show来实现unlink（向后合并堆块，">
 <meta name="keywords" content="pwn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DDCTF2020 pwn">
 <meta property="og:url" content="http://suvii22.github.io/2020/09/21/DDCTF2020-pwn/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
-<meta property="og:description" content="复现一道当时没有做出来的题">
+<meta property="og:description" content="这个程序的洞在 show 的时候会 push 一个 0xaabbccdd，当申请新的 chunk 时并没有更新 start 指针，这样就有可能造成 edit 向下溢出。 利用方法全程参考这篇writeup。将一个0x90的chunk通过show释放进入unsortedbin，因为未更新start指针，可以leak出libc；因为程序没开pie，可以通过show来实现unlink（向后合并堆块，">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-10-25T15:37:24.510Z">
+<meta property="og:updated_time" content="2020-10-26T04:14:58.167Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DDCTF2020 pwn">
-<meta name="twitter:description" content="复现一道当时没有做出来的题">
+<meta name="twitter:description" content="这个程序的洞在 show 的时候会 push 一个 0xaabbccdd，当申请新的 chunk 时并没有更新 start 指针，这样就有可能造成 edit 向下溢出。 利用方法全程参考这篇writeup。将一个0x90的chunk通过show释放进入unsortedbin，因为未更新start指针，可以leak出libc；因为程序没开pie，可以通过show来实现unlink（向后合并堆块，">
 
 
 
@@ -373,8 +373,7 @@
       
 
       
-        <p>复现一道当时没有做出来的题</p>
-<a id="more"></a>
+        <a id="more"></a>
 
 <p>这个程序的洞在 show 的时候会 push 一个 0xaabbccdd，当申请新的 chunk 时并没有更新 start 指针，这样就有可能造成 edit 向下溢出。</p>
 <p>利用方法全程参考这篇<a href="http://yulige.top/?p=780" target="_blank" rel="noopener">writeup</a>。将一个0x90的chunk通过show释放进入unsortedbin，因为未更新start指针，可以leak出libc；因为程序没开pie，可以通过show来实现unlink（向后合并堆块，太菜了学到了），修改bss地址来造成任意地址写，之后覆写free_hook为system来get shell。</p>

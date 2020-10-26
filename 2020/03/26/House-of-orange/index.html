@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="简单记录一下 House of orange 的利用过程：">
+<meta name="description" content="house of orange 修改 top chunk 的sizesize 需满足以下条件：  top chunk 大于 MINSIZE，即 0x10 old_size  &amp;lt;  nb + MINSIZE PREV_INUSE = 1 old_top + old_size 页对齐      申请一块大内存来触发 sysmalloc() 中的 _int_free()_int_free()">
 <meta name="keywords" content="pwn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="House of orange">
 <meta property="og:url" content="http://suvii22.github.io/2020/03/26/House-of-orange/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
-<meta property="og:description" content="简单记录一下 House of orange 的利用过程：">
+<meta property="og:description" content="house of orange 修改 top chunk 的sizesize 需满足以下条件：  top chunk 大于 MINSIZE，即 0x10 old_size  &amp;lt;  nb + MINSIZE PREV_INUSE = 1 old_top + old_size 页对齐      申请一块大内存来触发 sysmalloc() 中的 _int_free()_int_free()">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-10-25T15:37:39.760Z">
+<meta property="og:updated_time" content="2020-10-26T04:15:04.940Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="House of orange">
-<meta name="twitter:description" content="简单记录一下 House of orange 的利用过程：">
+<meta name="twitter:description" content="house of orange 修改 top chunk 的sizesize 需满足以下条件：  top chunk 大于 MINSIZE，即 0x10 old_size  &amp;lt;  nb + MINSIZE PREV_INUSE = 1 old_top + old_size 页对齐      申请一块大内存来触发 sysmalloc() 中的 _int_free()_int_free()">
 
 
 
@@ -373,8 +373,7 @@
       
 
       
-        <p>简单记录一下 House of orange 的利用过程：</p>
-<a id="more"></a>
+        <a id="more"></a>
 
 <p><a href="https://github.com/suvii22/pwn/tree/master/house%20of%20orange" target="_blank" rel="noopener">house of orange</a></p>
 <h2 id="修改-top-chunk-的size"><a href="#修改-top-chunk-的size" class="headerlink" title="修改 top chunk 的size"></a>修改 top chunk 的size</h2><p>size 需满足以下条件：</p>

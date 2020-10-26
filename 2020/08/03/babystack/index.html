@@ -81,20 +81,20 @@
 
 
 
-<meta name="description" content="关于canary的一道题">
+<meta name="description" content="babystack除了ASLR之外保护全开，存在明显栈溢出漏洞，不知道如何绕过canary 调试过程断点下到触发 __stack_chk_fail 的地方，输入 ‘a’*0x1200，观察 rcx 的值（里面存放着原 canary 与 ‘aaaaaaaa’ xor 的结果）。  把 rcx 异或回去得到原 canary 的值   可以得到 stack_guard 存放在 $rbp+2008 的">
 <meta name="keywords" content="pwn,canary">
 <meta property="og:type" content="article">
 <meta property="og:title" content="babystack">
 <meta property="og:url" content="http://suvii22.github.io/2020/08/03/babystack/index.html">
 <meta property="og:site_name" content="Apr1L&#39;s blog">
-<meta property="og:description" content="关于canary的一道题">
+<meta property="og:description" content="babystack除了ASLR之外保护全开，存在明显栈溢出漏洞，不知道如何绕过canary 调试过程断点下到触发 __stack_chk_fail 的地方，输入 ‘a’*0x1200，观察 rcx 的值（里面存放着原 canary 与 ‘aaaaaaaa’ xor 的结果）。  把 rcx 异或回去得到原 canary 的值   可以得到 stack_guard 存放在 $rbp+2008 的">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://i.loli.net/2020/08/03/eUbkLGR9ENStXra.png">
 <meta property="og:image" content="https://i.loli.net/2020/08/03/IgaX6AGVZ1n5sKh.png">
-<meta property="og:updated_time" content="2020-10-25T17:19:49.387Z">
+<meta property="og:updated_time" content="2020-10-26T04:14:45.260Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="babystack">
-<meta name="twitter:description" content="关于canary的一道题">
+<meta name="twitter:description" content="babystack除了ASLR之外保护全开，存在明显栈溢出漏洞，不知道如何绕过canary 调试过程断点下到触发 __stack_chk_fail 的地方，输入 ‘a’*0x1200，观察 rcx 的值（里面存放着原 canary 与 ‘aaaaaaaa’ xor 的结果）。  把 rcx 异或回去得到原 canary 的值   可以得到 stack_guard 存放在 $rbp+2008 的">
 <meta name="twitter:image" content="https://i.loli.net/2020/08/03/eUbkLGR9ENStXra.png">
 
 
@@ -376,8 +376,7 @@
       
 
       
-        <p>关于canary的一道题</p>
-<a id="more"></a>
+        <a id="more"></a>
 
 <h2 id="babystack"><a href="#babystack" class="headerlink" title="babystack"></a>babystack</h2><p>除了ASLR之外保护全开，存在明显栈溢出漏洞，不知道如何绕过canary</p>
 <h3 id="调试过程"><a href="#调试过程" class="headerlink" title="调试过程"></a>调试过程</h3><p>断点下到触发 __stack_chk_fail 的地方，输入 ‘a’*0x1200，观察 rcx 的值（里面存放着原 canary 与 ‘aaaaaaaa’ xor 的结果）。</p>

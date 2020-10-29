@@ -482,17 +482,15 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>确认ASLR是否已经被打开，“2”表示已经打开</p>
-<pre><code>suv11@ubuntu:~$ cat /proc/sys/kernel/randomize_va_space 
-2</code></pre><p>直接使用sudo会出现下面结果：</p>
-<pre><code>suv11@ubuntu:~$ sudo echo 0 &gt; /proc/sys/kernel/randomize_va_space
-bash: /proc/sys/kernel/randomize_va_space: 权限不够</code></pre><p>切换至root下关闭ASLR：</p>
-<pre><code>suv11@ubuntu:~$ su
-密码： 
-root@ubuntu:/home/suv11# echo 0 &gt; /proc/sys/kernel/randomize_va_space
-root@ubuntu:/home/suv11# cat /proc/sys/kernel/randomize_va_space
-0
-root@ubuntu:/home/suv11# su suv11
-suv11@ubuntu:~$ </code></pre>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">suv11<span class="variable">@ubuntu</span><span class="symbol">:~</span><span class="variable">$ </span>cat /proc/sys/kernel/randomize_va_space </span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>直接使用sudo会出现下面结果：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">suv11<span class="meta">@ubuntu</span>:~$ sudo echo <span class="number">0</span> &gt; <span class="regexp">/proc/</span>sys<span class="regexp">/kernel/</span>randomize_va_space</span><br><span class="line"><span class="string">bash:</span> <span class="regexp">/proc/</span>sys<span class="regexp">/kernel/</span><span class="string">randomize_va_space:</span> 权限不够</span><br></pre></td></tr></table></figure>
+
+<p>切换至root下关闭ASLR：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">suv11<span class="variable">@ubuntu</span><span class="symbol">:~</span><span class="variable">$ </span>su</span><br><span class="line">密码： </span><br><span class="line">root<span class="variable">@ubuntu</span><span class="symbol">:/home/suv11</span><span class="comment"># echo 0 &gt; /proc/sys/kernel/randomize_va_space</span></span><br><span class="line">root<span class="variable">@ubuntu</span><span class="symbol">:/home/suv11</span><span class="comment"># cat /proc/sys/kernel/randomize_va_space</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line">root<span class="variable">@ubuntu</span><span class="symbol">:/home/suv11</span><span class="comment"># su suv11</span></span><br><span class="line">suv11<span class="variable">@ubuntu</span><span class="symbol">:~</span>$</span><br></pre></td></tr></table></figure>
+
+
         
     
 

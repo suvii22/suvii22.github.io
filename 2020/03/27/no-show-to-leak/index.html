@@ -81,6 +81,11 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
 
     
 
@@ -483,8 +488,23 @@
     
         <p>这个 leak 方法是从高校战“疫”网络安全分享赛 <code>woodenbox</code> 这道题中学会的，这道题我是用 <code>House of roman</code> 爆破，跑了很长时间脚本/(ㄒoㄒ)/~~拿到的 flag，后来看了其他师傅的解法发现原来可以 <code>Overwrite Stdout Leak Libc</code> 。</p>
 <p>相关代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> _IO_new_file_overflow (_IO_FILE *f, <span class="keyword">int</span> ch)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> (f-&gt;_flags &amp; _IO_NO_WRITES) <span class="comment">/* SET ERROR */</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">//...</span></span><br><span class="line">      <span class="keyword">return</span> EOF;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">if</span> ((f-&gt;_flags &amp; _IO_CURRENTLY_PUTTING) == <span class="number">0</span> || f-&gt;_IO_write_base == <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">		<span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">if</span> (ch == EOF)</span><br><span class="line">    <span class="keyword">return</span> _IO_do_write (f, f-&gt;_IO_write_base,</span><br><span class="line">			 f-&gt;_IO_write_ptr - f-&gt;_IO_write_base);</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line">libc_hidden_ver (_IO_new_file_overflow, _IO_file_overflow)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="C">int _IO_new_file_overflow (_IO_FILE *f, int ch)
+{
+  if (f-&gt;_flags &amp; _IO_NO_WRITES) /* SET ERROR */
+    {
+      //...
+      return EOF;
+    }
+  if ((f-&gt;_flags &amp; _IO_CURRENTLY_PUTTING) == 0 || f-&gt;_IO_write_base == NULL)
+    {
+        //...
+    }
+  if (ch == EOF)
+    return _IO_do_write (f, f-&gt;_IO_write_base,
+             f-&gt;_IO_write_ptr - f-&gt;_IO_write_base);
+    //...
+}
+libc_hidden_ver (_IO_new_file_overflow, _IO_file_overflow)</code></pre>
 <p>我们想要顺利执行<code>_IO_do_write (f, f-&gt;_IO_write_base, f-&gt;_IO_write_ptr - f-&gt;_IO_write_base)</code> ,要尽可能减少其他不必要代码的执行，需要满足以下条件：</p>
 <ul>
 <li><code>f-&gt;_flags &amp; _IO_NO_WRITES == 0</code></li>
@@ -497,8 +517,10 @@
 <p>We overwrite <code>_flags</code> with the calculated value and <code>_IO_read_ptr</code>, <code>_IO_read_end</code>, <code>_IO_read_base</code> with NULL and the last byte of <code>_IO_write_base</code> with NULL as well.</p>
 </blockquote>
 <p>_flags = <code>0xfbad1800</code></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">_flags = <span class="number">0xfbad0000</span>  <span class="comment">// Magic number</span></span><br><span class="line">_flags &amp; = ~_IO_NO_WRITES <span class="comment">// _flags = 0xfbad0000</span></span><br><span class="line">_flags | = _IO_CURRENTLY_PUTTING <span class="comment">// _flags = 0xfbad0800</span></span><br><span class="line">_flags | = _IO_IS_APPENDING <span class="comment">// _flags = 0xfbad1800</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="C">_flags = 0xfbad0000  // Magic number
+_flags &amp; = ~_IO_NO_WRITES // _flags = 0xfbad0000
+_flags | = _IO_CURRENTLY_PUTTING // _flags = 0xfbad0800
+_flags | = _IO_IS_APPENDING // _flags = 0xfbad1800</code></pre>
 <p>参考链接：</p>
 <p><a href="https://sunichi.github.io/2018/11/29/leak-from-stdout/" target="_blank" rel="noopener">Leak From Stdout</a></p>
 <p><a href="https://vigneshsrao.github.io/babytcache/" target="_blank" rel="noopener">HITCON CTF: baby_tcache Writeup</a></p>
@@ -856,6 +878,12 @@ It will not impact the appearance and can give developers a lot of support :)
 
 <!-- Import prettify js  -->
 
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
 
 
 <!-- Window Load -->
@@ -866,6 +894,13 @@ It will not impact the appearance and can give developers a lot of support :)
         $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
     });
 
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
     
     
 </script>

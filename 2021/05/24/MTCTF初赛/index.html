@@ -244,7 +244,7 @@
 
     
         <meta property="article:published_time" content="Mon May 24 2021 17:35:19 GMT+0800">
-        <meta property="article:modified_time" content="Mon May 24 2021 20:18:05 GMT+0800">
+        <meta property="article:modified_time" content="Thu May 27 2021 14:00:32 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -267,7 +267,7 @@
     "mainEntityOfPage": "http://suvii22.github.io/2021/05/24/MTCTF初赛/index.html",
     "headline": "MTCTF初赛",
     "datePublished": "Mon May 24 2021 17:35:19 GMT+0800",
-    "dateModified": "Mon May 24 2021 20:18:05 GMT+0800",
+    "dateModified": "Thu May 27 2021 14:00:32 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "Apr1L",
@@ -623,22 +623,6 @@ pwd=long_to_bytes(pow(bytes_to_long(bytes([c^0x11 for c in b&quot; #\&quot;%$&#3
 <pre><code class="python">from pwn import *
 context.log_level = &#39;debug&#39;
 
-&#39;&#39;&#39;
-
-p.sendlineafter(&#39;&gt; &#39;,str(1))
-
-p.recvuntil(&#39;###\n&#39;)
-
-elf = p.recvuntil(&#39;###&#39;)[:-3]
-
-with open(&#39;psa&#39;,&#39;wb&#39;) as file_obj:
-
-            file_obj.write(elf)
-
-&#39;&#39;&#39;
-
-#p = process(&#39;./psa&#39;)
-#gdb.attach(p,&#39;b *0x555555554000+0x29A1&#39;)
 p=remote(&#39;115.28.187.226&#39;,&#39;28352&#39;)
 p.sendlineafter(&#39;&gt; &#39;,str(2))
 p.recvuntil(&#39;name:&#39;)
